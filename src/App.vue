@@ -1,4 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CompactReviewProcess from "@/components/CompactReviewProcess.vue";
+import type ReviewProcess from "@/typings/review-process";
+import { reactive } from "vue";
+
+const reviewProcesses: ReviewProcess[] = [];
+const state = reactive({ reviewProcesses: reviewProcesses });
+
+fetch("/review-processes.json")
+  .then((data) => data.json())
+  .then((json) => {
+    state.reviewProcesses = json;
+  });
+</script>
 
 <template>
   <header>
@@ -7,9 +20,12 @@
 
   <main>
     <ul>
-      <li>Review 1</li>
-      <li>Review 2</li>
-      <li>...</li>
+      <li
+        v-for="reviewProcess in state.reviewProcesses"
+        :key="reviewProcess.preprint.doi"
+      >
+        <CompactReviewProcess :review-process="reviewProcess" />
+      </li>
     </ul>
   </main>
 </template>
@@ -27,5 +43,9 @@
 
 header {
   line-height: 1.5;
+}
+
+ul {
+  list-style: none;
 }
 </style>
