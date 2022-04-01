@@ -1,0 +1,823 @@
+[
+  {
+    "docmap": {
+      "first-step": "_:b-f166eb49-1877-40c2-b5e1-789204501587",
+      "provider": "https://eeb.embo.org",
+      "created": "2022-03-30T08:12:35.249Z",
+      "generatedAt": "2022-03-30T08:12:35.249Z",
+      "publisher": {
+        "peer_review_policy": "https://reviewcommons.org/reviewers",
+        "name": "review commons",
+        "url": "https://reviewcommons.org"
+      },
+      "id": "https://eeb.embo.org/api/v2/docmap/10.1101/2020.07.17.208082",
+      "type": "docmap",
+      "steps": {
+        "_:b-f166eb49-1877-40c2-b5e1-789204501587": {
+          "next-step": "_:b-6492d6b1-2ccd-4e46-9054-031c682cb46c",
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2020.07.17.208082",
+              "status": "reviewed"
+            }
+          ],
+          "actions": [
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:22:19.556792+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837723",
+                  "content": [
+                    {
+                      "id": "10.1101/2020.07.17.208082",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.17.208082#review"
+                    },
+                    {
+                      "id": "07Ed-M0ZEeqONysTQKLaJg",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/07Ed-M0ZEeqONysTQKLaJg"
+                    },
+                    {
+                      "id": "1837723",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837723"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:22:19.238285+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837724",
+                  "content": [
+                    {
+                      "id": "10.1101/2020.07.17.208082",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.17.208082#review"
+                    },
+                    {
+                      "id": "1837724",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837724"
+                    },
+                    {
+                      "id": "02g8ls0ZEeqEDq9S3yK4Jw",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/02g8ls0ZEeqEDq9S3yK4Jw"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:22:19.976508+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837722",
+                  "content": [
+                    {
+                      "id": "1837722",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837722"
+                    },
+                    {
+                      "id": "10.1101/2020.07.17.208082",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.17.208082#review"
+                    },
+                    {
+                      "id": "0-sHjs0ZEeqlTrPEmDQG8g",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/0-sHjs0ZEeqlTrPEmDQG8g"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "published": "2020-07-17T00:00:00Z",
+              "uri": "https://doi.org/10.1101/2020.07.17.208082",
+              "doi": "10.1101/2020.07.17.208082"
+            }
+          ]
+        },
+        "_:b-6492d6b1-2ccd-4e46-9054-031c682cb46c": {
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2020.07.17.208082",
+              "status": ""
+            }
+          ],
+          "actions": [
+            {
+              "outputs": {
+                "published": "2020-07-23T19:22:20.994067+00:00",
+                "type": "author-response",
+                "uri": "https://eeb.embo.org/api/v2/review_material/1837720",
+                "content": [
+                  {
+                    "id": "1837720",
+                    "type": "web-page",
+                    "service": "https://eeb.embo.org",
+                    "url": "https://eeb.embo.org/api/v2/review_material/1837720"
+                  },
+                  {
+                    "id": "10.1101/2020.07.17.208082",
+                    "type": "web-page",
+                    "service": "https://biorxiv.org",
+                    "url": "https://biorxiv.org/content/10.1101/2020.07.17.208082#review"
+                  },
+                  {
+                    "id": "1J1Ims0ZEeqUvb_53N_Vag",
+                    "type": "web-page",
+                    "service": "https://hypothes.is",
+                    "url": "https://hypothes.is/a/1J1Ims0ZEeqUvb_53N_Vag"
+                  }
+                ]
+              },
+              "participants": [
+                {
+                  "actor": {
+                    "firstName": "Georgios N",
+                    "type": "person",
+                    "familyName": "Hatzopoulos"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Davide",
+                    "type": "person",
+                    "familyName": "Demurtas"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Maeva",
+                    "type": "person",
+                    "familyName": "Le Guennec"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Pierre",
+                    "type": "person",
+                    "familyName": "Gönczy"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Veronika Nemčíková",
+                    "type": "person",
+                    "familyName": "Villímová"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Sergey",
+                    "type": "person",
+                    "familyName": "Nazarov"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Paul",
+                    "type": "person",
+                    "familyName": "Guichard"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Alexandra",
+                    "type": "person",
+                    "familyName": "Bezler"
+                  },
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837723"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837724"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837722"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "docmap": {
+      "first-step": "_:b-55f23b59-2ec3-418a-a7c1-e04421d66d13",
+      "provider": "https://eeb.embo.org",
+      "created": "2022-03-30T08:12:35.249Z",
+      "generatedAt": "2022-03-30T08:12:35.249Z",
+      "publisher": {
+        "peer_review_policy": "https://reviewcommons.org/reviewers",
+        "name": "review commons",
+        "url": "https://reviewcommons.org"
+      },
+      "id": "https://eeb.embo.org/api/v2/docmap/10.1101/2020.07.20.212886",
+      "type": "docmap",
+      "steps": {
+        "_:b-55f23b59-2ec3-418a-a7c1-e04421d66d13": {
+          "next-step": "_:b-d903a9ce-c9b0-4555-8776-3fcb7bb9f8b0",
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2020.07.20.212886",
+              "status": "reviewed"
+            }
+          ],
+          "actions": [
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:26:50.243990+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837718",
+                  "content": [
+                    {
+                      "id": "10.1101/2020.07.20.212886",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.20.212886#review"
+                    },
+                    {
+                      "id": "dPqpQM0aEeqnEbNVsAC2Gw",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/dPqpQM0aEeqnEbNVsAC2Gw"
+                    },
+                    {
+                      "id": "1837718",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837718"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:26:49.980324+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837719",
+                  "content": [
+                    {
+                      "id": "10.1101/2020.07.20.212886",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.20.212886#review"
+                    },
+                    {
+                      "id": "dMsVVM0aEeqpiHvipzDs-Q",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/dMsVVM0aEeqpiHvipzDs-Q"
+                    },
+                    {
+                      "id": "1837719",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837719"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2020-07-23T19:26:51.010612+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/1837715",
+                  "content": [
+                    {
+                      "id": "1837715",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/1837715"
+                    },
+                    {
+                      "id": "10.1101/2020.07.20.212886",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2020.07.20.212886#review"
+                    },
+                    {
+                      "id": "dXLjdM0aEeqJVpd1GQZfAQ",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/dXLjdM0aEeqJVpd1GQZfAQ"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "published": "2020-07-21T00:00:00Z",
+              "uri": "https://doi.org/10.1101/2020.07.20.212886",
+              "doi": "10.1101/2020.07.20.212886"
+            }
+          ]
+        },
+        "_:b-d903a9ce-c9b0-4555-8776-3fcb7bb9f8b0": {
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2020.07.20.212886",
+              "status": ""
+            }
+          ],
+          "actions": [
+            {
+              "outputs": {
+                "published": "2020-07-23T19:26:51.484215+00:00",
+                "type": "author-response",
+                "uri": "https://eeb.embo.org/api/v2/review_material/1837714",
+                "content": [
+                  {
+                    "id": "ddoLMM0aEeqoVrMgA6Yx0w",
+                    "type": "web-page",
+                    "service": "https://hypothes.is",
+                    "url": "https://hypothes.is/a/ddoLMM0aEeqoVrMgA6Yx0w"
+                  },
+                  {
+                    "id": "10.1101/2020.07.20.212886",
+                    "type": "web-page",
+                    "service": "https://biorxiv.org",
+                    "url": "https://biorxiv.org/content/10.1101/2020.07.20.212886#review"
+                  },
+                  {
+                    "id": "1837714",
+                    "type": "web-page",
+                    "service": "https://eeb.embo.org",
+                    "url": "https://eeb.embo.org/api/v2/review_material/1837714"
+                  }
+                ]
+              },
+              "participants": [
+                {
+                  "actor": {
+                    "firstName": "Majid",
+                    "type": "person",
+                    "familyName": "Mohajerani"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Babita",
+                    "type": "person",
+                    "familyName": "Gollen"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Christopher",
+                    "type": "person",
+                    "familyName": "Isaac"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Yubo",
+                    "type": "person",
+                    "familyName": "Cheng"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Luke",
+                    "type": "person",
+                    "familyName": "Saville"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Athanasios",
+                    "type": "person",
+                    "familyName": "Zovoilis"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Jogender",
+                    "type": "person",
+                    "familyName": "Mehla"
+                  },
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837718"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837719"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/1837715"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "docmap": {
+      "first-step": "_:b-2a281f9b-2433-4ce1-beaf-401f738aef71",
+      "provider": "https://eeb.embo.org",
+      "created": "2022-03-30T08:12:35.249Z",
+      "generatedAt": "2022-03-30T08:12:35.249Z",
+      "publisher": {
+        "peer_review_policy": "https://reviewcommons.org/reviewers",
+        "name": "review commons",
+        "url": "https://reviewcommons.org"
+      },
+      "id": "https://eeb.embo.org/api/v2/docmap/10.1101/2022.03.22.485278",
+      "type": "docmap",
+      "steps": {
+        "_:b-2a281f9b-2433-4ce1-beaf-401f738aef71": {
+          "next-step": "_:b-946ef6a5-ff0b-4895-989b-c9f521520216",
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2022.03.22.485278",
+              "status": "reviewed"
+            }
+          ],
+          "actions": [
+            {
+              "outputs": [
+                {
+                  "published": "2022-03-29T12:13:36.504424+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/21187903",
+                  "content": [
+                    {
+                      "id": "10.1101/2022.03.22.485278",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2022.03.22.485278#review"
+                    },
+                    {
+                      "id": "21187903",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/21187903"
+                    },
+                    {
+                      "id": "qSgzBK9ZEeyrMYsvnJ26Ww",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/qSgzBK9ZEeyrMYsvnJ26Ww"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2022-03-29T12:13:21.135507+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/21187904",
+                  "content": [
+                    {
+                      "id": "21187904",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/21187904"
+                    },
+                    {
+                      "id": "10.1101/2022.03.22.485278",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2022.03.22.485278#review"
+                    },
+                    {
+                      "id": "n_2EUK9ZEeyqczNyKAUkcQ",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/n_2EUK9ZEeyqczNyKAUkcQ"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            },
+            {
+              "outputs": [
+                {
+                  "published": "2022-03-29T12:13:07.555210+00:00",
+                  "type": "review",
+                  "uri": "https://eeb.embo.org/api/v2/review_material/21187905",
+                  "content": [
+                    {
+                      "id": "l_woBq9ZEeyeh-fwd2JC_w",
+                      "type": "web-page",
+                      "service": "https://hypothes.is/",
+                      "url": "https://hypothes.is/a/l_woBq9ZEeyeh-fwd2JC_w"
+                    },
+                    {
+                      "id": "10.1101/2022.03.22.485278",
+                      "type": "web-page",
+                      "service": "https://biorxiv.org",
+                      "url": "https://biorxiv.org/content/10.1101/2022.03.22.485278#review"
+                    },
+                    {
+                      "id": "21187905",
+                      "type": "web-page",
+                      "service": "https://eeb.embo.org/",
+                      "url": "https://eeb.embo.org/api/v2/review_material/21187905"
+                    }
+                  ]
+                }
+              ],
+              "participants": [
+                {
+                  "actor": {
+                    "name": "anonymous",
+                    "type": "person"
+                  },
+                  "role": "peer-reviewer"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "published": "2022-03-24T00:00:00Z",
+              "uri": "https://doi.org/10.1101/2022.03.22.485278",
+              "doi": "10.1101/2022.03.22.485278"
+            }
+          ]
+        },
+        "_:b-946ef6a5-ff0b-4895-989b-c9f521520216": {
+          "assertions": [
+            {
+              "item": "https://doi.org/10.1101/2022.03.22.485278",
+              "status": ""
+            }
+          ],
+          "actions": [
+            {
+              "outputs": {
+                "published": "2022-03-29T12:14:03.229489+00:00",
+                "type": "author-response",
+                "uri": "https://eeb.embo.org/api/v2/review_material/21187881",
+                "content": [
+                  {
+                    "id": "uRRvOq9ZEeyrMv8Vs_7xzg",
+                    "type": "web-page",
+                    "service": "https://hypothes.is",
+                    "url": "https://hypothes.is/a/uRRvOq9ZEeyrMv8Vs_7xzg"
+                  },
+                  {
+                    "id": "21187881",
+                    "type": "web-page",
+                    "service": "https://eeb.embo.org",
+                    "url": "https://eeb.embo.org/api/v2/review_material/21187881"
+                  },
+                  {
+                    "id": "10.1101/2022.03.22.485278",
+                    "type": "web-page",
+                    "service": "https://biorxiv.org",
+                    "url": "https://biorxiv.org/content/10.1101/2022.03.22.485278#review"
+                  }
+                ]
+              },
+              "participants": [
+                {
+                  "actor": {
+                    "firstName": "Miguel",
+                    "type": "person",
+                    "familyName": "Salinas-Saavedra"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Shirley",
+                    "type": "person",
+                    "familyName": "Hanley"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Sebastian G",
+                    "type": "person",
+                    "familyName": "Gornik"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Eleni",
+                    "type": "person",
+                    "familyName": "Chrysostomou"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Kerry",
+                    "type": "person",
+                    "familyName": "Thompson"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Michelle",
+                    "type": "person",
+                    "familyName": "Kilcoyne"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Christine E.",
+                    "type": "person",
+                    "familyName": "Schnitzler"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Paul",
+                    "type": "person",
+                    "familyName": "Gonzalez"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Emma T",
+                    "type": "person",
+                    "familyName": "McMahon"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Hakima",
+                    "type": "person",
+                    "familyName": "Flici"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Andreas D",
+                    "type": "person",
+                    "familyName": "Baxevanis"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "Uri",
+                    "type": "person",
+                    "familyName": "Frank"
+                  },
+                  "role": "author"
+                },
+                {
+                  "actor": {
+                    "firstName": "James M",
+                    "type": "person",
+                    "familyName": "Gahan"
+                  },
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/21187903"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/21187904"
+            },
+            {
+              "uri": "https://eeb.embo.org/api/v2/review_material/21187905"
+            }
+          ]
+        }
+      }
+    }
+  }
+]
