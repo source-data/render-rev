@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+    #demo {
+      max-width: 800px;
+      min-width: 450px;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import '../render-rev.js';
+
+    const dois = [
+      '10.1101/2020.07.20.212886',
+      '10.1101/2021.10.26.465695',
+      // '10.1101/2022.05.19.22275311',
+      // '10.1101/2022.03.25.485742',
+      // '10.1101/2022.02.24.481763',
+      // '10.1101/2021.10.26.465695',
+      // '10.1101/2022.07.22.22277924',
+    ];
+    render(
+      html`
+        <ul>
+          ${dois.map((doi) =>
+            html`
+              <li>
+                <h2>${doi}</h2>
+                <render-rev .doi=${doi}></render-rev>
+              </li>
+            `)}
+        </ul>
+      `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>
