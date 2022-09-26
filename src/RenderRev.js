@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit';
 
-import { parse } from './docmaps.js';
+import { parse } from './Docmaps.js';
 
 function toClassName(str) {
   return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
