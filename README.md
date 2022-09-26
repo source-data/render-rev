@@ -1,6 +1,6 @@
 # \<render-rev>
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+Visualizing the peer review process.
 
 ## Installation
 
@@ -15,7 +15,7 @@ npm i render-rev
   import 'render-rev/render-rev.js';
 </script>
 
-<render-rev></render-rev>
+<render-rev doi="10.1101/2020.07.20.212886"></render-rev>
 ```
 
 ## Linting and formatting
