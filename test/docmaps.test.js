@@ -1,7 +1,10 @@
 import { expect } from '@open-wc/testing';
 
 import { parse } from '../src/docmaps.js';
-import { docmapsByDoi, reviewProcessByDoi } from './resources/sampleDocmaps.js';
+import {
+  docmapsByDoi,
+  reviewProcessByDoi,
+} from './resources/sample-docmaps.js';
 
 describe('docmaps', () => {
   for (const [doi, docmaps] of Object.entries(docmapsByDoi)) {

@@ -1,1 +1,1 @@
-export { RenderRev } from './src/RenderRev.js';
+export { RenderRev } from './src/render-rev.js';
