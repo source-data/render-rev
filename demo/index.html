@@ -28,6 +28,9 @@
       // '10.1101/2021.10.26.465695',
       // '10.1101/2022.07.22.22277924',
     ];
+    const options = {
+      source: 'eeb-docmaps'
+    }
     render(
       html`
         <ul>
@@ -35,7 +38,7 @@
             html`
               <li>
                 <h2>${doi}</h2>
-                <render-rev .doi=${doi}></render-rev>
+                <render-rev .doi=${doi} .options=${options}></render-rev>
               </li>
             `)}
         </ul>

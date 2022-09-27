@@ -1,17 +1,9 @@
 import { css, html, LitElement } from 'lit';
 
-import { parse } from './docmaps.js';
+import { getReviewProcess } from './store.js';
 
 function toClassName(str) {
   return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
-}
-
-function fetchDocmaps(docmapsBaseUrl, doi) {
-  if (!doi) {
-    return new Promise((_, reject) => reject());
-  }
-  const docmapsUrl = `${docmapsBaseUrl}/${doi}`;
-  return fetch(docmapsUrl).then(data => data.json());
 }
 
 function pluralize(count, noun, suffix = 's') {
@@ -89,22 +81,20 @@ function renderTimeline(reviewProcess) {
 export class RenderRev extends LitElement {
   static properties = {
     doi: { type: String },
+    options: { type: Object },
     _reviewProcess: { state: true },
   };
 
   constructor() {
     super();
-    this._docmapsBaseUrl = `https://eeb-dev.embo.org/api/v2/docmap`;
     this._reviewProcess = null;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    fetchDocmaps(this._docmapsBaseUrl, this.doi)
-      .then(parse)
-      .then(reviewProcess => {
-        this._reviewProcess = reviewProcess;
-      });
+    getReviewProcess(this.doi, this.options).then(reviewProcess => {
+      this._reviewProcess = reviewProcess;
+    });
   }
 
   static styles = css`
