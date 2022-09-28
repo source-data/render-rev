@@ -6,9 +6,25 @@
     body {
       background: #fafafa;
     }
-    #demo {
-      max-width: 800px;
-      min-width: 450px;
+    table {
+      border-collapse: collapse;
+      border-color: #dee2e6;
+    }
+    tbody, td, tfoot, th, thead, tr {
+      border-color: inherit;
+      border-style: solid;
+      border-width: 0;
+    }
+    table > :not(caption) > * > * {
+      padding: 1rem 1rem;
+      border-bottom-width: 1px;
+      border-right-width: 1px;
+    }
+    th.doi {
+      width: 200px;
+    }
+    th.source {
+      width: 700px;
     }
   </style>
 </head>
@@ -21,27 +37,44 @@
 
     const dois = [
       '10.1101/2020.07.20.212886',
+      '10.1101/2022.03.25.485742',
+      '10.1101/2022.02.24.481763',
       '10.1101/2021.10.26.465695',
-      // '10.1101/2022.05.19.22275311',
-      // '10.1101/2022.03.25.485742',
-      // '10.1101/2022.02.24.481763',
-      // '10.1101/2021.10.26.465695',
-      // '10.1101/2022.07.22.22277924',
+      '10.1101/2022.07.22.22277924',
     ];
-    const options = {
-      source: 'eeb-docmaps'
-    }
+    const sources = [
+      'eeb-docmaps',
+    ];
+
     render(
       html`
-        <ul>
-          ${dois.map((doi) =>
-            html`
-              <li>
-                <h2>${doi}</h2>
-                <render-rev .doi=${doi} .options=${options}></render-rev>
-              </li>
+        <table>
+          <thead>
+            <tr>
+              <th class="doi">
+                DOI
+              </th>
+              ${sources.map(source => html`<th class="source">${source}</th>`)}
+            </tr>
+          </thead>
+
+          <tbody>
+            ${dois.map(doi => html`
+              <tr>
+                <th scope="row">
+                  ${doi}
+                </th>
+                ${sources.map(source => html`
+                  <td>
+                    <render-rev
+                      .doi=${doi}
+                      .options=${{ source }}
+                    ></render-rev>
+                  </td>`)}
+              </tr>
             `)}
-        </ul>
+          </tbody>
+        </table>
       `,
       document.querySelector('#demo')
     );
