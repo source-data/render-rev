@@ -7,25 +7,46 @@ function* stepsGenerator(idFirstStep, stepsById) {
   }
 }
 
+function getOutput(action) {
+  return action.outputs.length ? action.outputs[0] : action.outputs;
+}
+
 function parseStep(timeline, items, step) {
-  const assertion = step.assertions[0].status;
-  const { actions } = step;
-  if (assertion === 'reviewed') {
-    const dates = actions.map(action => action.outputs[0].published).sort();
-    items.push({
-      date: new Date(dates[0]),
-      type: 'reviews',
-      uris: actions.map(action => action.outputs[0].uri),
-    });
-  } else if (
+  const { actions, assertions } = step;
+
+  const isReviewStep =
+    assertions && assertions.length > 0 && assertions[0].status === 'reviewed';
+  const isResponseStep =
+    actions &&
+    actions.length > 0 &&
     'type' in actions[0].outputs &&
-    actions[0].outputs.type === 'author-response'
-  ) {
-    const response = actions[0].outputs;
+    actions[0].outputs.type === 'author-response';
+  if (!isReviewStep && !isResponseStep) {
+    return;
+  }
+
+  const dates = actions.map(action => getOutput(action).published).sort();
+  const date = new Date(dates[0]);
+
+  const contents = actions.map(() => 'Loading...');
+  actions.forEach((action, idx) => {
+    fetch(getOutput(action).uri)
+      .then(data => data.json())
+      .then(data => {
+        contents[idx] = data[0].docmap.content;
+      });
+  });
+  if (isReviewStep) {
     items.push({
-      date: new Date(response.published),
+      date,
+      type: 'reviews',
+      contents,
+    });
+  } else if (isResponseStep) {
+    items.push({
+      date,
       type: 'response',
-      uri: response.uri,
+      contents,
     });
   }
 }
