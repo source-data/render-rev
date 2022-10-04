@@ -7,7 +7,7 @@ export function getReviewProcess(doi, options) {
   const { source } = options;
   switch (source) {
     case 'eeb-docmaps':
-      return fetch(`https://eeb-dev.embo.org/api/v2/docmap/${doi}`)
+      return fetch(`https://eeb.embo.org/api/v2/docmap/${doi}`)
         .then(data => data.json())
         .then(parseDocmap);
     default:
