@@ -1,4 +1,6 @@
 import { css, html, LitElement } from 'lit';
+import { Icons } from './icons.js';
+import './render-rev-highlight.js';
 
 function toClassName(str) {
   return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
@@ -11,7 +13,7 @@ function pluralize(count, noun, suffix = 's') {
 function itemDescription(item) {
   switch (item.type) {
     case 'reviews':
-      return `Peer Review (${pluralize(item.uris.length, 'report')})`;
+      return `Peer Review (${pluralize(item.contents.length, 'report')})`;
     case 'response':
       return 'Author reply';
     case 'preprint-posted':
@@ -21,59 +23,6 @@ function itemDescription(item) {
     default:
       return 'Unknown';
   }
-}
-
-function itemAction(item) {
-  switch (item.type) {
-    case 'preprint-posted':
-    case 'published':
-      return html`<a href="${item.uri}"><div class="external-link"></div></a>`;
-    case 'reviews':
-    case 'response':
-    default:
-      return html`<div></div>`;
-  }
-}
-
-function renderGroupPublisher(group) {
-  return html` <div class="group-publisher">${group.publisher.name}</div> `;
-}
-
-function renderGroupItem(group, item, showPublisher) {
-  const publisher = showPublisher
-    ? renderGroupPublisher(group)
-    : html`<div></div>`;
-  const formattedDate = item.date.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-  const description = itemDescription(item);
-  const action = itemAction(item);
-  return html`
-    ${publisher}
-    <div class="item-date">${formattedDate}</div>
-    <div class="item-description">${description}</div>
-    <div class="item-action">${action}</div>
-  `;
-}
-
-function renderGroup(group) {
-  return html`
-    <div class="timeline-group ${toClassName(group.publisher.name)}">
-      ${group.items.map((item, idx) => renderGroupItem(group, item, idx === 0))}
-    </div>
-  `;
-}
-
-function renderSummary(reviewProcess) {
-  return html`<div class="render-rev-summary">${reviewProcess.summary}</div>`;
-}
-
-function renderTimeline(reviewProcess) {
-  return html`<div class="render-rev-timeline">
-    ${reviewProcess.timeline.groups.map(renderGroup)}
-  </div>`;
 }
 
 export class RenderRevTimeline extends LitElement {
@@ -214,17 +163,73 @@ export class RenderRevTimeline extends LitElement {
       border-right-color: #ab0000;
     }
 
-    .external-link {
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLklEQVRIie1UsU7DMBB9Z/MLJY4Ff9DuILVCqELiS/go+A8mytIOLGwduleyCP6DxNGxJMgxSZwEBoa+7ey7985P5wNOiID8IE3TeyJ6AnDRkb8zxqwAQGu9BbBsyXkzxlzXgWioET32kAMAD2j6qsHpB1prBgBjTOO8D0qpmRBiA2BRn/n1orVqIJIkOZdSvgJYENG+LWeygFJqJqV8YeY5gEOe53d/JhDYciiK4tZa+9GWezaWvLJlw8xzIto759bW2s/qeodgEEYJVJ03bPHIUY+wj8EWjbFltEA4LWVZ3rSRa6231Qf8RtSimC0Bfvzs6AuEEM+xznvrB+Q4AO/OuXWWZV2ddyJqkb+4puBXq+JfCIQWHQFc1lt1Io5+0HgBMz+ECWPJK44ThuML10iEmOvrl44AAAAASUVORK5CYII=');
-      background-size: contain;
-      height: 16px;
-      width: 16px;
+    .open-highlight {
+      all: unset;
+      cursor: pointer;
+    }
+    .open-highlight:hover,
+    .open-highlight:focus {
+      filter: invert(50%);
     }
   `;
 
-  render() {
+  itemAction(item) {
+    const self = this;
+    function openHighlight() {
+      self.shadowRoot.querySelector('render-rev-highlight').show(item);
+    }
+    switch (item.type) {
+      case 'preprint-posted':
+      case 'published':
+        return html`<a href="${item.uri}">${Icons.externalLink}</a>`;
+      case 'reviews':
+      case 'response':
+        return html`<button class="open-highlight" @click="${openHighlight}">${Icons.eye}</button>`;
+      default:
+        return html`<div></div>`;
+    }
+  }
+
+  renderGroupItem(group, item, showPublisher) {
+    const publisher = showPublisher
+      ? html`<div class="group-publisher">${group.publisher.name}</div>`
+      : html`<div></div>`;
+    const formattedDate = item.date.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+    const description = itemDescription(item);
+    const action = this.itemAction(item);
     return html`
-      ${renderSummary(this.reviewProcess)} ${renderTimeline(this.reviewProcess)}
+      ${publisher}
+      <div class="item-date">${formattedDate}</div>
+      <div class="item-description">${description}</div>
+      <div class="item-action">${action}</div>
+    `;
+  }
+
+  renderGroup(group) {
+    const self = this;
+    return html`
+      <div class="timeline-group ${toClassName(group.publisher.name)}">
+        ${group.items.map((item, idx) =>
+          self.renderGroupItem(group, item, idx === 0)
+        )}
+      </div>
+    `;
+  }
+
+  render() {
+    const self = this;
+    return html`
+      <div class="render-rev-summary">${this.reviewProcess.summary}</div>
+      <div class="render-rev-timeline">
+        ${this.reviewProcess.timeline.groups.map(group =>
+          self.renderGroup(group)
+        )}
+      </div>
+      <render-rev-highlight></render-rev-highlight>
     `;
   }
 }

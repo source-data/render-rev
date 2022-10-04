@@ -3,7 +3,7 @@
   "description": "Webcomponent render-rev following open-wc recommendations",
   "license": "MIT",
   "author": "SourceData",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "main": "index.js",
   "module": "index.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "lit": "^2.0.2"
+    "lit": "^2.0.2",
+    "marked": "^4.1.1"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
