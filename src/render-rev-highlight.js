@@ -12,13 +12,16 @@ export class RenderRevHighlight extends LitElement {
     _htmlContents: { state: true, type: Array },
   };
 
-  show(item) {
+  async show(item) {
     this._highlight = {
       item,
       contentIdx: 0,
     };
     this._htmlContents = item.contents.map(content => marked.parse(content));
-    this.shadowRoot.querySelector('render-rev-modal').show();
+    const modal = this.shadowRoot.querySelector('render-rev-modal');
+    modal.show();
+    await modal.updateComplete;
+    this.resetContentScroll();
   }
 
   static styles = [
@@ -101,6 +104,7 @@ export class RenderRevHighlight extends LitElement {
           item,
           contentIdx: getNewContentIdx(contentIdx),
         };
+        this.resetContentScroll();
       }
     }
     return html` <button @click="${switchHighlight}">${icon}</button> `;
@@ -119,6 +123,10 @@ export class RenderRevHighlight extends LitElement {
     const getNewContentIdx = idx => idx + 1;
     const icon = Icons.skipForward;
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
+  }
+
+  resetContentScroll() {
+    this.shadowRoot.querySelector('.item-content').scrollTop = 0;
   }
 
   backToTopButton() {
