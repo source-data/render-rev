@@ -1,14 +1,10 @@
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, render } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { marked } from 'marked';
 
 import { Icons } from './icons.js';
 import './render-rev-modal.js';
 import { GlobalStyles } from './styles.js';
-
-function triggerPrinting() {
-  window.print();
-}
 
 export class RenderRevHighlight extends LitElement {
   static properties = {
@@ -72,24 +68,6 @@ export class RenderRevHighlight extends LitElement {
       }
       .sidebar button.scroll-to-top {
         bottom: 30%;
-      }
-
-      @media print {
-        .render-rev-highlight {
-          border: none;
-        }
-        .highlight-actions,
-        .sidebar {
-          display: none;
-        }
-        .item-content {
-          width: 100vw;
-          height: auto;
-          overflow: visible;
-        }
-        .item-content section {
-          display: block;
-        }
       }
     `,
   ];
@@ -161,13 +139,56 @@ export class RenderRevHighlight extends LitElement {
     `;
   }
 
+  triggerPrinting() {
+    render(
+      html`
+        <div class>
+          <style>
+            .render-rev-highlight-print-container {
+              display: none;
+            }
+            @media print {
+              .render-rev-highlight-print-container {
+                display: block;
+                background: white;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 2000;
+              }
+              article {
+                height: auto;
+                width: auto;
+                overflow: visible;
+              }
+              section {
+                break-after: page;
+              }
+              code {
+                white-space: break-spaces;
+              }
+            }
+          </style>
+
+          <div class="render-rev-highlight-print-container">
+            ${this.getHighlightContent()}
+          </div>
+        </div>
+      `,
+      document.body
+    );
+    window.print();
+  }
+
   render() {
     return html`
       <render-rev-modal>
         <div class="render-rev-highlight">
           <div class="highlight-actions">
             <div>
-              <button @click="${triggerPrinting}">${Icons.printer}</button>
+              <button @click="${this.triggerPrinting}">${Icons.printer}</button>
             </div>
           </div>
           <div class="highlight-content">

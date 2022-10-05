@@ -77,16 +77,7 @@ export class RenderRevModal extends LitElement {
         top: 1rem;
       }
       @media print {
-        .highlight-overlay {
-          position: absolute;
-        }
-        .highlight-dialog {
-          margin: 0;
-          max-width: unset;
-          height: auto;
-          width: auto;
-        }
-        .close-highlight {
+        .highlight-overlay.highlight-open {
           display: none;
         }
       }
