@@ -76,11 +76,6 @@ export class RenderRevModal extends LitElement {
         right: 1rem;
         top: 1rem;
       }
-      @media print {
-        .highlight-overlay.highlight-open {
-          display: none;
-        }
-      }
     `,
   ];
 

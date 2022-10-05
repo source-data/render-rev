@@ -1,4 +1,4 @@
-import { css, html, LitElement, render } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { marked } from 'marked';
 
@@ -17,9 +17,7 @@ export class RenderRevHighlight extends LitElement {
       item,
       contentIdx: 0,
     };
-    this._htmlContents = item.contents.map(content =>
-      unsafeHTML(marked.parse(content))
-    );
+    this._htmlContents = item.contents.map(content => marked.parse(content));
     this.shadowRoot.querySelector('render-rev-modal').show();
   }
 
@@ -82,7 +80,7 @@ export class RenderRevHighlight extends LitElement {
         ${this._htmlContents.map(
           (content, idx) => html`
             <section class="${idx === contentIdx ? 'visible' : ''}">
-              ${content}
+              ${unsafeHTML(content)}
             </section>
           `
         )}
@@ -140,46 +138,45 @@ export class RenderRevHighlight extends LitElement {
   }
 
   triggerPrinting() {
-    render(
-      html`
-        <div class>
-          <style>
-            .render-rev-highlight-print-container {
-              display: none;
-            }
-            @media print {
-              .render-rev-highlight-print-container {
-                display: block;
-                background: white;
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 100%;
-                z-index: 2000;
-              }
-              article {
-                height: auto;
-                width: auto;
-                overflow: visible;
-              }
-              section {
-                break-after: page;
-              }
-              code {
-                white-space: break-spaces;
-              }
-            }
-          </style>
+    const idPrintContainer = 'render-rev-highlight-print-container';
 
-          <div class="render-rev-highlight-print-container">
-            ${this.getHighlightContent()}
-          </div>
-        </div>
-      `,
-      document.body
-    );
+    const printContainer = document.createElement('div');
+    printContainer.id = idPrintContainer;
+    printContainer.innerHTML = `
+      <article>
+        ${this._htmlContents
+          .map(content => `<section>${content}</section>`)
+          .join('')}
+      </article>
+    `;
+    document.body.appendChild(printContainer);
+
+    const printStyle = document.createElement('style');
+    printStyle.innerHTML = `
+      #${idPrintContainer} {
+        display: none;
+      }
+      @media print {
+        body > * {
+          display: none !important;
+        }
+        #${idPrintContainer} {
+          display: block !important;
+        }
+        section {
+          break-after: page;
+        }
+        code {
+          white-space: break-spaces;
+        }
+      }
+    `;
+    document.head.appendChild(printStyle);
+
     window.print();
+
+    document.head.removeChild(printStyle);
+    document.body.removeChild(printContainer);
   }
 
   render() {
