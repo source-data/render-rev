@@ -7,13 +7,13 @@ import './render-rev-modal.js';
 
 export class RenderRevHighlight extends LitElement {
   static properties = {
-    _highlight: { state: true, type: Object }
+    _highlight: { state: true, type: Object },
   };
 
   show(item) {
     this._highlight = {
       item,
-      contentIdx: 0
+      contentIdx: 0,
     };
     this.shadowRoot.querySelector('render-rev-modal').show();
   }
@@ -82,11 +82,7 @@ export class RenderRevHighlight extends LitElement {
         };
       }
     }
-    return html`
-      <button @click="${switchHighlight}">
-        ${icon}
-      </button>
-    `;
+    return html` <button @click="${switchHighlight}">${icon}</button> `;
   }
 
   previousContentButton() {
@@ -97,7 +93,8 @@ export class RenderRevHighlight extends LitElement {
   }
 
   nextContentButton() {
-    const isEnabled = ({ item, contentIdx }) => (contentIdx + 1) < item.contents.length;
+    const isEnabled = ({ item, contentIdx }) =>
+      contentIdx + 1 < item.contents.length;
     const getNewContentIdx = idx => idx + 1;
     const icon = Icons.skipForward;
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
@@ -109,7 +106,7 @@ export class RenderRevHighlight extends LitElement {
       scrollingElement.scrollTo({
         top: 0,
         left: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
     return html`
@@ -122,18 +119,13 @@ export class RenderRevHighlight extends LitElement {
   render() {
     return html`
       <render-rev-modal>
-        <div class = "render-rev-highlight">
+        <div class="render-rev-highlight">
           <div class="highlight-actions"></div>
           <div class="highlight-content">
+            <div class="sidebar">${this.previousContentButton()}</div>
+            <div class="item-content">${this.getHighlightContent()}</div>
             <div class="sidebar">
-              ${this.previousContentButton()}
-            </div>
-            <div class="item-content">
-              ${this.getHighlightContent()}
-            </div>
-            <div class="sidebar">
-              ${this.backToTopButton()}
-              ${this.nextContentButton()}
+              ${this.backToTopButton()} ${this.nextContentButton()}
             </div>
           </div>
         </div>

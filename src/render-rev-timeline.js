@@ -184,7 +184,9 @@ export class RenderRevTimeline extends LitElement {
         return html`<a href="${item.uri}">${Icons.externalLink}</a>`;
       case 'reviews':
       case 'response':
-        return html`<button class="open-highlight" @click="${openHighlight}">${Icons.eye}</button>`;
+        return html`<button class="open-highlight" @click="${openHighlight}">
+          ${Icons.eye}
+        </button>`;
       default:
         return html`<div></div>`;
     }

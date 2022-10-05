@@ -3,14 +3,14 @@ import { Icons } from './icons.js';
 
 export class RenderRevModal extends LitElement {
   static properties = {
-    _isOpen: { state: true, type: Boolean }
+    _isOpen: { state: true, type: Boolean },
   };
 
   constructor() {
     super();
     this._isOpen = false;
   }
-  
+
   disconnectedCallback() {
     super.disconnectedCallback();
     this._closeModal();
@@ -18,19 +18,19 @@ export class RenderRevModal extends LitElement {
 
   show() {
     document.body.style.overflow = 'hidden';
-    document.addEventListener("keydown", this._onKeypress.bind(this));
+    document.addEventListener('keydown', this._onKeypress.bind(this));
     this._isOpen = true;
   }
 
-  close(){
+  close() {
     document.body.style.overflow = 'initial';
-    document.removeEventListener("keydown", this._onKeypress);
+    document.removeEventListener('keydown', this._onKeypress);
     this._isOpen = false;
   }
 
-  _onKeypress(event){
-    if(event.key === "Escape") {
-        this.close();
+  _onKeypress(event) {
+    if (event.key === 'Escape') {
+      this.close();
     }
   }
 
@@ -44,7 +44,7 @@ export class RenderRevModal extends LitElement {
       width: 100%;
       z-index: 1200;
       outline: 0;
-      transition: opacity .15s linear;
+      transition: opacity 0.15s linear;
       background-color: rgba(20, 20, 20, 0.2);
     }
     .highlight-overlay.highlight-open {
@@ -55,7 +55,7 @@ export class RenderRevModal extends LitElement {
       height: 80vh;
       max-width: 800px;
       overflow: hidden;
-      transition: transform .3s ease-out;
+      transition: transform 0.3s ease-out;
     }
     .close-highlight {
       all: unset;
@@ -70,18 +70,18 @@ export class RenderRevModal extends LitElement {
     }
   `;
 
-  render(){
+  render() {
     return html`
       <div class="highlight-overlay ${this._isOpen ? 'highlight-open' : ''}">
-        <button class="close-highlight" @click = "${this.close}">
-            ${Icons.close}
+        <button class="close-highlight" @click="${this.close}">
+          ${Icons.close}
         </button>
 
-        <div class = "highlight-dialog">
+        <div class="highlight-dialog">
           <slot></slot>
         </div>
       </div>
-    `
+    `;
   }
 }
 window.customElements.define('render-rev-modal', RenderRevModal);
