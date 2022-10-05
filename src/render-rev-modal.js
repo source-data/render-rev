@@ -4,11 +4,15 @@ import { Icons } from './icons.js';
 export class RenderRevModal extends LitElement {
   static properties = {
     _isOpen: { state: true, type: Boolean },
+    _scrollLockElements: { state: true, type: Boolean },
+    _initialStyles: { state: true, type: Object },
   };
 
   constructor() {
     super();
     this._isOpen = false;
+    this._scrollLockElements = ['html', 'body'];
+    this._initialStyles = {};
   }
 
   disconnectedCallback() {
@@ -17,13 +21,20 @@ export class RenderRevModal extends LitElement {
   }
 
   show() {
-    document.body.style.overflow = 'hidden';
+    for (const selector of this._scrollLockElements) {
+      const el = document.querySelector(selector);
+      this._initialStyles[selector] = el.style;
+      el.style.overflow = 'hidden';
+    }
     document.addEventListener('keydown', this._onKeypress.bind(this));
     this._isOpen = true;
   }
 
   close() {
-    document.body.style.overflow = 'initial';
+    for (const selector of this._scrollLockElements) {
+      const el = document.querySelector(selector);
+      el.style = this._initialStyles[selector];
+    }
     document.removeEventListener('keydown', this._onKeypress);
     this._isOpen = false;
   }
