@@ -88,7 +88,7 @@ export class RenderRevModal extends LitElement {
           ${Icons.close}
         </button>
 
-        <div class="highlight-dialog">
+        <div class="highlight-dialog" role="dialog" aria-modal="true">
           <slot></slot>
         </div>
       </div>
