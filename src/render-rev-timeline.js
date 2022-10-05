@@ -163,6 +163,12 @@ export class RenderRevTimeline extends LitElement {
       border-right-color: #ab0000;
     }
 
+    .open-external-link:hover,
+    .open-external-link:focus {
+      border-bottom: 1px solid;
+      margin-bottom: -1px;
+    }
+
     .open-highlight {
       all: unset;
       cursor: pointer;
@@ -181,7 +187,7 @@ export class RenderRevTimeline extends LitElement {
     switch (item.type) {
       case 'preprint-posted':
       case 'published':
-        return html`<a href="${item.uri}">${Icons.externalLink}</a>`;
+        return html`<a class="open-external-link" href="${item.uri}">${Icons.externalLink}</a>`;
       case 'reviews':
       case 'response':
         return html`<button class="open-highlight" @click="${openHighlight}">
