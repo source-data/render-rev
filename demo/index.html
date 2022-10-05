@@ -42,8 +42,11 @@
       '10.1101/2021.10.26.465695',
       '10.1101/2022.07.22.22277924',
     ];
-    const sources = [
-      'eeb-docmaps',
+    const optionsList = [
+      {
+        name: 'Default',
+        options: null
+      }
     ];
 
     render(
@@ -54,7 +57,7 @@
               <th class="doi">
                 DOI
               </th>
-              ${sources.map(source => html`<th class="source">${source}</th>`)}
+              ${optionsList.map(({ name }) => html`<th class="source">${name}</th>`)}
             </tr>
           </thead>
 
@@ -64,11 +67,11 @@
                 <th scope="row">
                   ${doi}
                 </th>
-                ${sources.map(source => html`
+                ${optionsList.map(({ options }) => html`
                   <td>
                     <render-rev
                       .doi=${doi}
-                      .options=${{ source }}
+                      .options=${options}
                     ></render-rev>
                   </td>`)}
               </tr>
