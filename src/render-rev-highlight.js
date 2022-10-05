@@ -4,10 +4,16 @@ import { marked } from 'marked';
 
 import { Icons } from './icons.js';
 import './render-rev-modal.js';
+import { GlobalStyles } from './styles.js';
+
+function triggerPrinting() {
+  window.print();
+}
 
 export class RenderRevHighlight extends LitElement {
   static properties = {
     _highlight: { state: true, type: Object },
+    _htmlContents: { state: true, type: Array },
   };
 
   show(item) {
@@ -15,56 +21,95 @@ export class RenderRevHighlight extends LitElement {
       item,
       contentIdx: 0,
     };
+    this._htmlContents = item.contents.map(content =>
+      unsafeHTML(marked.parse(content))
+    );
     this.shadowRoot.querySelector('render-rev-modal').show();
   }
 
-  static styles = css`
-    .render-rev-highlight {
-      background-color: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: 0.5em;
-      height: 100%;
-      outline: 0;
-      overflow: hidden;
-    }
-    .highlight-actions {
-      height: 5%;
-    }
-    .highlight-content {
-      display: grid;
-      grid-template-columns: 32px auto 32px;
-      height: 93%;
-    }
-    .item-content {
-      height: 100%;
-      overflow: scroll;
-    }
-    .sidebar {
-      padding: 8px;
-      position: relative;
-    }
-    .sidebar button {
-      all: unset;
-      position: absolute;
-      bottom: 0px;
-      cursor: pointer;
-    }
-    .sidebar button.scroll-to-top {
-      bottom: 30%;
-    }
-    .sidebar button:focus,
-    .sidebar button:hover {
-      filter: invert(50%);
-    }
-  `;
+  static styles = [
+    GlobalStyles,
+    css`
+      .render-rev-highlight {
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.5em;
+        height: 100%;
+        outline: 0;
+        overflow: hidden;
+      }
+      .highlight-actions {
+        height: 5%;
+      }
+      .highlight-actions div {
+        padding: 8px 32px;
+      }
+      .highlight-content {
+        display: grid;
+        grid-template-columns: 32px auto 32px;
+        height: 93%;
+      }
+      .item-content {
+        height: 100%;
+        overflow: scroll;
+      }
+      .item-content section {
+        display: none;
+      }
+      .item-content section.visible {
+        display: block;
+      }
+      .item-content section code {
+        white-space: break-spaces;
+      }
+      .sidebar {
+        padding: 8px;
+        position: relative;
+      }
+      .sidebar button {
+        position: absolute;
+        bottom: 0px;
+      }
+      .sidebar button.scroll-to-top {
+        bottom: 30%;
+      }
+
+      @media print {
+        .render-rev-highlight {
+          border: none;
+        }
+        .highlight-actions,
+        .sidebar {
+          display: none;
+        }
+        .item-content {
+          width: 100vw;
+          height: auto;
+          overflow: visible;
+        }
+        .item-content section {
+          display: block;
+        }
+      }
+    `,
+  ];
 
   getHighlightContent() {
     if (!this._highlight) {
       return null;
     }
-    const { item, contentIdx } = this._highlight;
-    const content = item.contents[contentIdx];
-    return unsafeHTML(marked.parse(content));
+    const { contentIdx } = this._highlight;
+    return html`
+      <article>
+        ${this._htmlContents.map(
+          (content, idx) => html`
+            <section class="${idx === contentIdx ? 'visible' : ''}">
+              ${content}
+            </section>
+          `
+        )}
+      </article>
+    `;
   }
 
   getControlButton(isEnabled, getNewContentIdx, icon) {
@@ -120,7 +165,11 @@ export class RenderRevHighlight extends LitElement {
     return html`
       <render-rev-modal>
         <div class="render-rev-highlight">
-          <div class="highlight-actions"></div>
+          <div class="highlight-actions">
+            <div>
+              <button @click="${triggerPrinting}">${Icons.printer}</button>
+            </div>
+          </div>
           <div class="highlight-content">
             <div class="sidebar">${this.previousContentButton()}</div>
             <div class="item-content">${this.getHighlightContent()}</div>

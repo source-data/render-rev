@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { Icons } from './icons.js';
+import { GlobalStyles } from './styles.js';
 
 export class RenderRevModal extends LitElement {
   static properties = {
@@ -45,41 +46,52 @@ export class RenderRevModal extends LitElement {
     }
   }
 
-  static styles = css`
-    .highlight-overlay {
-      display: none;
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 1200;
-      outline: 0;
-      transition: opacity 0.15s linear;
-      background-color: rgba(20, 20, 20, 0.2);
-    }
-    .highlight-overlay.highlight-open {
-      display: block;
-    }
-    .highlight-dialog {
-      margin: 2rem auto;
-      height: 80vh;
-      max-width: 800px;
-      overflow: hidden;
-      transition: transform 0.3s ease-out;
-    }
-    .close-highlight {
-      all: unset;
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-      cursor: pointer;
-    }
-    .close-highlight:hover,
-    .close-highlight:focus {
-      filter: invert(50%);
-    }
-  `;
+  static styles = [
+    GlobalStyles,
+    css`
+      .highlight-overlay {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 1200;
+        outline: 0;
+        transition: opacity 0.15s linear;
+        background-color: rgba(20, 20, 20, 0.2);
+      }
+      .highlight-overlay.highlight-open {
+        display: block;
+      }
+      .highlight-dialog {
+        margin: 2rem auto;
+        height: 80vh;
+        max-width: 800px;
+        overflow: hidden;
+        transition: transform 0.3s ease-out;
+      }
+      .close-highlight {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
+      @media print {
+        .highlight-overlay {
+          position: absolute;
+        }
+        .highlight-dialog {
+          margin: 0;
+          max-width: unset;
+          height: auto;
+          width: auto;
+        }
+        .close-highlight {
+          display: none;
+        }
+      }
+    `,
+  ];
 
   render() {
     return html`
