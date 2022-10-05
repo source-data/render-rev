@@ -3,7 +3,7 @@
   "description": "Webcomponent render-rev following open-wc recommendations",
   "license": "MIT",
   "author": "SourceData",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "main": "index.js",
   "module": "index.js",
   "scripts": {
