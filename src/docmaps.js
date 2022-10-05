@@ -11,7 +11,7 @@ function getOutput(action) {
   return action.outputs.length ? action.outputs[0] : action.outputs;
 }
 
-function parseStep(timeline, items, step) {
+function parseStep(items, step) {
   const { actions, assertions } = step;
 
   const isReviewStep =
@@ -27,28 +27,26 @@ function parseStep(timeline, items, step) {
 
   const dates = actions.map(action => getOutput(action).published).sort();
   const date = new Date(dates[0]);
-
   const contents = actions.map(() => 'Loading...');
-  actions.forEach((action, idx) => {
-    fetch(getOutput(action).uri)
-      .then(data => data.json())
-      .then(data => {
-        contents[idx] = data[0].docmap.content;
-      });
-  });
+  const item = { date, type: 'unknown', contents };
   if (isReviewStep) {
-    items.push({
-      date,
-      type: 'reviews',
-      contents,
-    });
+    item.type = 'reviews';
   } else if (isResponseStep) {
-    items.push({
-      date,
-      type: 'response',
-      contents,
-    });
+    item.type = 'response';
   }
+  items.push(item);
+
+  Promise.all(
+    actions.map(action =>
+      fetch(getOutput(action).uri)
+        .then(data => data.json())
+        .then(data => data[0].docmap)
+    )
+  ).then(contentDocmaps => {
+    item.contents = contentDocmaps
+      .sort((a, b) => a.runningNumber > b.runningNumber)
+      .map(docmap => docmap.content);
+  });
 }
 
 function getPublisher(input) {
@@ -83,7 +81,7 @@ function parseDocmap(timeline, docmap) {
 
   const items = [];
   for (const step of steps) {
-    parseStep(timeline, items, step);
+    parseStep(items, step);
   }
   timeline.groups.push({
     publisher: {

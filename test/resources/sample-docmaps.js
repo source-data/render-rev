@@ -581,16 +581,12 @@ export const reviewProcessByDoi = {
             {
               type: 'reviews',
               date: new Date('2020-07-23T19:26:49.980324+00:00'),
-              uris: [
-                'https://eeb.embo.org/api/v2/review_material/1837718',
-                'https://eeb.embo.org/api/v2/review_material/1837715',
-                'https://eeb.embo.org/api/v2/review_material/1837719',
-              ],
+              contents: ['Loading...', 'Loading...', 'Loading...'],
             },
             {
               date: new Date('2020-07-23T19:26:51.484215+00:00'),
               type: 'response',
-              uri: 'https://eeb.embo.org/api/v2/review_material/1837714',
+              contents: ['Loading...'],
             },
           ],
         },
@@ -623,16 +619,12 @@ export const reviewProcessByDoi = {
             {
               type: 'reviews',
               date: new Date('2022-02-09T18:21:14.076802+00:00'),
-              uris: [
-                'https://eeb.embo.org/api/v2/review_material/20539358',
-                'https://eeb.embo.org/api/v2/review_material/20539359',
-                'https://eeb.embo.org/api/v2/review_material/20539360',
-              ],
+              contents: ['Loading...', 'Loading...', 'Loading...'],
             },
             {
               date: new Date('2022-02-09T18:21:16.420772+00:00'),
               type: 'response',
-              uri: 'https://eeb.embo.org/api/v2/review_material/20539357',
+              contents: ['Loading...'],
             },
           ],
         },
@@ -645,7 +637,7 @@ export const reviewProcessByDoi = {
             {
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
               type: 'reviews',
-              uris: ['https://eeb.embo.org/api/v2/review_material/22676192'],
+              contents: ['Loading...'],
             },
           ],
         },
