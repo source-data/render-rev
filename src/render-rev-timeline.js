@@ -7,20 +7,16 @@ function toClassName(str) {
   return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
 }
 
-function pluralize(count, noun, suffix = 's') {
-  return `${count} ${noun}${count !== 1 ? suffix : ''}`;
-}
-
 function itemDescription(item) {
   switch (item.type) {
     case 'reviews':
-      return `Peer Review (${pluralize(item.contents.length, 'report')})`;
+      return `Peer Review (${item.contents.length})`;
     case 'response':
-      return 'Author reply';
+      return 'Reply';
     case 'preprint-posted':
-      return 'Preprint posted';
+      return 'Preprint';
     case 'published':
-      return 'Paper published';
+      return 'Published';
     default:
       return 'Unknown';
   }
