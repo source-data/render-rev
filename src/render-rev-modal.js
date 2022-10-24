@@ -41,7 +41,15 @@ export class RenderRevModal extends LitElement {
   }
 
   _onKeypress(event) {
+    // close the modal if the escape key is pressed
     if (event.key === 'Escape') {
+      this.close();
+    }
+  }
+
+  _onClick(event) {
+    // close the modal if the overlay is clicked
+    if (event.target.classList.contains('highlight-overlay')) {
       this.close();
     }
   }
@@ -80,17 +88,20 @@ export class RenderRevModal extends LitElement {
   ];
 
   render() {
-    return html`
-      <div class="highlight-overlay ${this._isOpen ? 'highlight-open' : ''}">
-        <button class="close-highlight" @click="${this.close}">
-          ${Icons.close}
-        </button>
+    /* corresponding keydown event listener is set up in show() function */
+    /* eslint-disable-next-line lit-a11y/click-events-have-key-events */
+    return html`<div
+      class="highlight-overlay ${this._isOpen ? 'highlight-open' : ''}"
+      @click="${this._onClick}"
+    >
+      <button class="close-highlight" @click="${this.close}">
+        ${Icons.close}
+      </button>
 
-        <div class="highlight-dialog" role="dialog" aria-modal="true">
-          <slot></slot>
-        </div>
+      <div class="highlight-dialog" role="dialog" aria-modal="true">
+        <slot></slot>
       </div>
-    `;
+    </div> `;
   }
 }
 window.customElements.define('render-rev-modal', RenderRevModal);
