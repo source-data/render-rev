@@ -78,11 +78,12 @@ export class RenderRevModal extends LitElement {
         max-width: 800px;
         overflow: hidden;
         transition: transform 0.3s ease-out;
+        position: relative;
       }
       .close-highlight {
         position: absolute;
-        right: 1rem;
-        top: 1rem;
+        right: 8px;
+        top: 8px;
       }
     `,
   ];
@@ -94,11 +95,11 @@ export class RenderRevModal extends LitElement {
       class="highlight-overlay ${this._isOpen ? 'highlight-open' : ''}"
       @click="${this._onClick}"
     >
-      <button class="close-highlight" @click="${this.close}">
-        ${Icons.close}
-      </button>
-
       <div class="highlight-dialog" role="dialog" aria-modal="true">
+        <button class="close-highlight" @click="${this.close}">
+          ${Icons.close}
+        </button>
+
         <slot></slot>
       </div>
     </div> `;
