@@ -39,7 +39,7 @@ export class RenderRevTimeline extends LitElement {
       .timeline-group {
         display: grid;
         gap: 8px;
-        grid-template-columns: 1fr 100px 1fr 20px;
+        grid-template-columns: minmax(150px, 1fr) 100px minmax(150px, 1fr);
       }
       .timeline-group > * {
         /* border: 3px solid transparent; */
@@ -49,7 +49,7 @@ export class RenderRevTimeline extends LitElement {
         line-height: 16px;
         height: 32px;
       }
-      .group-publisher {
+      .group-label {
         border-radius: 12px;
       }
       .item-date {
@@ -73,11 +73,11 @@ export class RenderRevTimeline extends LitElement {
         top: -30px;
       }
 
-      .item-description {
+      .item-label {
         margin-left: 12px;
         position: relative; /* enable absolute positioning for the :before element */
       }
-      .item-description::before {
+      .item-label::before {
         content: '';
         position: absolute;
         right: 100%;
@@ -87,12 +87,28 @@ export class RenderRevTimeline extends LitElement {
         height: 0px;
         width: 0px;
       }
+      .item-action {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 1fr 24px;
+      }
+      a.item-action {
+        text-decoration: none;
+      }
+      .item-action:focus,
+      .item-action:hover {
+        filter: hue-rotate(25deg) brightness(1.05);
+      }
+      a.item-action:focus,
+      a.item-action:hover {
+        text-decoration: underline;
+      }
 
-      .timeline-group:nth-child(4n + 1) .group-publisher {
+      .timeline-group:nth-child(4n + 1) .group-label {
         background: #add8e6;
         background-image: linear-gradient(to left, #add8e6 0%, #a6c1ee 100%);
       }
-      .timeline-group:nth-child(4n + 1) .item-description {
+      .timeline-group:nth-child(4n + 1) .item-label {
         background: #add8e6;
         background-image: linear-gradient(
           to right,
@@ -101,16 +117,16 @@ export class RenderRevTimeline extends LitElement {
           #a6c1ee 100%
         );
       }
-      .timeline-group:nth-child(4n + 1) .item-description:before {
+      .timeline-group:nth-child(4n + 1) .item-label:before {
         border-right-color: #add8e6;
       }
 
-      .timeline-group:nth-child(4n + 2) .group-publisher {
+      .timeline-group:nth-child(4n + 2) .group-label {
         background: #0000db;
         background-image: linear-gradient(to left, #0000db 0%, #00008b 100%);
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 2) .item-description {
+      .timeline-group:nth-child(4n + 2) .item-label {
         background: #0000db;
         background-image: linear-gradient(
           to right,
@@ -120,16 +136,16 @@ export class RenderRevTimeline extends LitElement {
         );
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 2) .item-description:before {
+      .timeline-group:nth-child(4n + 2) .item-label:before {
         border-right-color: #0000db;
       }
 
-      .timeline-group:nth-child(4n + 3) .group-publisher {
+      .timeline-group:nth-child(4n + 3) .group-label {
         background: #008400;
         background-image: linear-gradient(to left, #008400 0%, #006400 100%);
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 3) .item-description {
+      .timeline-group:nth-child(4n + 3) .item-label {
         background: #008400;
         background-image: linear-gradient(
           to right,
@@ -139,16 +155,16 @@ export class RenderRevTimeline extends LitElement {
         );
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 3) .item-description:before {
+      .timeline-group:nth-child(4n + 3) .item-label:before {
         border-right-color: #008400;
       }
 
-      .timeline-group:nth-child(4n + 4) .group-publisher {
+      .timeline-group:nth-child(4n + 4) .group-label {
         background: #ab0000;
         background-image: linear-gradient(to left, #ab0000 0%, #8b0000 100%);
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 4) .item-description {
+      .timeline-group:nth-child(4n + 4) .item-label {
         background: #ab0000;
         background-image: linear-gradient(
           to right,
@@ -158,55 +174,53 @@ export class RenderRevTimeline extends LitElement {
         );
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 4) .item-description:before {
+      .timeline-group:nth-child(4n + 4) .item-label:before {
         border-right-color: #ab0000;
-      }
-
-      .open-external-link:hover,
-      .open-external-link:focus {
-        border-bottom: 1px solid;
-        margin-bottom: -1px;
       }
     `,
   ];
 
-  itemAction(item) {
+  itemLabel(item) {
     const self = this;
     function openHighlight() {
       self.shadowRoot.querySelector('render-rev-highlight').show(item);
     }
+    const description = itemDescription(item);
     switch (item.type) {
       case 'preprint-posted':
       case 'published':
-        return html`<a class="open-external-link" href="${item.uri}"
-          >${Icons.externalLink}</a
-        >`;
+        return html` <a class="item-label item-action" href="${item.uri}">
+          <div class="item-description">${description}</div>
+          <span class="item-action-icon"> ${Icons.externalLink} </span>
+        </a>`;
       case 'reviews':
       case 'response':
-        return html`<button class="open-highlight" @click="${openHighlight}">
-          ${Icons.eye}
+        return html` <button
+          class="item-label item-action"
+          @click="${openHighlight}"
+        >
+          <div class="item-description">${description}</div>
+          <span class="item-action-icon"> ${Icons.eye} </span>
         </button>`;
       default:
-        return html`<div></div>`;
+        return html`<div class="item-label">${description}</div>`;
     }
   }
 
   renderGroupItem(group, item, showPublisher) {
     const publisher = showPublisher
-      ? html`<div class="group-publisher">${group.publisher.name}</div>`
+      ? html`<div class="group-label">${group.publisher.name}</div>`
       : html`<div></div>`;
     const formattedDate = item.date.toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
     });
-    const description = itemDescription(item);
-    const action = this.itemAction(item);
+    const label = this.itemLabel(item);
     return html`
       ${publisher}
       <div class="item-date">${formattedDate}</div>
-      <div class="item-description">${description}</div>
-      <div class="item-action">${action}</div>
+      ${label}
     `;
   }
 
