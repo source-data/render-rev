@@ -146,6 +146,12 @@ export class RenderRevHighlight extends LitElement {
   }
 
   triggerPrinting() {
+    /* To be able to fully control what gets printed we have to mess with the document.
+     * We append a new element with just the text we want to print to the document body
+     * and add styling that hides everything but this new element when printing.
+     * Then after printing (window.print() blocks while the print dialog is open) we
+     * remove these elements again.
+     */
     const idPrintContainer = 'render-rev-highlight-print-container';
 
     const printContainer = document.createElement('div');
