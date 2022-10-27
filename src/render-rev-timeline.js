@@ -64,6 +64,7 @@ export class RenderRevTimeline extends LitElement {
         position: absolute;
         bottom: 28px;
         right: 50%;
+        width: 20px;
 
         /* the dots are just dots, but oriented vertically */
         content: '........';
@@ -71,6 +72,9 @@ export class RenderRevTimeline extends LitElement {
         text-orientation: upright;
 
         /* these settings control how many dots are visible */
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        font-style: normal;
         font-weight: 800;
         letter-spacing: -10px;
         height: 24px;
