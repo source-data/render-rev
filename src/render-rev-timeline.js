@@ -39,10 +39,11 @@ export class RenderRevTimeline extends LitElement {
       .timeline-group {
         display: grid;
         gap: 8px;
-        grid-template-columns: minmax(150px, 1fr) 100px minmax(150px, 1fr);
+        grid-template-columns: minmax(150px, 1fr) 100px minmax(170px, 1fr);
       }
-      .timeline-group > * {
-        /* border: 3px solid transparent; */
+      .group-label,
+      .item-date,
+      .item-label {
         display: flex;
         align-items: center; /* Vertical center alignment */
         justify-content: center; /* Horizontal center alignment */
@@ -56,23 +57,31 @@ export class RenderRevTimeline extends LitElement {
         color: grey;
         position: relative;
       }
+
+      /* create the dotted lines between dates */
       .timeline-group:not(:first-child) .item-date::before {
-        border: none;
-        border-right: 4px dotted grey;
-        content: '';
-        width: 1px;
+        /* position it above the middle of the item date */
         position: absolute;
+        bottom: 28px;
         right: 50%;
-      }
-      .timeline-group:not(:first-child) .item-date:not(:nth-child(2))::before {
+
+        /* the dots are just dots, but oriented vertically */
+        content: '........';
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+
+        /* these settings control how many dots are visible */
+        font-weight: 800;
+        letter-spacing: -10px;
         height: 24px;
-        top: -18px;
+        overflow: hidden;
       }
+      /* the dotted lines between groups are longer than the ones between items */
       .timeline-group:not(:first-child) .item-date:nth-child(2)::before {
-        height: 34px;
-        top: -30px;
+        height: 42px;
       }
 
+      /* create the left-pointing arrow for the item label */
       .item-label {
         margin-left: 12px;
         position: relative; /* enable absolute positioning for the :before element */
@@ -87,10 +96,16 @@ export class RenderRevTimeline extends LitElement {
         height: 0px;
         width: 0px;
       }
-      .item-action {
-        display: grid;
-        gap: 8px;
-        grid-template-columns: 1fr 24px;
+
+      .item-action-icon {
+        /* position the action icon on the right side of the item label */
+        position: absolute;
+        right: 8px;
+
+        /* center the icon within this container */
+        display: flex;
+        align-items: center; /* Vertical center alignment */
+        justify-content: center; /* Horizontal center alignment */
       }
       a.item-action {
         text-decoration: none;
@@ -190,8 +205,8 @@ export class RenderRevTimeline extends LitElement {
       case 'preprint-posted':
       case 'published':
         return html` <a class="item-label item-action" href="${item.uri}">
-          <div class="item-description">${description}</div>
-          <span class="item-action-icon"> ${Icons.externalLink} </span>
+          ${description}
+          <span class="item-action-icon">${Icons.externalLink}</span>
         </a>`;
       case 'reviews':
       case 'response':
@@ -199,8 +214,8 @@ export class RenderRevTimeline extends LitElement {
           class="item-label item-action"
           @click="${openHighlight}"
         >
-          <div class="item-description">${description}</div>
-          <span class="item-action-icon"> ${Icons.eye} </span>
+          ${description}
+          <span class="item-action-icon">${Icons.eye}</span>
         </button>`;
       default:
         return html`<div class="item-label">${description}</div>`;
