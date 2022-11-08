@@ -9,19 +9,71 @@ import { GlobalStyles } from './styles.js';
 export class RenderRevHighlight extends LitElement {
   static properties = {
     _highlight: { state: true, type: Object },
-    _htmlContents: { state: true, type: Array },
+    _scrollspy: { state: true, type: Object },
   };
 
-  async show(item) {
+  async show(group, activeItem) {
+    const highlightContents = group.items.map(item => item.contents).flat();
+    const idxActiveContent = highlightContents.indexOf(activeItem.contents[0]);
+
     this._highlight = {
-      item,
-      contentIdx: 0,
+      contents: highlightContents.map(content => ({
+        htmlContent: marked.parse(content),
+      })),
+      idxActiveContent,
     };
-    this._htmlContents = item.contents.map(content => marked.parse(content));
     const modal = this.shadowRoot.querySelector('render-rev-modal');
     modal.show();
     await modal.updateComplete;
     this.resetContentScroll();
+
+    // We're keeping track of which content is the currently active one to e.g. update
+    // the prev / next buttons.
+    // The IntersectionObserver APi we're using for that offers a callback every time
+    // some elements' visibility crosses a threshold: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+    this._scrollspy = {
+      visibilities: [],
+    };
+    const self = this;
+    this._scrollspy.observer = new IntersectionObserver(
+      entries => {
+        // Which entry is most visible? We only need to consider height since the
+        // container only has vertical scrolling.
+        // entries doesn't always contain all observed targets so we have to keep track
+        // of the last visibility for every target.
+        entries.forEach(entry => {
+          const idxContent = Number(entry.target.dataset.idx);
+          self._scrollspy.visibilities[idxContent] =
+            entry.intersectionRect.height;
+        });
+
+        const { visibilities } = self._scrollspy;
+        const highestVisibility = Math.max(...visibilities);
+
+        const idxHighestVisibility = visibilities.indexOf(highestVisibility);
+        if (idxHighestVisibility === self._highlight.idxActiveContent) {
+          return;
+        }
+
+        self._highlight = {
+          contents: self._highlight.contents,
+          idxActiveContent: idxHighestVisibility,
+        };
+      },
+      {
+        // the scrolling container
+        root: this.shadowRoot.querySelector('.item-content'),
+        // When should the observer be called? For more details see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#thresholds
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+      }
+    );
+    this.shadowRoot
+      .querySelectorAll('.highlight')
+      .forEach(el => this._scrollspy.observer.observe(el));
+  }
+
+  close() {
+    this._scrollspy.observer.disconnect();
   }
 
   static styles = [
@@ -50,11 +102,12 @@ export class RenderRevHighlight extends LitElement {
         height: 100%;
         overflow: scroll;
       }
-      .item-content section {
-        display: none;
+      .item-content section:not(:first-child) {
+        border-top: 1px solid;
+        margin-top: 48px;
       }
-      .item-content section.visible {
-        display: block;
+      .item-content section h2 {
+        display: none;
       }
       .item-content section code {
         white-space: break-spaces;
@@ -77,13 +130,12 @@ export class RenderRevHighlight extends LitElement {
     if (!this._highlight) {
       return null;
     }
-    const { contentIdx } = this._highlight;
     return html`
       <article>
-        ${this._htmlContents.map(
-          (content, idx) => html`
-            <section class="${idx === contentIdx ? 'visible' : ''}">
-              ${unsafeHTML(content)}
+        ${this._highlight.contents.map(
+          ({ htmlContent }, idx) => html`
+            <section class="highlight" data-idx="${idx}">
+              ${unsafeHTML(htmlContent)}
             </section>
           `
         )}
@@ -99,27 +151,27 @@ export class RenderRevHighlight extends LitElement {
     const self = this;
     function switchHighlight() {
       if (isEnabled(this._highlight)) {
-        const { item, contentIdx } = self._highlight;
-        self._highlight = {
-          item,
-          contentIdx: getNewContentIdx(contentIdx),
-        };
-        this.resetContentScroll();
+        const newHighlight = { contents: self._highlight.contents };
+        newHighlight.idxActiveContent = getNewContentIdx(
+          self._highlight.idxActiveContent
+        );
+        self._highlight = newHighlight;
+        this.scrollToActiveContent();
       }
     }
     return html` <button @click="${switchHighlight}">${icon}</button> `;
   }
 
   previousContentButton() {
-    const isEnabled = ({ contentIdx }) => contentIdx > 0;
+    const isEnabled = ({ idxActiveContent }) => idxActiveContent > 0;
     const getNewContentIdx = idx => idx - 1;
     const icon = Icons.skipBackward;
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
   }
 
   nextContentButton() {
-    const isEnabled = ({ item, contentIdx }) =>
-      contentIdx + 1 < item.contents.length;
+    const isEnabled = ({ contents, idxActiveContent }) =>
+      idxActiveContent + 1 < contents.length;
     const getNewContentIdx = idx => idx + 1;
     const icon = Icons.skipForward;
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
@@ -127,6 +179,14 @@ export class RenderRevHighlight extends LitElement {
 
   resetContentScroll() {
     this.shadowRoot.querySelector('.item-content').scrollTop = 0;
+  }
+
+  scrollToActiveContent() {
+    this.shadowRoot
+      .querySelector(
+        `.highlight[data-idx="${this._highlight.idxActiveContent}"]`
+      )
+      .scrollIntoView();
   }
 
   backToTopButton() {
@@ -158,8 +218,8 @@ export class RenderRevHighlight extends LitElement {
     printContainer.id = idPrintContainer;
     printContainer.innerHTML = `
       <article>
-        ${this._htmlContents
-          .map(content => `<section>${content}</section>`)
+        ${this._highlight.contents
+          .map(({ htmlContent }) => `<section>${htmlContent}</section>`)
           .join('')}
       </article>
     `;
@@ -195,7 +255,7 @@ export class RenderRevHighlight extends LitElement {
 
   render() {
     return html`
-      <render-rev-modal>
+      <render-rev-modal @close="${this.close}">
         <div class="render-rev-highlight">
           <div class="highlight-actions">
             <div>

@@ -199,10 +199,10 @@ export class RenderRevTimeline extends LitElement {
     `,
   ];
 
-  itemLabel(item) {
+  itemLabel(group, item) {
     const self = this;
     function openHighlight() {
-      self.shadowRoot.querySelector('render-rev-highlight').show(item);
+      self.shadowRoot.querySelector('render-rev-highlight').show(group, item);
     }
     const description = itemDescription(item);
     switch (item.type) {
@@ -235,7 +235,7 @@ export class RenderRevTimeline extends LitElement {
       month: 'short',
       year: 'numeric',
     });
-    const label = this.itemLabel(item);
+    const label = this.itemLabel(group, item);
     return html`
       ${publisher}
       <div class="item-date">${formattedDate}</div>

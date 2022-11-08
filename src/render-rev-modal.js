@@ -38,6 +38,7 @@ export class RenderRevModal extends LitElement {
     }
     document.removeEventListener('keydown', this._onKeypress);
     this._isOpen = false;
+    this.dispatchEvent(new Event('close'));
   }
 
   _onKeypress(event) {
