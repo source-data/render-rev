@@ -267,7 +267,15 @@ export class RenderRevHighlight extends LitElement {
         this.scrollToContent(idxNewActiveContent, true);
       }
     }
-    return html` <button @click="${switchHighlight}">${icon}</button> `;
+
+    const title = `Go to ${
+      this._highlight.contents[
+        getNewContentIdx(this._highlight.idxActiveContent)
+      ].title
+    }`;
+    return html`
+      <button @click="${switchHighlight}" title="${title}">${icon}</button>
+    `;
   }
 
   previousContentButton() {
