@@ -6,6 +6,17 @@ import { Icons } from './icons.js';
 import './render-rev-modal.js';
 import { GlobalStyles } from './styles.js';
 
+function highlightItemTitle(item, contentIdx) {
+  switch (item.type) {
+    case 'reviews':
+      return `Review ${contentIdx + 1}`;
+    case 'response':
+      return `Response`;
+    default:
+      return 'Unknown';
+  }
+}
+
 export class RenderRevHighlight extends LitElement {
   static properties = {
     _highlight: { state: true, type: Object },
@@ -16,16 +27,20 @@ export class RenderRevHighlight extends LitElement {
     const highlightContents = group.items.map(item => item.contents).flat();
     const idxActiveContent = highlightContents.indexOf(activeItem.contents[0]);
 
+    const highlightTitles = group.items
+      .map(item => item.contents.map((_, idx) => highlightItemTitle(item, idx)))
+      .flat();
     this._highlight = {
-      contents: highlightContents.map(content => ({
+      contents: highlightContents.map((content, idx) => ({
         htmlContent: marked.parse(content),
+        title: highlightTitles[idx],
       })),
       idxActiveContent,
     };
     const modal = this.shadowRoot.querySelector('render-rev-modal');
     modal.show();
     await modal.updateComplete;
-    this.resetContentScroll();
+    this.scrollToActiveContent();
 
     // We're keeping track of which content is the currently active one to e.g. update
     // the prev / next buttons.
@@ -51,19 +66,12 @@ export class RenderRevHighlight extends LitElement {
         const highestVisibility = Math.max(...visibilities);
 
         const idxHighestVisibility = visibilities.indexOf(highestVisibility);
-        if (idxHighestVisibility === self._highlight.idxActiveContent) {
-          return;
-        }
-
-        self._highlight = {
-          contents: self._highlight.contents,
-          idxActiveContent: idxHighestVisibility,
-        };
+        self.setActiveContent(idxHighestVisibility);
       },
       {
         // the scrolling container
         root: this.shadowRoot.querySelector('.item-content'),
-        // When should the observer be called? For more details see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#thresholds
+        // Threshold controls when the observer is called. For more details see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#thresholds
         threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
       }
     );
@@ -74,6 +82,16 @@ export class RenderRevHighlight extends LitElement {
 
   close() {
     this._scrollspy.observer.disconnect();
+  }
+
+  setActiveContent(idxNewActiveContent) {
+    if (idxNewActiveContent === this._highlight.idxActiveContent) {
+      return;
+    }
+    this._highlight = {
+      contents: this._highlight.contents,
+      idxActiveContent: idxNewActiveContent,
+    };
   }
 
   static styles = [
@@ -87,12 +105,46 @@ export class RenderRevHighlight extends LitElement {
         outline: 0;
         overflow: hidden;
       }
-      .highlight-actions {
-        height: 5%;
+
+      /* The nav container uses flex layout for variable # of nav items.
+       * Left & right margin are set so the nav container is flush with the text
+       * content below it.
+       * Top & bottom margins are set by nav items below.
+       */
+      .highlight-nav {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 32px;
       }
-      .highlight-actions div {
-        padding: 8px 32px;
+      .highlight-nav > * {
+        flex: 1 auto;
+        margin: 8px 0;
       }
+      /* Nav item borders are used to indicate focus/hover. So the items stay in the
+       * same place when hovered/clicked the border is always present but transparent
+       * if not in one of these states.
+       */
+      .highlight-nav-item {
+        border-radius: 8px;
+        border: 1px solid transparent;
+        padding: 2px 12px;
+      }
+      .highlight-nav-item:active,
+      .highlight-nav-item:focus,
+      .highlight-nav-item:hover {
+        border-color: darkgrey;
+      }
+      .highlight-nav-item.active {
+        background-color: darkgray;
+        color: whitesmoke;
+      }
+      .highlight-nav-item.active:active,
+      .highlight-nav-item.active:focus,
+      .highlight-nav-item.active:hover {
+        border-color: #333;
+        filter: none;
+      }
+
       .highlight-content {
         display: grid;
         grid-template-columns: 32px auto 32px;
@@ -123,8 +175,42 @@ export class RenderRevHighlight extends LitElement {
       .sidebar button.scroll-to-top {
         bottom: 30%;
       }
+      .sidebar button.print {
+        bottom: unset;
+        top: 10%;
+      }
     `,
   ];
+
+  getHighlightNav() {
+    if (!this._highlight) {
+      return null;
+    }
+    const self = this;
+    function navigateToContent(event) {
+      const idxNewActiveContent = Number(event.target.dataset.idx);
+      self.setActiveContent(idxNewActiveContent);
+      self.scrollToActiveContent();
+    }
+    return html`
+      ${this._highlight.contents.map(
+        ({ title }, idx) => html`
+          <div>
+            <button
+              class="highlight-nav-item ${this._highlight.idxActiveContent ===
+              idx
+                ? 'active'
+                : ''}"
+              data-idx="${idx}"
+              @click="${navigateToContent}"
+            >
+              ${title}
+            </button>
+          </div>
+        `
+      )}
+    `;
+  }
 
   getHighlightContent() {
     if (!this._highlight) {
@@ -151,11 +237,10 @@ export class RenderRevHighlight extends LitElement {
     const self = this;
     function switchHighlight() {
       if (isEnabled(this._highlight)) {
-        const newHighlight = { contents: self._highlight.contents };
-        newHighlight.idxActiveContent = getNewContentIdx(
+        const idxNewActiveContent = getNewContentIdx(
           self._highlight.idxActiveContent
         );
-        self._highlight = newHighlight;
+        self.setActiveContent(idxNewActiveContent);
         this.scrollToActiveContent();
       }
     }
@@ -175,10 +260,6 @@ export class RenderRevHighlight extends LitElement {
     const getNewContentIdx = idx => idx + 1;
     const icon = Icons.skipForward;
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
-  }
-
-  resetContentScroll() {
-    this.shadowRoot.querySelector('.item-content').scrollTop = 0;
   }
 
   scrollToActiveContent() {
@@ -257,13 +338,14 @@ export class RenderRevHighlight extends LitElement {
     return html`
       <render-rev-modal @close="${this.close}">
         <div class="render-rev-highlight">
-          <div class="highlight-actions">
-            <div>
-              <button @click="${this.triggerPrinting}">${Icons.printer}</button>
-            </div>
-          </div>
+          <nav class="highlight-nav">${this.getHighlightNav()}</nav>
           <div class="highlight-content">
-            <div class="sidebar">${this.previousContentButton()}</div>
+            <div class="sidebar">
+              <button class="print" @click="${this.triggerPrinting}">
+                ${Icons.printer}
+              </button>
+              ${this.previousContentButton()}
+            </div>
             <div class="item-content">${this.getHighlightContent()}</div>
             <div class="sidebar">
               ${this.backToTopButton()} ${this.nextContentButton()}
