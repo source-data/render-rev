@@ -106,6 +106,9 @@ export class RenderRevTimeline extends LitElement {
         position: absolute;
         right: 8px;
 
+        width: 16px;
+        height: 16px;
+
         /* center the icon within this container */
         display: flex;
         align-items: center; /* Vertical center alignment */

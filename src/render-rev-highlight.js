@@ -114,11 +114,11 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav {
         display: flex;
         flex-wrap: wrap;
-        margin: 0 32px;
+        margin: 0 38px;
       }
       .highlight-nav > * {
         flex: 1 auto;
-        margin: 8px 0;
+        margin: 8px;
       }
       /* Nav item borders are used to indicate focus/hover. So the items stay in the
        * same place when hovered/clicked the border is always present but transparent
@@ -127,6 +127,9 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav-item {
         border-radius: 8px;
         border: 1px solid transparent;
+        font-size: 16px;
+        height: 24px;
+        line-height: 24px;
         padding: 2px 12px;
       }
       .highlight-nav-item:active,
@@ -145,11 +148,48 @@ export class RenderRevHighlight extends LitElement {
         filter: none;
       }
 
+      /* .highlight-content is the container for the text content plus the two sidebars.
+       * The sidebars are 32px + 2 * 8px = 48px wide (button width + 2 * padding), the
+       * text content takes the remaining width.
+       */
       .highlight-content {
         display: grid;
-        grid-template-columns: 32px auto 32px;
+        grid-template-columns: 48px auto 48px;
         height: 93%;
       }
+      .sidebar {
+        padding: 8px;
+        position: relative;
+      }
+      /* Sidebar buttons are 24 + 2 * 3px + 2 * 1px = 32px wide (width + 2 * padding + 2 * border).
+       * Just like with the nav items above, the border is always present but transparent
+       * if not in one of these states stay in the same place when hovered/clicked.
+       */
+      .sidebar button {
+        border: 1px solid transparent;
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
+        padding: 3px;
+
+        /* The buttons go at the bottom of the sidebar by default. */
+        position: absolute;
+        bottom: 0px;
+      }
+      .sidebar button:active,
+      .sidebar button:focus,
+      .sidebar button:hover {
+        border-color: lightgrey;
+      }
+      /* The print and scroll-to-top buttons go some way up the sidebar. */
+      .sidebar button.scroll-to-top {
+        bottom: 30%;
+      }
+      .sidebar button.print {
+        bottom: unset;
+        top: 10%;
+      }
+
       .item-content {
         height: 100%;
         overflow: scroll;
@@ -163,21 +203,6 @@ export class RenderRevHighlight extends LitElement {
       }
       .item-content section code {
         white-space: break-spaces;
-      }
-      .sidebar {
-        padding: 8px;
-        position: relative;
-      }
-      .sidebar button {
-        position: absolute;
-        bottom: 0px;
-      }
-      .sidebar button.scroll-to-top {
-        bottom: 30%;
-      }
-      .sidebar button.print {
-        bottom: unset;
-        top: 10%;
       }
     `,
   ];

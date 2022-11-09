@@ -4,23 +4,19 @@ export const Icons = {
   arrowUp: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-arrow-up-circle"
       viewBox="0 0 16 16"
     >
       <path
         fill-rule="evenodd"
-        d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"
+        d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
       />
     </svg>
   `,
   close: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-x"
       viewBox="0 0 16 16"
@@ -33,8 +29,6 @@ export const Icons = {
   externalLink: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-box-arrow-up-right"
       viewBox="0 0 16 16"
@@ -52,8 +46,6 @@ export const Icons = {
   eye: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-eye"
       viewBox="0 0 16 16"
@@ -69,8 +61,6 @@ export const Icons = {
   printer: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-printer"
       viewBox="0 0 16 16"
@@ -84,8 +74,6 @@ export const Icons = {
   skipBackward: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-skip-backward"
       viewBox="0 0 16 16"
@@ -98,8 +86,6 @@ export const Icons = {
   skipForward: html`
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       fill="currentColor"
       class="bi bi-skip-forward"
       viewBox="0 0 16 16"

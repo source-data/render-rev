@@ -82,9 +82,20 @@ export class RenderRevModal extends LitElement {
         position: relative;
       }
       .close-highlight {
+        border: 1px solid transparent;
+        border-radius: 50%;
+
         position: absolute;
         right: 8px;
         top: 8px;
+
+        height: 32px;
+        width: 32px;
+      }
+      .close-highlight:active,
+      .close-highlight:focus,
+      .close-highlight:hover {
+        border-color: lightgrey;
       }
     `,
   ];
