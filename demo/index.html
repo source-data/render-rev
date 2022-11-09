@@ -35,12 +35,24 @@
     import { html, render } from 'lit';
     import '../render-rev.js';
 
+    const display = {
+      publisherName: name => {
+        const nameMap = {
+          'embo press': 'EMBO Press',
+          'peer ref': 'Peer Ref',
+          'review commons': 'Review Commons',
+        };
+        return nameMap[name] || name;
+      },
+    }
+
     const eebDois = [
       '10.1101/2022.07.22.22277924',
       '10.1101/2021.10.26.465695',
     ];
-
-    const scietyDocmaps = await fetch('sciety-docmaps/10.21203/rs.3.rs-955726.json').then(data => data.json());
+    const scietyDois = [
+      '10.21203/rs.3.rs-955726',
+    ];
 
     render(
       html`
@@ -54,23 +66,33 @@
                   </th>
                 ` : null}
                 <td>
-                  <render-rev doi="${doi}"></render-rev>
+                  <render-rev doi="${doi}" .config=${{ display }}></render-rev>
                 </td>
               </tr>
             `)}
 
+            ${scietyDois.map((doi, idx) => html`
               <tr>
-                <th scope="row">
-                  Sciety-style docmaps
-                </th>
+                ${idx === 0 ? html`
+                  <th rowspan="${scietyDois.length}" scope="row">
+                    Sciety-style docmaps
+                  </th>
+                ` : null}
                 <td>
-                  <render-rev .docmaps=${scietyDocmaps}></render-rev>
+                  <render-rev class="sciety-docmaps" data-doi="${doi}"></render-rev>
                 </td>
               </tr>
+            `)}
           </tbody>
         </table>
       `,
       document.querySelector('#demo')
+    );
+
+    scietyDois.forEach(
+      doi => fetch(`sciety-docmaps/${doi}.json`)
+        .then(data => data.json())
+        .then(docmaps => document.querySelector(`render-rev.sciety-docmaps[data-doi="${doi}"]`).configure({ docmaps, display }))
     );
   </script>
 </body>

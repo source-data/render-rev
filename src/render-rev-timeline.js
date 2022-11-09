@@ -26,8 +26,22 @@ function itemDescription(item) {
 
 export class RenderRevTimeline extends LitElement {
   static properties = {
+    config: { type: Object },
     reviewProcess: { type: Object },
+    _defaultConfig: { state: true, type: Object },
   };
+
+  constructor() {
+    super();
+    this._defaultConfig = {
+      publisherName: name => name,
+    };
+  }
+
+  getOpt(key) {
+    const defaultValue = this._defaultConfig[key];
+    return this.config ? this.config[key] || defaultValue : defaultValue;
+  }
 
   static styles = [
     GlobalStyles,
@@ -234,7 +248,9 @@ export class RenderRevTimeline extends LitElement {
 
   renderGroupItem(group, item, showPublisher) {
     const publisher = showPublisher
-      ? html`<div class="group-label">${group.publisher.name}</div>`
+      ? html`<div class="group-label">
+          ${this.getOpt('publisherName')(group.publisher.name)}
+        </div>`
       : html`<div></div>`;
     const date = item.date
       ? html`

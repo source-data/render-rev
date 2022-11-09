@@ -1,15 +1,15 @@
 import { parse as parseDocmap } from './docmaps.js';
 
-export async function getReviewProcess(docmaps, doi, options) {
-  if (docmaps) {
-    return parseDocmap(docmaps);
+export async function getReviewProcess(config) {
+  if (config.docmaps) {
+    return parseDocmap(config.docmaps);
   }
 
-  if (doi) {
-    const { source } = options || { source: 'eeb-docmaps' };
+  if (config.doi) {
+    const source = config.source || 'eeb-docmaps';
     switch (source) {
       case 'eeb-docmaps':
-        return fetch(`https://eeb.embo.org/api/v2/docmap/${doi}`)
+        return fetch(`https://eeb.embo.org/api/v2/docmap/${config.doi}`)
           .then(data => data.json())
           .then(parseDocmap);
       default:

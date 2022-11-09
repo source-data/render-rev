@@ -5,28 +5,39 @@ import './render-rev-timeline.js';
 
 export class RenderRev extends LitElement {
   static properties = {
-    docmaps: { type: Array },
     doi: { type: String },
-    options: { type: Object },
-    _reviewProcess: { state: true },
+    config: { type: Object },
+    _config: { state: true, type: Object },
+    _reviewProcess: { state: true, type: Object },
   };
 
   constructor() {
     super();
+    this._config = {};
     this._reviewProcess = null;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    getReviewProcess(this.docmaps, this.doi, this.options).then(
-      reviewProcess => {
+    this._config = this.config || this._config;
+    if (this.doi) {
+      this._config.doi = this.doi;
+      getReviewProcess(this._config).then(reviewProcess => {
         this._reviewProcess = reviewProcess;
-      }
-    );
+      });
+    }
+  }
+
+  configure(config) {
+    this._config = config;
+    getReviewProcess(this._config).then(reviewProcess => {
+      this._reviewProcess = reviewProcess;
+    });
   }
 
   loading() {
-    return html`Loading review process for ${this.doi}...`;
+    return html`Loading review
+    process${this._config.doi ? ` ${this._config.doi}` : ''}...`;
   }
 
   render() {
@@ -37,6 +48,7 @@ export class RenderRev extends LitElement {
     return html`
       <render-rev-timeline
         .reviewProcess=${this._reviewProcess}
+        .config=${this._config.display}
       ></render-rev-timeline>
     `;
   }
