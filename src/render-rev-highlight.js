@@ -40,7 +40,7 @@ export class RenderRevHighlight extends LitElement {
     const modal = this.shadowRoot.querySelector('render-rev-modal');
     modal.show();
     await modal.updateComplete;
-    this.scrollToActiveContent();
+    this.scrollToContent(idxActiveContent, false);
 
     // We're keeping track of which content is the currently active one to e.g. update
     // the prev / next buttons.
@@ -214,8 +214,7 @@ export class RenderRevHighlight extends LitElement {
     const self = this;
     function navigateToContent(event) {
       const idxNewActiveContent = Number(event.target.dataset.idx);
-      self.setActiveContent(idxNewActiveContent);
-      self.scrollToActiveContent();
+      self.scrollToContent(idxNewActiveContent, true);
     }
     return html`
       ${this._highlight.contents.map(
@@ -265,8 +264,7 @@ export class RenderRevHighlight extends LitElement {
         const idxNewActiveContent = getNewContentIdx(
           self._highlight.idxActiveContent
         );
-        self.setActiveContent(idxNewActiveContent);
-        this.scrollToActiveContent();
+        this.scrollToContent(idxNewActiveContent, true);
       }
     }
     return html` <button @click="${switchHighlight}">${icon}</button> `;
@@ -287,12 +285,11 @@ export class RenderRevHighlight extends LitElement {
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
   }
 
-  scrollToActiveContent() {
+  scrollToContent(idx, smooth) {
+    const scrollOptions = smooth ? { behavior: 'smooth' } : {};
     this.shadowRoot
-      .querySelector(
-        `.highlight[data-idx="${this._highlight.idxActiveContent}"]`
-      )
-      .scrollIntoView();
+      .querySelector(`.highlight[data-idx="${idx}"]`)
+      .scrollIntoView(scrollOptions);
   }
 
   backToTopButton() {
