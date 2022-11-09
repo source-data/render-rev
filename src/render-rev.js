@@ -5,6 +5,7 @@ import './render-rev-timeline.js';
 
 export class RenderRev extends LitElement {
   static properties = {
+    docmaps: { type: Array },
     doi: { type: String },
     options: { type: Object },
     _reviewProcess: { state: true },
@@ -17,9 +18,11 @@ export class RenderRev extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    getReviewProcess(this.doi, this.options).then(reviewProcess => {
-      this._reviewProcess = reviewProcess;
-    });
+    getReviewProcess(this.docmaps, this.doi, this.options).then(
+      reviewProcess => {
+        this._reviewProcess = reviewProcess;
+      }
+    );
   }
 
   loading() {

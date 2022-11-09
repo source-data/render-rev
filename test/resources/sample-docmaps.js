@@ -552,6 +552,123 @@ export const docmapsByDoi = {
       },
     },
   ],
+  '10.21203/rs.3.rs-955726': [
+    {
+      '@context': 'https://w3id.org/docmaps/context.jsonld',
+      id: 'https://sciety.org/docmaps/v1/articles/10.21203/rs.3.rs-955726/v1/biophysics-colab.docmap.json',
+      type: 'docmap',
+      created: '2021-12-21T10:31:00.000Z',
+      updated: '2022-05-17T10:00:10.633Z',
+      publisher: {
+        id: 'https://biophysics.sciencecolab.org',
+        name: 'Biophysics Colab',
+        logo: 'https://sciety.org/static/groups/biophysics-colab--4bbf0c12-629b-4bb8-91d6-974f4df8efb2.png',
+        homepage: 'https://biophysics.sciencecolab.org',
+        account: {
+          id: 'https://sciety.org/groups/biophysics-colab',
+          service: 'https://sciety.org',
+        },
+      },
+      'first-step': '_:b0',
+      steps: {
+        '_:b0': {
+          assertions: [],
+          inputs: [
+            {
+              doi: '10.21203/rs.3.rs-955726/v1',
+              url: 'https://doi.org/10.21203/rs.3.rs-955726/v1',
+            },
+          ],
+          actions: [
+            {
+              participants: [
+                {
+                  actor: { name: 'anonymous', type: 'person' },
+                  role: 'peer-reviewer',
+                },
+              ],
+              outputs: [
+                {
+                  type: 'review-article',
+                  published: '2021-12-17T13:59:00.000Z',
+                  content: [
+                    {
+                      type: 'web-page',
+                      url: 'https://hypothes.is/a/iDLPjF9BEeyhWi89_nqmpA',
+                    },
+                    {
+                      type: 'web-page',
+                      url: 'https://sciety.org/articles/activity/10.21203/rs.3.rs-955726/v1#hypothesis:iDLPjF9BEeyhWi89_nqmpA',
+                    },
+                    {
+                      type: 'web-content',
+                      url: 'https://sciety.org/evaluations/hypothesis:iDLPjF9BEeyhWi89_nqmpA/content',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              participants: [
+                {
+                  actor: { name: 'anonymous', type: 'person' },
+                  role: 'peer-reviewer',
+                },
+              ],
+              outputs: [
+                {
+                  type: 'review-article',
+                  published: '2022-01-10T19:38:00.000Z',
+                  content: [
+                    {
+                      type: 'web-page',
+                      url: 'https://hypothes.is/a/8h6HBnJMEeyIDzNrTJzkOA',
+                    },
+                    {
+                      type: 'web-page',
+                      url: 'https://sciety.org/articles/activity/10.21203/rs.3.rs-955726/v1#hypothesis:8h6HBnJMEeyIDzNrTJzkOA',
+                    },
+                    {
+                      type: 'web-content',
+                      url: 'https://sciety.org/evaluations/hypothesis:8h6HBnJMEeyIDzNrTJzkOA/content',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              participants: [
+                {
+                  actor: { name: 'anonymous', type: 'person' },
+                  role: 'peer-reviewer',
+                },
+              ],
+              outputs: [
+                {
+                  type: 'review-article',
+                  published: '2022-05-17T09:52:32.797Z',
+                  content: [
+                    {
+                      type: 'web-page',
+                      url: 'https://hypothes.is/a/EqExCNXHEey74zd9EjVy7g',
+                    },
+                    {
+                      type: 'web-page',
+                      url: 'https://sciety.org/articles/activity/10.21203/rs.3.rs-955726/v1#hypothesis:EqExCNXHEey74zd9EjVy7g',
+                    },
+                    {
+                      type: 'web-content',
+                      url: 'https://sciety.org/evaluations/hypothesis:EqExCNXHEey74zd9EjVy7g/content',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+  ],
 };
 
 export const reviewProcessByDoi = {
@@ -561,7 +678,7 @@ export const reviewProcessByDoi = {
       groups: [
         {
           publisher: {
-            name: 'biorxiv',
+            name: 'bioRxiv',
             uri: 'https://www.biorxiv.org',
           },
           items: [
@@ -579,14 +696,14 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
-              type: 'reviews',
-              date: new Date('2020-07-23T19:26:49.980324+00:00'),
               contents: ['Loading...', 'Loading...', 'Loading...'],
+              date: new Date('2020-07-23T19:26:49.980324+00:00'),
+              type: 'reviews',
             },
             {
+              contents: ['Loading...'],
               date: new Date('2020-07-23T19:26:51.484215+00:00'),
               type: 'response',
-              contents: ['Loading...'],
             },
           ],
         },
@@ -599,7 +716,7 @@ export const reviewProcessByDoi = {
       groups: [
         {
           publisher: {
-            name: 'biorxiv',
+            name: 'bioRxiv',
             uri: 'https://www.biorxiv.org',
           },
           items: [
@@ -617,14 +734,14 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
-              type: 'reviews',
-              date: new Date('2022-02-09T18:21:14.076802+00:00'),
               contents: ['Loading...', 'Loading...', 'Loading...'],
+              date: new Date('2022-02-09T18:21:14.076802+00:00'),
+              type: 'reviews',
             },
             {
+              contents: ['Loading...'],
               date: new Date('2022-02-09T18:21:16.420772+00:00'),
               type: 'response',
-              contents: ['Loading...'],
             },
           ],
         },
@@ -635,9 +752,52 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
+              contents: ['Loading...'],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
               type: 'reviews',
-              contents: ['Loading...'],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  '10.21203/rs.3.rs-955726': {
+    summary: '',
+    timeline: {
+      groups: [
+        {
+          publisher: {
+            name: 'Research Square',
+            uri: 'https://www.biorxiv.org',
+          },
+          items: [
+            {
+              date: null,
+              type: 'preprint-posted',
+              uri: 'https://doi.org/10.21203/rs.3.rs-955726/v1',
+            },
+          ],
+        },
+        {
+          publisher: {
+            name: 'Biophysics Colab',
+            uri: 'https://biophysics.sciencecolab.org',
+          },
+          items: [
+            {
+              date: new Date('2021-12-17T13:59:00.000Z'),
+              type: 'review-article',
+              uri: 'https://hypothes.is/a/iDLPjF9BEeyhWi89_nqmpA',
+            },
+            {
+              date: new Date('2022-01-10T19:38:00.000Z'),
+              type: 'review-article',
+              uri: 'https://hypothes.is/a/8h6HBnJMEeyIDzNrTJzkOA',
+            },
+            {
+              date: new Date('2022-05-17T09:52:32.797Z'),
+              type: 'review-article',
+              uri: 'https://hypothes.is/a/EqExCNXHEey74zd9EjVy7g',
             },
           ],
         },

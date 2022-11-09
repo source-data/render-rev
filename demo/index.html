@@ -20,7 +20,7 @@
       border-bottom-width: 1px;
       border-right-width: 1px;
     }
-    th.doi {
+    th.label {
       width: 200px;
     }
     th.source {
@@ -35,47 +35,38 @@
     import { html, render } from 'lit';
     import '../render-rev.js';
 
-    const dois = [
-      '10.1101/2020.07.20.212886',
-      '10.1101/2022.03.25.485742',
-      '10.1101/2022.02.24.481763',
-      '10.1101/2021.10.26.465695',
+    const eebDois = [
       '10.1101/2022.07.22.22277924',
+      '10.1101/2021.10.26.465695',
     ];
-    const optionsList = [
-      {
-        name: 'Default',
-        options: null
-      }
-    ];
+
+    const scietyDocmaps = await fetch('sciety-docmaps/10.21203/rs.3.rs-955726.json').then(data => data.json());
 
     render(
       html`
         <table>
-          <thead>
-            <tr>
-              <th class="doi">
-                DOI
-              </th>
-              ${optionsList.map(({ name }) => html`<th class="source">${name}</th>`)}
-            </tr>
-          </thead>
-
           <tbody>
-            ${dois.map(doi => html`
+            ${eebDois.map((doi, idx) => html`
               <tr>
-                <th scope="row">
-                  ${doi}
-                </th>
-                ${optionsList.map(({ options }) => html`
-                  <td>
-                    <render-rev
-                      .doi=${doi}
-                      .options=${options}
-                    ></render-rev>
-                  </td>`)}
+                ${idx === 0 ? html`
+                  <th rowspan="${eebDois.length}" scope="row">
+                    Fetched from EEB
+                  </th>
+                ` : null}
+                <td>
+                  <render-rev doi="${doi}"></render-rev>
+                </td>
               </tr>
             `)}
+
+              <tr>
+                <th scope="row">
+                  Sciety-style docmaps
+                </th>
+                <td>
+                  <render-rev .docmaps=${scietyDocmaps}></render-rev>
+                </td>
+              </tr>
           </tbody>
         </table>
       `,

@@ -13,6 +13,8 @@ function itemDescription(item) {
       return `Peer Review (${item.contents.length})`;
     case 'response':
       return 'Reply';
+    case 'review-article':
+      return 'Review';
     case 'preprint-posted':
       return 'Preprint';
     case 'published':
@@ -211,6 +213,7 @@ export class RenderRevTimeline extends LitElement {
     switch (item.type) {
       case 'preprint-posted':
       case 'published':
+      case 'review-article':
         return html` <a class="item-label item-action" href="${item.uri}">
           ${description}
           <span class="item-action-icon">${Icons.externalLink}</span>
@@ -233,17 +236,19 @@ export class RenderRevTimeline extends LitElement {
     const publisher = showPublisher
       ? html`<div class="group-label">${group.publisher.name}</div>`
       : html`<div></div>`;
-    const formattedDate = item.date.toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
+    const date = item.date
+      ? html`
+          <div class="item-date">
+            ${item.date.toLocaleDateString('en-US', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })}
+          </div>
+        `
+      : html`<div></div>`;
     const label = this.itemLabel(group, item);
-    return html`
-      ${publisher}
-      <div class="item-date">${formattedDate}</div>
-      ${label}
-    `;
+    return html` ${publisher} ${date} ${label} `;
   }
 
   renderGroup(group) {

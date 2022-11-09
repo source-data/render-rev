@@ -7,56 +7,121 @@ function* stepsGenerator(idFirstStep, stepsById) {
   }
 }
 
-function getOutput(action) {
-  return action.outputs.length ? action.outputs[0] : action.outputs;
+function getDate(dateString) {
+  const dateStamp = Date.parse(dateString);
+  if (Number.isNaN(dateStamp)) {
+    return null;
+  }
+  return new Date(dateStamp);
 }
 
-function parseStep(items, step) {
-  const { actions, assertions } = step;
-
-  const isReviewStep =
-    assertions && assertions.length > 0 && assertions[0].status === 'reviewed';
-  const isResponseStep =
-    actions &&
-    actions.length > 0 &&
-    'type' in actions[0].outputs &&
-    actions[0].outputs.type === 'author-response';
-  if (!isReviewStep && !isResponseStep) {
-    return;
-  }
-
-  const dates = actions.map(action => getOutput(action).published).sort();
-  const date = new Date(dates[0]);
-  const contents = actions.map(() => 'Loading...');
-  const item = { date, type: 'unknown', contents };
-  if (isReviewStep) {
-    item.type = 'reviews';
-  } else if (isResponseStep) {
-    item.type = 'response';
-  }
-  items.push(item);
-
+function fetchContents(item, uris) {
   Promise.all(
-    actions.map(action =>
-      fetch(getOutput(action).uri)
+    uris.map(uri =>
+      fetch(uri)
         .then(data => data.json())
         .then(data => data[0].docmap)
     )
   ).then(contentDocmaps => {
+    /* eslint no-param-reassign: ["error", { "props": false }] */
     item.contents = contentDocmaps
       .sort((a, b) => a.runningNumber > b.runningNumber)
       .map(docmap => docmap.content);
   });
 }
 
+function parseStep(items, step) {
+  const { actions } = step;
+
+  const isResponseStep =
+    actions &&
+    actions.length === 1 &&
+    'type' in actions[0].outputs &&
+    actions[0].outputs.type === 'author-response';
+  if (isResponseStep) {
+    const output = actions[0].outputs;
+    const item = {
+      contents: ['Loading...'],
+      date: getDate(output.published),
+      type: 'response',
+    };
+    items.push(item);
+    fetchContents(item, [output.uri]);
+  }
+
+  const isReviewStep =
+    actions &&
+    actions.length >= 1 &&
+    actions.every(
+      action =>
+        action.outputs &&
+        action.outputs.length === 1 &&
+        'type' in action.outputs[0] &&
+        action.outputs[0].type === 'review'
+    );
+  if (isReviewStep) {
+    const contents = [];
+    const dates = [];
+    const uris = [];
+    actions.forEach((action, idx) => {
+      contents[idx] = 'Loading...';
+      const output = action.outputs[0];
+      dates[idx] = getDate(output.published);
+      uris[idx] = output.uri;
+    });
+    dates.sort();
+    const item = {
+      contents,
+      date: dates[0],
+      type: 'reviews',
+    };
+    items.push(item);
+    fetchContents(item, uris);
+  }
+
+  const isReviewArticleStep =
+    actions &&
+    actions.length >= 1 &&
+    actions.every(
+      action =>
+        action.outputs &&
+        action.outputs.length === 1 &&
+        'type' in action.outputs[0] &&
+        action.outputs[0].type === 'review-article'
+    );
+  if (isReviewArticleStep) {
+    items.push(
+      ...actions.map(action => {
+        const output = action.outputs[0];
+        const content = output.content[0];
+        return {
+          date: getDate(output.published),
+          type: 'review-article',
+          uri: content.url,
+        };
+      })
+    );
+  }
+}
+
+const publishersByDoiPrefix = {
+  10.1101: {
+    name: 'bioRxiv',
+    uri: 'https://www.biorxiv.org',
+  },
+  10.21203: {
+    name: 'Research Square',
+    uri: 'https://www.biorxiv.org',
+  },
+};
 function getPublisher(input) {
-  const isBiorxiv = input.doi.startsWith('10.1101');
-  const name = isBiorxiv ? 'biorxiv' : 'unknown';
-  const uri = isBiorxiv ? 'https://www.biorxiv.org' : null;
-  return {
-    name,
-    uri,
-  };
+  const doiPrefix = input.doi.split('/')[0];
+  return (
+    publishersByDoiPrefix[doiPrefix] || {
+      name: null,
+      uri: null,
+    }
+  );
 }
 
 function getFirstGroup(inputs) {
@@ -65,9 +130,9 @@ function getFirstGroup(inputs) {
     publisher: getPublisher(input),
     items: [
       {
-        date: new Date(input.published),
+        date: getDate(input.published),
         type: 'preprint-posted',
-        uri: input.uri,
+        uri: input.uri || input.url,
       },
     ],
   };
@@ -86,7 +151,10 @@ function parseDocmap(timeline, docmap) {
   timeline.groups.push({
     publisher: {
       name: docmap.publisher.name,
-      uri: docmap.publisher.url,
+      uri:
+        docmap.publisher.uri ||
+        docmap.publisher.url ||
+        docmap.publisher.homepage,
     },
     items,
   });
