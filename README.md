@@ -92,6 +92,10 @@ external source, use the `.configure()` method of the element:
       }
     }
     ```
+  * `renderMarkdown`: A callable that takes a Markdown-formatted string and return an HTML representation of it. Is used to render the full text of reviews and replies. Uses the very small [drawdown library](https://github.com/adamvleggett/drawdown/) by default. Other possibilites are e.g. [marked](https://github.com/markedjs/marked) or [markdown-it](https://github.com/markdown-it/markdown-it):
+    ```Javascript
+    { renderMarkdown: marked.parse }
+    ```
 
 ## Development
 

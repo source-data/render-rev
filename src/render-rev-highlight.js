@@ -1,6 +1,5 @@
 import { css, html, LitElement } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
 import { Icons } from './icons.js';
@@ -20,6 +19,7 @@ function highlightItemTitle(item, contentIdx) {
 
 export class RenderRevHighlight extends LitElement {
   static properties = {
+    config: { type: Object },
     _highlight: { state: true, type: Object },
     _scrollspy: { state: true, type: Object },
   };
@@ -33,7 +33,7 @@ export class RenderRevHighlight extends LitElement {
       .flat();
     this._highlight = {
       contents: highlightContents.map((content, idx) => ({
-        htmlContent: DOMPurify.sanitize(marked.parse(content)),
+        htmlContent: DOMPurify.sanitize(this.config.renderMarkdown(content)),
         title: highlightTitles[idx],
       })),
       idxActiveContent,

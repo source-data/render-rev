@@ -1,4 +1,5 @@
 import { html, LitElement } from 'lit';
+import { markdown } from '../lib/drawdown.js';
 
 import { getReviewProcess } from './store.js';
 import './render-rev-timeline.js';
@@ -63,10 +64,13 @@ export class RenderRev extends LitElement {
       docmaps: null,
       display: {
         publisherName: name => name,
+        renderMarkdown: markdown,
       },
     };
     // use the default config as the basis and let the external options override any settings it provides.
     const config = { ...defaultConfig, ...externalOptions };
+    config.display = { ...defaultConfig.display, ...externalOptions.display };
+
     this._config = config;
     getReviewProcess(this._config)
       .then(reviewProcess => {

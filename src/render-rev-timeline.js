@@ -274,7 +274,7 @@ export class RenderRevTimeline extends LitElement {
           self.renderGroup(group)
         )}
       </div>
-      <render-rev-highlight></render-rev-highlight>
+      <render-rev-highlight .config=${this.config}></render-rev-highlight>
     `;
   }
 }
