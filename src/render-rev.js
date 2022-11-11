@@ -3,11 +3,27 @@ import { html, LitElement } from 'lit';
 import { getReviewProcess } from './store.js';
 import './render-rev-timeline.js';
 
+/**
+ * Renders the peer review process of a preprint.
+ */
 export class RenderRev extends LitElement {
   static properties = {
+    /**
+     * The DOI of the preprint whose review process should be rendered.
+     */
     doi: { type: String },
-    config: { type: Object },
+    /**
+     * Additional configuration, optional.
+     */
+    options: { type: Object },
+
+    /**
+     * The internal object that holds all configuration options.
+     */
     _config: { state: true, type: Object },
+    /**
+     * The internal representation of the review process that is being rendered.
+     */
     _reviewProcess: { state: true, type: Object },
   };
 
@@ -19,16 +35,27 @@ export class RenderRev extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._config = this.config || this._config;
-    if (this.doi) {
-      this._config.doi = this.doi;
-      getReviewProcess(this._config).then(reviewProcess => {
-        this._reviewProcess = reviewProcess;
-      });
-    }
+    // use either the passed-in options or the default ones if nothing was passed in.
+    const externalOptions = this.options || {};
+    // if the DOI parameter was set use that one, otherwise use the one from the passed-in options.
+    externalOptions.doi = this.doi || externalOptions.doi;
+    this._updateReviewProcess(externalOptions);
   }
 
-  configure(config) {
+  configure(externalOptions) {
+    this._updateReviewProcess(externalOptions);
+  }
+
+  _updateReviewProcess(externalOptions) {
+    const defaultConfig = {
+      doi: null,
+      docmaps: null,
+      display: {
+        publisherName: name => name,
+      },
+    };
+    // use the default config as the basis and let the external options override any settings it provides.
+    const config = { ...defaultConfig, ...externalOptions };
     this._config = config;
     getReviewProcess(this._config).then(reviewProcess => {
       this._reviewProcess = reviewProcess;

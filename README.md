@@ -58,7 +58,7 @@ Use this element and pass it the DOI of the preprint you want to display:
 ## Customization
 
 To customize the look of the rendered review process, or to pass in data from an
-external source, use the `.configure()` of the element:
+external source, use the `.configure()` method of the element:
 
 ```html
 <render-rev id="render-rev-0"></render-rev>
@@ -67,9 +67,9 @@ external source, use the `.configure()` of the element:
   import 'render-rev/render-rev.js';
   const renderRevElement = document.getElementById('render-rev-0');
   renderRevElement.configure({
-    docmaps: [...],
+    doi: '10.1101/2020.07.20.212886',
     display: {
-      publisherName: ...
+      publisherName: name => name.toUpperCase(),
     }
   });
 </script>
