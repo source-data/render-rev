@@ -63,11 +63,16 @@ export class RenderRevTimeline extends LitElement {
 
       /* create the dotted lines between dates */
       .timeline-group:not(:first-child) .item-date::before {
+        width: 20px;
         /* position it above the middle of the item date */
         position: absolute;
         bottom: 28px;
-        right: 50%;
-        width: 20px;
+        /*
+         * The date element is 100px wide, the line itself 20px. In order for the line
+         * to be centered its right edge therefore has to be at:
+         * (100px / 2) - (20px / 2) = 40px
+         */
+        right: 40px;
 
         /* the dots are just dots, but oriented vertically */
         content: '........';
