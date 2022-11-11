@@ -115,6 +115,7 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav {
         display: flex;
         flex-wrap: wrap;
+        height: 46px;
         margin: 0 38px;
       }
       .highlight-nav > * {
@@ -156,10 +157,19 @@ export class RenderRevHighlight extends LitElement {
       .highlight-content {
         display: grid;
         grid-template-columns: 48px auto 48px;
-        height: 93%;
+
+        /* The navbar at the top is exactly 46px high. Setting margin- & padding-top to
+         * -46px & 46px respectively positions the content just below that, while height:
+         * 100% combined with box-sizing: border-box makes the content take up the
+         * remaining vertical space.
+         * Setting height to some value is also required to enable overflow scrolling.
+         */
+        height: 100%;
+        box-sizing: border-box;
+        margin-top: -46px;
+        padding: 46px 8px 8px 8px; /* 8px padding on left, right, and bottom. */
       }
       .sidebar {
-        padding: 8px;
         position: relative;
       }
       /* Sidebar buttons are 24 + 2 * 3px + 2 * 1px = 32px wide (width + 2 * padding + 2 * border).
