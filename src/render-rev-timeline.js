@@ -10,7 +10,7 @@ function toClassName(str) {
 function itemDescription(item) {
   switch (item.type) {
     case 'reviews':
-      return `Peer Review (${item.contents.length})`;
+      return `Peer Review`;
     case 'response':
       return 'Reply';
     case 'review-article':
