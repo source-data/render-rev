@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 import { Icons } from './icons.js';
 import './render-rev-modal.js';
@@ -32,7 +33,7 @@ export class RenderRevHighlight extends LitElement {
       .flat();
     this._highlight = {
       contents: highlightContents.map((content, idx) => ({
-        htmlContent: marked.parse(content),
+        htmlContent: DOMPurify.sanitize(marked.parse(content)),
         title: highlightTitles[idx],
       })),
       idxActiveContent,
