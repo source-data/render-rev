@@ -25,12 +25,23 @@ export class RenderRev extends LitElement {
      * The internal representation of the review process that is being rendered.
      */
     _reviewProcess: { state: true, type: Object },
+    /**
+     * The internal status of fetching and parsing the review process data.
+     */
+    _status: { state: true, type: Number },
   };
+
+  Ready = 0;
+
+  Loading = 1;
+
+  Failed = 2;
 
   constructor() {
     super();
     this._config = {};
     this._reviewProcess = null;
+    this._status = this.Loading;
   }
 
   connectedCallback() {
@@ -57,27 +68,40 @@ export class RenderRev extends LitElement {
     // use the default config as the basis and let the external options override any settings it provides.
     const config = { ...defaultConfig, ...externalOptions };
     this._config = config;
-    getReviewProcess(this._config).then(reviewProcess => {
-      this._reviewProcess = reviewProcess;
-    });
+    getReviewProcess(this._config)
+      .then(reviewProcess => {
+        this._reviewProcess = reviewProcess;
+        this._status = this.Ready;
+      })
+      .catch(() => {
+        this._status = this.Failed;
+      });
   }
 
   loading() {
     return html`Loading review
-    process${this._config.doi ? ` ${this._config.doi}` : ''}...`;
+    process${this._config.doi ? ` for ${this._config.doi}` : ''}...`;
+  }
+
+  error() {
+    return html`Failed to load review
+    process${this._config.doi ? ` for ${this._config.doi}` : ''}`;
   }
 
   render() {
-    if (!this._reviewProcess) {
-      return this.loading();
+    switch (this._status) {
+      case this.Ready:
+        return html`
+          <render-rev-timeline
+            .reviewProcess=${this._reviewProcess}
+            .config=${this._config.display}
+          ></render-rev-timeline>
+        `;
+      case this.Loading:
+        return this.loading();
+      default:
+        return this.error();
     }
-
-    return html`
-      <render-rev-timeline
-        .reviewProcess=${this._reviewProcess}
-        .config=${this._config.display}
-      ></render-rev-timeline>
-    `;
   }
 }
 window.customElements.define('render-rev', RenderRev);
