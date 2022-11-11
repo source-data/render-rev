@@ -114,13 +114,15 @@ export class RenderRevTimeline extends LitElement {
         position: absolute;
         right: 8px;
 
-        width: 16px;
-        height: 16px;
-
         /* center the icon within this container */
         display: flex;
         align-items: center; /* Vertical center alignment */
         justify-content: center; /* Horizontal center alignment */
+      }
+      .item-action-icon,
+      .item-action-icon svg {
+        width: 16px;
+        height: 16px;
       }
       a.item-action {
         text-decoration: none;
