@@ -167,10 +167,11 @@ export class RenderRevHighlight extends LitElement {
         height: 100%;
         box-sizing: border-box;
         margin-top: -46px;
-        padding: 46px 8px 8px 8px; /* 8px padding on left, right, and bottom. */
+        padding-top: 46px;
       }
       .sidebar {
-        position: relative;
+        padding: 8px;
+        position: relative; /* enable positioning of buttons inside the sidebar */
       }
       /* Sidebar buttons are 24 + 2 * 3px + 2 * 1px = 32px wide (width + 2 * padding + 2 * border).
        * Just like with the nav items above, the border is always present but transparent
@@ -185,7 +186,7 @@ export class RenderRevHighlight extends LitElement {
 
         /* The buttons go at the bottom of the sidebar by default. */
         position: absolute;
-        bottom: 0px;
+        bottom: 8px;
       }
       .sidebar button:active,
       .sidebar button:focus,
