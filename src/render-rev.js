@@ -65,6 +65,12 @@ export class RenderRev extends LitElement {
       display: {
         publisherName: name => name,
         renderMarkdown: markdown,
+        formatDate: date =>
+          date.toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          }),
       },
     };
     // use the default config as the basis and let the external options override any settings it provides.

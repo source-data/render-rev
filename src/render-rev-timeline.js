@@ -248,13 +248,7 @@ export class RenderRevTimeline extends LitElement {
       : html`<div></div>`;
     const date = item.date
       ? html`
-          <div class="item-date">
-            ${item.date.toLocaleDateString('en-US', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            })}
-          </div>
+          <div class="item-date">${this.config.formatDate(item.date)}</div>
         `
       : html`<div></div>`;
     const label = this.itemLabel(group, item);
