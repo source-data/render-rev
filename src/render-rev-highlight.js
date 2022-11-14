@@ -25,17 +25,24 @@ export class RenderRevHighlight extends LitElement {
   };
 
   async show(group, activeItem) {
-    const highlightContents = group.items.map(item => item.contents).flat();
-    const idxActiveContent = highlightContents.indexOf(activeItem.contents[0]);
+    const highlightContents = group.items
+      .map(item => item.contents.map(content => content.src))
+      .flat();
+    const idxActiveContent = highlightContents.indexOf(
+      activeItem.contents[0].src
+    );
 
-    const highlightTitles = group.items
-      .map(item => item.contents.map((_, idx) => highlightItemTitle(item, idx)))
+    const contents = group.items
+      .map(item =>
+        item.contents.map(({ date, src }, contentIdx) => ({
+          date,
+          html: DOMPurify.sanitize(this.config.renderMarkdown(src)),
+          title: highlightItemTitle(item, contentIdx),
+        }))
+      )
       .flat();
     this._highlight = {
-      contents: highlightContents.map((content, idx) => ({
-        htmlContent: DOMPurify.sanitize(this.config.renderMarkdown(content)),
-        title: highlightTitles[idx],
-      })),
+      contents,
       idxActiveContent,
     };
     const modal = this.shadowRoot.querySelector('render-rev-modal');
@@ -206,14 +213,14 @@ export class RenderRevHighlight extends LitElement {
         height: 100%;
         overflow: scroll;
       }
-      .item-content section:not(:first-child) {
+      .item-content article:not(:first-child) {
         border-top: 1px solid;
         margin-top: 48px;
       }
-      .item-content section h2 {
-        display: none;
+      .item-content article section {
+        margin-top: 16px;
       }
-      .item-content section code {
+      .item-content article code {
         white-space: break-spaces;
       }
     `,
@@ -253,15 +260,20 @@ export class RenderRevHighlight extends LitElement {
       return null;
     }
     return html`
-      <article>
+      <main>
         ${this._highlight.contents.map(
-          ({ htmlContent }, idx) => html`
-            <section class="highlight" data-idx="${idx}">
+          ({ html: htmlContent, date }, idx) => html`
+            <article class="highlight" data-idx="${idx}">
+              <section>
+                Published on
+                <time datetime="${date}">${this.config.formatDate(date)}</time>
+              </section>
+
               ${unsafeHTML(htmlContent)}
-            </section>
+            </article>
           `
         )}
-      </article>
+      </main>
     `;
   }
 
@@ -340,11 +352,11 @@ export class RenderRevHighlight extends LitElement {
     const printContainer = document.createElement('div');
     printContainer.id = idPrintContainer;
     printContainer.innerHTML = `
-      <article>
+      <main>
         ${this._highlight.contents
-          .map(({ htmlContent }) => `<section>${htmlContent}</section>`)
+          .map(({ htmlContent }) => `<article>${htmlContent}</article>`)
           .join('')}
-      </article>
+      </main>
     `;
     document.body.appendChild(printContainer);
 
@@ -360,7 +372,7 @@ export class RenderRevHighlight extends LitElement {
         #${idPrintContainer} {
           display: block !important;
         }
-        section {
+        article {
           break-after: page;
         }
         code {

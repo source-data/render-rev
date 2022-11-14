@@ -22,12 +22,14 @@ function fetchContents(item, uris) {
         .then(data => data.json())
         .then(data => data[0].docmap)
     )
-  ).then(contentDocmaps => {
-    /* eslint no-param-reassign: ["error", { "props": false }] */
-    item.contents = contentDocmaps
+  ).then(contentDocmaps =>
+    contentDocmaps
       .sort((a, b) => a.runningNumber > b.runningNumber)
-      .map(docmap => docmap.content);
-  });
+      .forEach((docmap, idx) => {
+        /* eslint no-param-reassign: ["error", { "props": false }] */
+        item.contents[idx].src = docmap.content;
+      })
+  );
 }
 
 function parseStep(items, step) {
@@ -40,9 +42,15 @@ function parseStep(items, step) {
     actions[0].outputs.type === 'author-response';
   if (isResponseStep) {
     const output = actions[0].outputs;
+    const date = getDate(output.published);
     const item = {
-      contents: ['Loading...'],
-      date: getDate(output.published),
+      contents: [
+        {
+          date,
+          src: 'Loading...',
+        },
+      ],
+      date,
       type: 'response',
     };
     items.push(item);
@@ -64,9 +72,13 @@ function parseStep(items, step) {
     const dates = [];
     const uris = [];
     actions.forEach((action, idx) => {
-      contents[idx] = 'Loading...';
       const output = action.outputs[0];
-      dates[idx] = getDate(output.published);
+      const date = getDate(output.published);
+      contents[idx] = {
+        date,
+        src: 'Loading...',
+      };
+      dates[idx] = date;
       uris[idx] = output.uri;
     });
     dates.sort();

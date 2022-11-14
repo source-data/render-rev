@@ -696,12 +696,30 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
-              contents: ['Loading...', 'Loading...', 'Loading...'],
+              contents: [
+                {
+                  src: 'Loading...',
+                  date: new Date('2020-07-23T19:26:50.243990+00:00'),
+                },
+                {
+                  src: 'Loading...',
+                  date: new Date('2020-07-23T19:26:51.010612+00:00'),
+                },
+                {
+                  src: 'Loading...',
+                  date: new Date('2020-07-23T19:26:49.980324+00:00'),
+                },
+              ],
               date: new Date('2020-07-23T19:26:49.980324+00:00'),
               type: 'reviews',
             },
             {
-              contents: ['Loading...'],
+              contents: [
+                {
+                  src: 'Loading...',
+                  date: new Date('2020-07-23T19:26:51.484215+00:00'),
+                },
+              ],
               date: new Date('2020-07-23T19:26:51.484215+00:00'),
               type: 'response',
             },
@@ -734,12 +752,30 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
-              contents: ['Loading...', 'Loading...', 'Loading...'],
+              contents: [
+                {
+                  src: 'Loading...',
+                  date: new Date('2022-02-09T18:21:15.407641+00:00'),
+                },
+                {
+                  src: 'Loading...',
+                  date: new Date('2022-02-09T18:21:15.077442+00:00'),
+                },
+                {
+                  src: 'Loading...',
+                  date: new Date('2022-02-09T18:21:14.076802+00:00'),
+                },
+              ],
               date: new Date('2022-02-09T18:21:14.076802+00:00'),
               type: 'reviews',
             },
             {
-              contents: ['Loading...'],
+              contents: [
+                {
+                  src: 'Loading...',
+                  date: new Date('2022-02-09T18:21:16.420772+00:00'),
+                },
+              ],
               date: new Date('2022-02-09T18:21:16.420772+00:00'),
               type: 'response',
             },
@@ -752,7 +788,12 @@ export const reviewProcessByDoi = {
           },
           items: [
             {
-              contents: ['Loading...'],
+              contents: [
+                {
+                  src: 'Loading...',
+                  date: new Date('2022-05-27T05:02:20.022255+00:00'),
+                },
+              ],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
               type: 'reviews',
             },
