@@ -42,22 +42,28 @@ export class RenderRevTimeline extends LitElement {
       .timeline-group {
         display: grid;
         gap: 8px;
-        grid-template-columns: minmax(150px, 1fr) 100px minmax(170px, 1fr);
+        grid-template-columns: minmax(120px, 1fr) 100px minmax(180px, 1fr);
       }
       .group-label,
       .item-date,
       .item-label {
         display: flex;
-        align-items: center; /* Vertical center alignment */
-        justify-content: center; /* Horizontal center alignment */
+        align-items: center; /* vertically centered */
         line-height: 16px;
         height: 32px;
       }
-      .group-label {
-        border-radius: 12px;
+      .item-date,
+      .item-label {
+        justify-content: center; /* item date and label horizontally center-aligned */
       }
+      .group-label {
+        justify-content: right; /* group label right-aligned */
+      }
+      .group-label,
       .item-date {
         color: grey;
+      }
+      .item-date {
         position: relative;
       }
 
@@ -136,10 +142,6 @@ export class RenderRevTimeline extends LitElement {
         text-decoration: underline;
       }
 
-      .timeline-group:nth-child(4n + 1) .group-label {
-        background: #add8e6;
-        background-image: linear-gradient(to left, #add8e6 0%, #a6c1ee 100%);
-      }
       .timeline-group:nth-child(4n + 1) .item-label {
         background: #add8e6;
         background-image: linear-gradient(
@@ -153,11 +155,6 @@ export class RenderRevTimeline extends LitElement {
         border-right-color: #add8e6;
       }
 
-      .timeline-group:nth-child(4n + 2) .group-label {
-        background: #0000db;
-        background-image: linear-gradient(to left, #0000db 0%, #00008b 100%);
-        color: ivory;
-      }
       .timeline-group:nth-child(4n + 2) .item-label {
         background: #0000db;
         background-image: linear-gradient(
@@ -172,11 +169,6 @@ export class RenderRevTimeline extends LitElement {
         border-right-color: #0000db;
       }
 
-      .timeline-group:nth-child(4n + 3) .group-label {
-        background: #008400;
-        background-image: linear-gradient(to left, #008400 0%, #006400 100%);
-        color: ivory;
-      }
       .timeline-group:nth-child(4n + 3) .item-label {
         background: #008400;
         background-image: linear-gradient(
@@ -191,11 +183,6 @@ export class RenderRevTimeline extends LitElement {
         border-right-color: #008400;
       }
 
-      .timeline-group:nth-child(4n + 4) .group-label {
-        background: #ab0000;
-        background-image: linear-gradient(to left, #ab0000 0%, #8b0000 100%);
-        color: ivory;
-      }
       .timeline-group:nth-child(4n + 4) .item-label {
         background: #ab0000;
         background-image: linear-gradient(
