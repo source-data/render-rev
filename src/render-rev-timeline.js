@@ -143,58 +143,35 @@ export class RenderRevTimeline extends LitElement {
       }
 
       .timeline-group:nth-child(4n + 1) .item-label {
-        background: #add8e6;
-        background-image: linear-gradient(
-          to right,
-          #add8e6 0%,
-          #add8e6 10%,
-          #a6c1ee 100%
-        );
+        background: #accbd2;
+        color: #056277;
       }
       .timeline-group:nth-child(4n + 1) .item-label:before {
-        border-right-color: #add8e6;
+        border-right-color: #accbd2;
       }
 
       .timeline-group:nth-child(4n + 2) .item-label {
-        background: #0000db;
-        background-image: linear-gradient(
-          to right,
-          #0000db 0%,
-          #0000db 10%,
-          #00008b 100%
-        );
+        background: #5796a4;
         color: ivory;
       }
       .timeline-group:nth-child(4n + 2) .item-label:before {
-        border-right-color: #0000db;
+        border-right-color: #5796a4;
       }
 
       .timeline-group:nth-child(4n + 3) .item-label {
-        background: #008400;
-        background-image: linear-gradient(
-          to right,
-          #008400 0%,
-          #008400 10%,
-          #006400 100%
-        );
+        background: #056277;
         color: ivory;
       }
       .timeline-group:nth-child(4n + 3) .item-label:before {
-        border-right-color: #008400;
+        border-right-color: #056277;
       }
 
       .timeline-group:nth-child(4n + 4) .item-label {
-        background: #ab0000;
-        background-image: linear-gradient(
-          to right,
-          #ab0000 0%,
-          #ab0000 10%,
-          #8b0000 100%
-        );
+        background: #5796a4;
         color: ivory;
       }
       .timeline-group:nth-child(4n + 4) .item-label:before {
-        border-right-color: #ab0000;
+        border-right-color: #5796a4;
       }
     `,
   ];
