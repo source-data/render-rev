@@ -1,6 +1,11 @@
 function* stepsGenerator(idFirstStep, stepsById) {
+  const visitedSteps = new Set();
   let idNextStep = idFirstStep;
   while (idNextStep in stepsById) {
+    if (visitedSteps.has(idNextStep)) {
+      return;
+    }
+    visitedSteps.add(idNextStep);
     const nextStep = stepsById[idNextStep];
     idNextStep = nextStep['next-step'];
     yield nextStep;
@@ -20,7 +25,7 @@ function fetchContents(item, uris) {
     uris.map(uri =>
       fetch(uri)
         .then(data => data.json())
-        .then(data => data[0].docmap)
+        .then(data => (data && data.length ? data[0].docmap : []))
     )
   ).then(contentDocmaps =>
     contentDocmaps
@@ -32,16 +37,36 @@ function fetchContents(item, uris) {
   );
 }
 
+const TimelineItemTypes = {
+  JournalPublication: 'journal-publication',
+  Preprint: 'preprint-posted',
+  Response: 'response',
+  Reviews: 'reviews',
+  ReviewArticle: 'review-article',
+};
+const DocmapOutputTypes = {
+  JournalPublication: 'journal-publication',
+  Response: 'author-response',
+  Review: 'review',
+  ReviewArticle: 'review-article',
+};
+
 function parseStep(items, step) {
-  const { actions } = step;
+  const isSingleActionStep = ({ actions }) => actions && actions.length === 1;
+  const isSingleOrMultiActionStep = ({ actions }) =>
+    actions && actions.length >= 1;
+
+  const hasSingleOutputOfType = (action, expectedType) =>
+    action.outputs &&
+    action.outputs.length === 1 &&
+    'type' in action.outputs[0] &&
+    action.outputs[0].type === expectedType;
 
   const isResponseStep =
-    actions &&
-    actions.length === 1 &&
-    'type' in actions[0].outputs &&
-    actions[0].outputs.type === 'author-response';
+    isSingleActionStep(step) &&
+    hasSingleOutputOfType(step.actions[0], DocmapOutputTypes.Response);
   if (isResponseStep) {
-    const output = actions[0].outputs;
+    const output = step.actions[0].outputs[0];
     const date = getDate(output.published);
     const item = {
       contents: [
@@ -51,27 +76,22 @@ function parseStep(items, step) {
         },
       ],
       date,
-      type: 'response',
+      type: TimelineItemTypes.Response,
     };
     items.push(item);
     fetchContents(item, [output.uri]);
   }
 
   const isReviewStep =
-    actions &&
-    actions.length >= 1 &&
-    actions.every(
-      action =>
-        action.outputs &&
-        action.outputs.length === 1 &&
-        'type' in action.outputs[0] &&
-        action.outputs[0].type === 'review'
+    isSingleOrMultiActionStep(step) &&
+    step.actions.every(action =>
+      hasSingleOutputOfType(action, DocmapOutputTypes.Review)
     );
   if (isReviewStep) {
     const contents = [];
     const dates = [];
     const uris = [];
-    actions.forEach((action, idx) => {
+    step.actions.forEach((action, idx) => {
       const output = action.outputs[0];
       const date = getDate(output.published);
       contents[idx] = {
@@ -85,34 +105,45 @@ function parseStep(items, step) {
     const item = {
       contents,
       date: dates[0],
-      type: 'reviews',
+      type: TimelineItemTypes.Reviews,
     };
     items.push(item);
     fetchContents(item, uris);
   }
 
   const isReviewArticleStep =
-    actions &&
-    actions.length >= 1 &&
-    actions.every(
-      action =>
-        action.outputs &&
-        action.outputs.length === 1 &&
-        'type' in action.outputs[0] &&
-        action.outputs[0].type === 'review-article'
+    isSingleOrMultiActionStep(step) &&
+    step.actions.every(action =>
+      hasSingleOutputOfType(action, DocmapOutputTypes.ReviewArticle)
     );
   if (isReviewArticleStep) {
-    items.push(
-      ...actions.map(action => {
-        const output = action.outputs[0];
-        const content = output.content[0];
-        return {
-          date: getDate(output.published),
-          type: 'review-article',
-          uri: content.url,
-        };
-      })
+    const newItems = step.actions.map(action => {
+      const output = action.outputs[0];
+      const content = output.content[0];
+      return {
+        date: getDate(output.published),
+        doi: output.doi,
+        type: TimelineItemTypes.ReviewArticle,
+        uri: content.url,
+      };
+    });
+    items.push(...newItems);
+  }
+
+  const isJournalPublicationStep =
+    isSingleActionStep(step) &&
+    hasSingleOutputOfType(
+      step.actions[0],
+      DocmapOutputTypes.JournalPublication
     );
+  if (isJournalPublicationStep) {
+    const output = step.actions[0].outputs[0];
+    const item = {
+      date: getDate(output.published),
+      type: TimelineItemTypes.JournalPublication,
+      uri: output.uri,
+    };
+    items.push(item);
   }
 }
 
@@ -143,7 +174,7 @@ function getFirstGroup(inputs) {
     items: [
       {
         date: getDate(input.published),
-        type: 'preprint-posted',
+        type: TimelineItemTypes.Preprint,
         uri: input.uri || input.url,
       },
     ],
@@ -187,11 +218,38 @@ function reduce(docmaps) {
     parseDocmap(timeline, docmap);
   }
   timeline.groups.sort((a, b) => {
-    const datesInA = a.items.map(item => item.date).sort();
+    function extractDates(items) {
+      return items
+        .map(item => item.date)
+        .filter(Boolean) // remove nulls, i.e. unknown dates
+        .sort();
+    }
+    function extractTypes(items) {
+      return new Set(items.map(item => item.type));
+    }
+    const datesInA = extractDates(a.items);
+    const datesInB = extractDates(b.items);
+    if (datesInA.length === 0 || datesInB.length === 0) {
+      const itemTypesInA = extractTypes(a.items);
+      const itemTypesInB = extractTypes(b.items);
+      if (itemTypesInA.has(TimelineItemTypes.Preprint)) {
+        return -1;
+      }
+      if (itemTypesInB.has(TimelineItemTypes.Preprint)) {
+        return 1;
+      }
+      if (itemTypesInA.has(TimelineItemTypes.JournalPublication)) {
+        return 1;
+      }
+      if (itemTypesInB.has(TimelineItemTypes.JournalPublication)) {
+        return -1;
+      }
+      return 0;
+    }
+
     const earliestDateInA = datesInA[0];
     const latestDateInA = datesInA.at(-1);
 
-    const datesInB = b.items.map(item => item.date).sort();
     const earliestDateInB = datesInB[0];
     const latestDateInB = datesInB.at(-1);
 
@@ -207,8 +265,9 @@ function reduce(docmaps) {
 }
 
 export async function parse(docmaps) {
+  const unpackedDocmaps = docmaps.map(unpack);
   return {
     summary: '',
-    timeline: reduce(docmaps.map(unpack)),
+    timeline: reduce(unpackedDocmaps),
   };
 }

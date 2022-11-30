@@ -17,7 +17,7 @@ function itemDescription(item) {
       return 'Review';
     case 'preprint-posted':
       return 'Preprint';
-    case 'published':
+    case 'journal-publication':
       return 'Published';
     default:
       return 'Unknown';
@@ -184,7 +184,7 @@ export class RenderRevTimeline extends LitElement {
     const description = itemDescription(item);
     switch (item.type) {
       case 'preprint-posted':
-      case 'published':
+      case 'journal-publication':
       case 'review-article':
         return html` <a class="item-label item-action" href="${item.uri}">
           ${description}
@@ -214,7 +214,7 @@ export class RenderRevTimeline extends LitElement {
       ? html`
           <div class="item-date">${this.config.formatDate(item.date)}</div>
         `
-      : html`<div></div>`;
+      : html`<div class="item-date">n/a</div>`;
     const label = this.itemLabel(group, item);
     return html` ${publisher} ${date} ${label} `;
   }

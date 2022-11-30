@@ -503,6 +503,7 @@ export const docmapsByDoi = {
         type: 'docmap',
         steps: {
           '_:b-ca656813-248b-4c75-b001-6a40b57f6697': {
+            'next-step': '_:b-7be1d33d-efaa-4fbb-ac73-1b5363b74c3a',
             assertions: [
               {
                 item: 'https://doi.org/10.1101/2021.10.26.465695',
@@ -536,6 +537,32 @@ export const docmapsByDoi = {
                         url: 'https://biorxiv.org/content/10.1101/2021.10.26.465695#review',
                       },
                     ],
+                  },
+                ],
+              },
+            ],
+            inputs: [
+              {
+                published: '2021-10-26T00:00:00Z',
+                uri: 'https://doi.org/10.1101/2021.10.26.465695',
+                doi: '10.1101/2021.10.26.465695',
+              },
+            ],
+          },
+          '_:b-7be1d33d-efaa-4fbb-ac73-1b5363b74c3a': {
+            assertions: [
+              {
+                item: 'https://doi.org/10.1101/452276',
+                status: 'published',
+              },
+            ],
+            actions: [
+              {
+                outputs: [
+                  {
+                    doi: '10.1371/journal.pone.0217516',
+                    type: 'journal-publication',
+                    uri: 'https://doi.org/10.1371/journal.pone.0217516',
                   },
                 ],
               },
@@ -796,6 +823,11 @@ export const reviewProcessByDoi = {
               ],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
               type: 'reviews',
+            },
+            {
+              date: null,
+              type: 'journal-publication',
+              uri: 'https://doi.org/10.1371/journal.pone.0217516',
             },
           ],
         },
