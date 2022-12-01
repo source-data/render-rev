@@ -185,6 +185,7 @@ export class RenderRevTimeline extends LitElement {
         return html` <a
           class="item-label ${item.type} item-action"
           href="${item.uri}"
+          target="_blank"
         >
           ${description}
           <span class="item-action-icon">${Icons.externalLink}</span>

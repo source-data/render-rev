@@ -280,7 +280,10 @@ export class RenderRevHighlight extends LitElement {
               <header>
                 <h1>${title}</h1>
                 ${doi
-                  ? html`<a class="highlight-doi" href="https://doi.org/${doi}"
+                  ? html`<a
+                      class="highlight-doi"
+                      href="https://doi.org/${doi}"
+                      target="_blank"
                       >${doi}</a
                     >`
                   : ''}
