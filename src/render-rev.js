@@ -64,7 +64,21 @@ export class RenderRev extends LitElement {
       doi: null,
       docmaps: null,
       display: {
-        publisherName: name => name,
+        publisherName: name => {
+          const nameMap = {
+            development: 'Development',
+            elife: 'eLife',
+            'embo press': 'EMBO Press',
+            'embo reports': 'EMBOR',
+            'life science alliance': 'LSA',
+            'peerage of science': 'Peerage of Science',
+            'peer ref': 'Peer Ref',
+            'plos one': 'PLOS ONE',
+            'review commons': 'Review Commons',
+            'the embo journal': 'EMBOJ',
+          };
+          return nameMap[name] || name;
+        },
         renderMarkdown: markdown,
         formatDate: date =>
           date.toLocaleDateString('en-US', {

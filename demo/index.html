@@ -35,21 +35,15 @@
     import { html, render } from 'lit';
     import '../render-rev.js';
 
-    const display = {
-      publisherName: name => {
-        const nameMap = {
-          'embo press': 'EMBO Press',
-          'peer ref': 'Peer Ref',
-          'review commons': 'Review Commons',
-        };
-        return nameMap[name] || name;
-      },
-    };
+    const display = {};
     const debug = true;
 
     const eebDois = [
       '10.1101/2022.07.22.22277924',
       '10.1101/2021.10.26.465695',
+      '10.1101/2020.05.15.098251',
+      '10.1101/452276',
+      '10.1101/2022.07.14.499766',
     ];
     const scietyDois = [
       '10.21203/rs.3.rs-955726',
@@ -67,6 +61,7 @@
                   </th>
                 ` : null}
                 <td>
+                  <span>${doi}:</span>
                   <render-rev doi="${doi}" .options=${{ debug, display }}></render-rev>
                 </td>
               </tr>
@@ -80,6 +75,7 @@
                   </th>
                 ` : null}
                 <td>
+                  <span>${doi}:</span>
                   <render-rev class="sciety-docmaps" data-doi="${doi}"></render-rev>
                 </td>
               </tr>
