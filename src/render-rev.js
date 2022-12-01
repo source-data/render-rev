@@ -60,6 +60,7 @@ export class RenderRev extends LitElement {
 
   _updateReviewProcess(externalOptions) {
     const defaultConfig = {
+      debug: false,
       doi: null,
       docmaps: null,
       display: {

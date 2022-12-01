@@ -1,8 +1,17 @@
+let debug = false;
+function log(message, ...optionalParams) {
+  if (debug) {
+    // eslint-disable-next-line no-console
+    console.log(message, ...optionalParams);
+  }
+}
+
 function* stepsGenerator(idFirstStep, stepsById) {
   const visitedSteps = new Set();
   let idNextStep = idFirstStep;
   while (idNextStep in stepsById) {
     if (visitedSteps.has(idNextStep)) {
+      log('loop detected, aborting step iterator at %s', idNextStep);
       return;
     }
     visitedSteps.add(idNextStep);
@@ -52,6 +61,7 @@ const DocmapOutputTypes = {
 };
 
 function parseStep(items, step) {
+  log('parsing step', step);
   const isSingleActionStep = ({ actions }) => actions && actions.length === 1;
   const isSingleOrMultiActionStep = ({ actions }) =>
     actions && actions.length >= 1;
@@ -80,6 +90,8 @@ function parseStep(items, step) {
     };
     items.push(item);
     fetchContents(item, [output.uri]);
+    log('added response item', item);
+    return;
   }
 
   const isReviewStep =
@@ -109,6 +121,8 @@ function parseStep(items, step) {
     };
     items.push(item);
     fetchContents(item, uris);
+    log('added review item', item);
+    return;
   }
 
   const isReviewArticleStep =
@@ -128,6 +142,8 @@ function parseStep(items, step) {
       };
     });
     items.push(...newItems);
+    log('added review article items', newItems);
+    return;
   }
 
   const isJournalPublicationStep =
@@ -144,7 +160,10 @@ function parseStep(items, step) {
       uri: output.uri,
     };
     items.push(item);
+    log('added journal publication item', item);
+    return;
   }
+  log('no item added for step');
 }
 
 const publishersByDoiPrefix = {
@@ -182,8 +201,10 @@ function getFirstGroup(inputs) {
 }
 
 function parseDocmap(timeline, docmap) {
+  log('parsing docmap', docmap);
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
+    log('adding first group to empty timeline');
     timeline.groups.push(getFirstGroup(steps[0].inputs));
   }
 
@@ -217,6 +238,7 @@ function reduce(docmaps) {
   for (const docmap of docmaps) {
     parseDocmap(timeline, docmap);
   }
+  log('sorting %d timeline groups', timeline.groups.length);
   timeline.groups.sort((a, b) => {
     function extractDates(items) {
       return items
@@ -264,8 +286,10 @@ function reduce(docmaps) {
   return timeline;
 }
 
-export async function parse(docmaps) {
+export async function parse(docmaps, config) {
+  debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);
+  log('parsing %d docmaps', unpackedDocmaps.length, unpackedDocmaps);
   return {
     summary: '',
     timeline: reduce(unpackedDocmaps),

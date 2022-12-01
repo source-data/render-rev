@@ -44,7 +44,8 @@
         };
         return nameMap[name] || name;
       },
-    }
+    };
+    const debug = true;
 
     const eebDois = [
       '10.1101/2022.07.22.22277924',
@@ -66,7 +67,7 @@
                   </th>
                 ` : null}
                 <td>
-                  <render-rev doi="${doi}" .options=${{ display }}></render-rev>
+                  <render-rev doi="${doi}" .options=${{ debug, display }}></render-rev>
                 </td>
               </tr>
             `)}
@@ -92,7 +93,7 @@
     scietyDois.forEach(
       doi => fetch(`sciety-docmaps/${doi}.json`)
         .then(data => data.json())
-        .then(docmaps => document.querySelector(`render-rev.sciety-docmaps[data-doi="${doi}"]`).configure({ docmaps, display }))
+        .then(docmaps => document.querySelector(`render-rev.sciety-docmaps[data-doi="${doi}"]`).configure({ debug, docmaps, display }))
     );
   </script>
 </body>

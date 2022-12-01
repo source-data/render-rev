@@ -2,7 +2,7 @@ import { parse as parseDocmap } from './docmaps.js';
 
 export async function getReviewProcess(config) {
   if (config.docmaps) {
-    return parseDocmap(config.docmaps);
+    return parseDocmap(config.docmaps, config);
   }
 
   if (config.doi) {
@@ -11,7 +11,7 @@ export async function getReviewProcess(config) {
       case 'eeb-docmaps':
         return fetch(`https://eeb.embo.org/api/v2/docmap/${config.doi}`)
           .then(data => data.json())
-          .then(parseDocmap);
+          .then(docmaps => parseDocmap(docmaps, config));
       default:
         return new Promise((_, reject) => reject());
     }
