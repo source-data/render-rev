@@ -142,36 +142,32 @@ export class RenderRevTimeline extends LitElement {
         text-decoration: underline;
       }
 
-      .timeline-group:nth-child(4n + 1) .item-label {
+      .item-label.preprint-posted {
         background: #accbd2;
         color: #056277;
       }
-      .timeline-group:nth-child(4n + 1) .item-label:before {
+      .item-label.preprint-posted:before {
         border-right-color: #accbd2;
       }
 
-      .timeline-group:nth-child(4n + 2) .item-label {
+      .item-label.response,
+      .item-label.review-article,
+      .item-label.reviews {
         background: #5796a4;
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 2) .item-label:before {
+      .item-label.response:before,
+      .item-label.review-article:before,
+      .item-label.reviews:before {
         border-right-color: #5796a4;
       }
 
-      .timeline-group:nth-child(4n + 3) .item-label {
+      .item-label.journal-publication {
         background: #056277;
         color: ivory;
       }
-      .timeline-group:nth-child(4n + 3) .item-label:before {
+      .item-label.journal-publication:before {
         border-right-color: #056277;
-      }
-
-      .timeline-group:nth-child(4n + 4) .item-label {
-        background: #5796a4;
-        color: ivory;
-      }
-      .timeline-group:nth-child(4n + 4) .item-label:before {
-        border-right-color: #5796a4;
       }
     `,
   ];
@@ -186,21 +182,24 @@ export class RenderRevTimeline extends LitElement {
       case 'preprint-posted':
       case 'journal-publication':
       case 'review-article':
-        return html` <a class="item-label item-action" href="${item.uri}">
+        return html` <a
+          class="item-label ${item.type} item-action"
+          href="${item.uri}"
+        >
           ${description}
           <span class="item-action-icon">${Icons.externalLink}</span>
         </a>`;
       case 'reviews':
       case 'response':
         return html` <button
-          class="item-label item-action"
+          class="item-label ${item.type} item-action"
           @click="${openHighlight}"
         >
           ${description}
           <span class="item-action-icon">${Icons.eye}</span>
         </button>`;
       default:
-        return html`<div class="item-label">${description}</div>`;
+        return html`<div class="item-label ${item.type}">${description}</div>`;
     }
   }
 
