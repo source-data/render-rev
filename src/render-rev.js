@@ -79,6 +79,7 @@ export class RenderRev extends LitElement {
           };
           return nameMap[name] || name;
         },
+        publisherLogo: () => null,
         renderMarkdown: markdown,
         formatDate: date =>
           date.toLocaleDateString('en-US', {

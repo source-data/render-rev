@@ -66,6 +66,11 @@ export class RenderRevTimeline extends LitElement {
       .item-date {
         position: relative;
       }
+      .group-logo {
+        height: 16px;
+        width: 16px;
+        margin-left: 4px;
+      }
 
       /* create the dotted lines between dates */
       .timeline-group:not(:first-child) .item-date::before {
@@ -205,9 +210,19 @@ export class RenderRevTimeline extends LitElement {
   }
 
   renderGroupItem(group, item, showPublisher) {
+    const publisherName = group.publisher.name;
+    const publisherDisplayName = this.config.publisherName(publisherName);
+    const publisherLogoUrl = this.config.publisherLogo(publisherName);
     const publisher = showPublisher
       ? html`<div class="group-label">
-          ${this.config.publisherName(group.publisher.name)}
+          ${publisherDisplayName}
+          ${publisherLogoUrl
+            ? html`<img
+                class="group-logo"
+                alt="Logo of ${publisherDisplayName}"
+                src="${publisherLogoUrl}"
+              />`
+            : ''}
         </div>`
       : html`<div></div>`;
     const date = item.date
