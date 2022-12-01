@@ -42,7 +42,7 @@ export class RenderRevTimeline extends LitElement {
       .timeline-group {
         display: grid;
         gap: 8px;
-        grid-template-columns: minmax(120px, 1fr) 100px minmax(180px, 1fr);
+        grid-template-columns: minmax(140px, 1fr) 100px minmax(180px, 1fr);
       }
       .group-label,
       .item-date,
