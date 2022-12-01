@@ -83,6 +83,7 @@ function parseStep(items, step) {
         {
           date,
           src: 'Loading...',
+          doi: output.doi,
         },
       ],
       date,
@@ -108,6 +109,7 @@ function parseStep(items, step) {
       const date = getDate(output.published);
       contents[idx] = {
         date,
+        doi: output.doi,
         src: 'Loading...',
       };
       dates[idx] = date;
@@ -156,6 +158,7 @@ function parseStep(items, step) {
     const output = step.actions[0].outputs[0];
     const item = {
       date: getDate(output.published),
+      doi: output.doi,
       type: TimelineItemTypes.JournalPublication,
       uri: output.uri,
     };

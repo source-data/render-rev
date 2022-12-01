@@ -26,7 +26,9 @@ export class RenderRevHighlight extends LitElement {
 
   async show(group, activeItem) {
     const highlightContents = group.items
-      .map(item => item.contents.map(content => content.src))
+      .map(item =>
+        item.contents ? item.contents.map(content => content.src) : []
+      )
       .flat();
     const idxActiveContent = highlightContents.indexOf(
       activeItem.contents[0].src
@@ -34,11 +36,14 @@ export class RenderRevHighlight extends LitElement {
 
     const contents = group.items
       .map(item =>
-        item.contents.map(({ date, src }, contentIdx) => ({
-          date,
-          html: DOMPurify.sanitize(this.config.renderMarkdown(src)),
-          title: highlightItemTitle(item, contentIdx),
-        }))
+        item.contents
+          ? item.contents.map(({ date, doi, src }, contentIdx) => ({
+              date,
+              doi,
+              html: DOMPurify.sanitize(this.config.renderMarkdown(src)),
+              title: highlightItemTitle(item, contentIdx),
+            }))
+          : []
       )
       .flat();
     this._highlight = {
@@ -214,11 +219,19 @@ export class RenderRevHighlight extends LitElement {
         overflow: scroll;
       }
       .item-content article:not(:first-child) {
-        border-top: 1px solid;
         margin-top: 48px;
       }
-      .item-content article section {
-        margin-top: 16px;
+      .item-content article header {
+        border-bottom: 1px solid;
+        display: flex;
+        justify-content: space-between;
+        margin: 32px;
+        padding: 4px;
+      }
+      .item-content article header h1 {
+        font-size: unset;
+        font-weight: unset;
+        margin: unset;
       }
       .item-content article code {
         white-space: break-spaces;
@@ -262,12 +275,19 @@ export class RenderRevHighlight extends LitElement {
     return html`
       <main>
         ${this._highlight.contents.map(
-          ({ html: htmlContent, date }, idx) => html`
+          ({ html: htmlContent, date, doi, title }, idx) => html`
             <article class="highlight" data-idx="${idx}">
-              <section>
-                Published on
-                <time datetime="${date}">${this.config.formatDate(date)}</time>
-              </section>
+              <header>
+                <h1>${title}</h1>
+                ${doi
+                  ? html`<a class="highlight-doi" href="https://doi.org/${doi}"
+                      >${doi}</a
+                    >`
+                  : ''}
+                <time class="highlight-date" datetime="${date}"
+                  >Published on ${this.config.formatDate(date)}</time
+                >
+              </header>
 
               ${unsafeHTML(htmlContent)}
             </article>
