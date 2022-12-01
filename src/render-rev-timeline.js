@@ -57,7 +57,9 @@ export class RenderRevTimeline extends LitElement {
         justify-content: center; /* item date and label horizontally center-aligned */
       }
       .group-label {
-        justify-content: right; /* group label right-aligned */
+        /* group label right-aligned */
+        justify-content: right;
+        text-align: right;
       }
       .group-label,
       .item-date {
