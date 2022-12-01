@@ -18,7 +18,7 @@ export class RenderRevModal extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._closeModal();
+    this.close();
   }
 
   show() {
