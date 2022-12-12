@@ -17,7 +17,7 @@ If available, the full text of peer reviews and author replies can be viewed in 
 All data about the review process is fetched from the [Early Evidence Base (EEB)](https://eeb.embo.org/) API in the DocMaps format.
 
 The DocMaps framework is used at EMBO Press to describe the peer review process that a scientific article went through.
-Given the DOI of an article, the EEB service returns a list of DocMap objects that each describe a single revision round of the peer review process.
+Given the DOI of an article, the EEB service returns a list of DocMap objects that each describe a single round of the peer review process.
 
 A DocMap consists of one or more ordered steps.
 Each step has inputs, and actions that were taken during the step, outputs, and assertions about the article that hold after this step.
@@ -77,18 +77,32 @@ external source, use the `.configure()` method of the element:
 
 ### Configuration Options
 
+* `debug`: Passing a truthy value activates detailed logging during DocMaps parsing.
 * `docmaps`: Pass in an array of DocMaps that represent the review process of a preprint. Overrides both the configuration option and the custom element attribute named `doi`.
 * `doi`: Display the review process of the preprint with this DOI. Overrides the value passed to the `doi` custom element attribute.
 * `display`: Pass in an object to configure how the review process is displayed with one of the following keys:
-  * `publisherName`: A callable that receives the name of a publisher and returns how it should be displayed. This publisher name is what's displayed on the left side of the timeline. The default is to return the received name unchanged. Can be used to e.g. correct capitalization or use abbreviations:
+  * `formatDate`: A callable that receives a Date object and returns a string representation of this date. Dates passed to this function are displayed in the timeline and above the full-text of reviews and responses in the highlight viewer. By default dates are formatted as `<Name of month abbreviated> <Day of month>, <Year>`, e.g. `Feb 24, 2020`.
+  * `publisherLogo`: A callable that receives the name of a publisher and returns a URL to the icon that should be displayed next to the publisher's name, or a falsy value if no icon should be displayed. By default always returns null, i.e. no icons are displayed for any publisher. Example:
+    ```Javascript
+    {
+      publisherLogo: name => {
+        const publisherLogosById = {
+          'bioRxiv': 'https://www.biorxiv.org/sites/default/files/images/favicon.ico',
+          'embo press': 'https://www.embopress.org/favicon.ico',
+        }
+        return publisherLogosById[name] || null;
+      }
+    }
+    ```
+  * `publisherName`: A callable that receives the name of a publisher and returns how it should be displayed. This publisher name is what's displayed on the left side of the timeline. The default is to return the received name unchanged for unknown publishers and use the correct capitalization for known publishers like bioRxiv, EMBO Press, etc. Can be used to e.g. correct capitalization or use abbreviations:
     ```Javascript
     {
       publisherName: name => {
-        const publishersByid = {
+        const publisherNamesById = {
           'elife': 'eLife',
           'embo journal': 'EMBOJ',
         }
-        return publishersById[name] || name;
+        return publisherNamesById[name] || name;
       }
     }
     ```
