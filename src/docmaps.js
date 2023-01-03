@@ -176,7 +176,7 @@ const publishersByDoiPrefix = {
   },
   10.21203: {
     name: 'Research Square',
-    uri: 'https://www.biorxiv.org',
+    uri: 'https://www.researchsquare.com',
   },
 };
 function getPublisher(input) {

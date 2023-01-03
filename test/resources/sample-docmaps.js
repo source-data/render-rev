@@ -23,31 +23,34 @@ export const docmapsByDoi = {
             ],
             actions: [
               {
-                outputs: {
-                  published: '2020-07-23T19:26:51.484215+00:00',
-                  type: 'author-response',
-                  uri: 'https://eeb.embo.org/api/v2/review_material/1837714',
-                  content: [
-                    {
-                      id: '10.1101/2020.07.20.212886',
-                      type: 'web-page',
-                      service: 'https://biorxiv.org',
-                      url: 'https://biorxiv.org/content/10.1101/2020.07.20.212886#review',
-                    },
-                    {
-                      id: '1837714',
-                      type: 'web-page',
-                      service: 'https://eeb.embo.org',
-                      url: 'https://eeb.embo.org/api/v2/review_material/1837714',
-                    },
-                    {
-                      id: 'ddoLMM0aEeqoVrMgA6Yx0w',
-                      type: 'web-page',
-                      service: 'https://hypothes.is',
-                      url: 'https://hypothes.is/a/ddoLMM0aEeqoVrMgA6Yx0w',
-                    },
-                  ],
-                },
+                outputs: [
+                  {
+                    doi: '10.1234/2022.1.2.012',
+                    published: '2020-07-23T19:26:51.484215+00:00',
+                    type: 'author-response',
+                    uri: 'https://eeb.embo.org/api/v2/review_material/1837714',
+                    content: [
+                      {
+                        id: '10.1101/2020.07.20.212886',
+                        type: 'web-page',
+                        service: 'https://biorxiv.org',
+                        url: 'https://biorxiv.org/content/10.1101/2020.07.20.212886#review',
+                      },
+                      {
+                        id: '1837714',
+                        type: 'web-page',
+                        service: 'https://eeb.embo.org',
+                        url: 'https://eeb.embo.org/api/v2/review_material/1837714',
+                      },
+                      {
+                        id: 'ddoLMM0aEeqoVrMgA6Yx0w',
+                        type: 'web-page',
+                        service: 'https://hypothes.is',
+                        url: 'https://hypothes.is/a/ddoLMM0aEeqoVrMgA6Yx0w',
+                      },
+                    ],
+                  },
+                ],
                 participants: [
                   {
                     actor: {
@@ -268,6 +271,7 @@ export const docmapsByDoi = {
               {
                 outputs: [
                   {
+                    doi: '10.1234/2022.11.22.123',
                     published: '2022-02-09T18:21:15.407641+00:00',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539358',
@@ -303,6 +307,7 @@ export const docmapsByDoi = {
               {
                 outputs: [
                   {
+                    doi: '10.1234/2022.11.22.456',
                     published: '2022-02-09T18:21:15.077442+00:00',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539359',
@@ -338,6 +343,7 @@ export const docmapsByDoi = {
               {
                 outputs: [
                   {
+                    doi: '10.1234/2022.11.22.789',
                     published: '2022-02-09T18:21:14.076802+00:00',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539360',
@@ -385,31 +391,33 @@ export const docmapsByDoi = {
             ],
             actions: [
               {
-                outputs: {
-                  published: '2022-02-09T18:21:16.420772+00:00',
-                  type: 'author-response',
-                  uri: 'https://eeb.embo.org/api/v2/review_material/20539357',
-                  content: [
-                    {
-                      id: '10.1101/2021.10.26.465695',
-                      type: 'web-page',
-                      service: 'https://biorxiv.org',
-                      url: 'https://biorxiv.org/content/10.1101/2021.10.26.465695#review',
-                    },
-                    {
-                      id: 'EgAsdInVEeyPEgtK4clUNg',
-                      type: 'web-page',
-                      service: 'https://hypothes.is',
-                      url: 'https://hypothes.is/a/EgAsdInVEeyPEgtK4clUNg',
-                    },
-                    {
-                      id: '20539357',
-                      type: 'web-page',
-                      service: 'https://eeb.embo.org',
-                      url: 'https://eeb.embo.org/api/v2/review_material/20539357',
-                    },
-                  ],
-                },
+                outputs: [
+                  {
+                    published: '2022-02-09T18:21:16.420772+00:00',
+                    type: 'author-response',
+                    uri: 'https://eeb.embo.org/api/v2/review_material/20539357',
+                    content: [
+                      {
+                        id: '10.1101/2021.10.26.465695',
+                        type: 'web-page',
+                        service: 'https://biorxiv.org',
+                        url: 'https://biorxiv.org/content/10.1101/2021.10.26.465695#review',
+                      },
+                      {
+                        id: 'EgAsdInVEeyPEgtK4clUNg',
+                        type: 'web-page',
+                        service: 'https://hypothes.is',
+                        url: 'https://hypothes.is/a/EgAsdInVEeyPEgtK4clUNg',
+                      },
+                      {
+                        id: '20539357',
+                        type: 'web-page',
+                        service: 'https://eeb.embo.org',
+                        url: 'https://eeb.embo.org/api/v2/review_material/20539357',
+                      },
+                    ],
+                  },
+                ],
                 participants: [
                   {
                     actor: {
@@ -725,16 +733,19 @@ export const reviewProcessByDoi = {
             {
               contents: [
                 {
-                  src: 'Loading...',
                   date: new Date('2020-07-23T19:26:50.243990+00:00'),
+                  doi: undefined,
+                  src: 'Loading...',
                 },
                 {
-                  src: 'Loading...',
                   date: new Date('2020-07-23T19:26:51.010612+00:00'),
+                  doi: undefined,
+                  src: 'Loading...',
                 },
                 {
-                  src: 'Loading...',
                   date: new Date('2020-07-23T19:26:49.980324+00:00'),
+                  doi: undefined,
+                  src: 'Loading...',
                 },
               ],
               date: new Date('2020-07-23T19:26:49.980324+00:00'),
@@ -743,8 +754,9 @@ export const reviewProcessByDoi = {
             {
               contents: [
                 {
-                  src: 'Loading...',
                   date: new Date('2020-07-23T19:26:51.484215+00:00'),
+                  doi: '10.1234/2022.1.2.012',
+                  src: 'Loading...',
                 },
               ],
               date: new Date('2020-07-23T19:26:51.484215+00:00'),
@@ -781,16 +793,19 @@ export const reviewProcessByDoi = {
             {
               contents: [
                 {
-                  src: 'Loading...',
                   date: new Date('2022-02-09T18:21:15.407641+00:00'),
+                  doi: '10.1234/2022.11.22.123',
+                  src: 'Loading...',
                 },
                 {
-                  src: 'Loading...',
                   date: new Date('2022-02-09T18:21:15.077442+00:00'),
+                  doi: '10.1234/2022.11.22.456',
+                  src: 'Loading...',
                 },
                 {
-                  src: 'Loading...',
                   date: new Date('2022-02-09T18:21:14.076802+00:00'),
+                  doi: '10.1234/2022.11.22.789',
+                  src: 'Loading...',
                 },
               ],
               date: new Date('2022-02-09T18:21:14.076802+00:00'),
@@ -799,8 +814,9 @@ export const reviewProcessByDoi = {
             {
               contents: [
                 {
-                  src: 'Loading...',
                   date: new Date('2022-02-09T18:21:16.420772+00:00'),
+                  doi: undefined,
+                  src: 'Loading...',
                 },
               ],
               date: new Date('2022-02-09T18:21:16.420772+00:00'),
@@ -817,8 +833,9 @@ export const reviewProcessByDoi = {
             {
               contents: [
                 {
-                  src: 'Loading...',
                   date: new Date('2022-05-27T05:02:20.022255+00:00'),
+                  doi: undefined,
+                  src: 'Loading...',
                 },
               ],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
@@ -826,6 +843,7 @@ export const reviewProcessByDoi = {
             },
             {
               date: null,
+              doi: '10.1371/journal.pone.0217516',
               type: 'journal-publication',
               uri: 'https://doi.org/10.1371/journal.pone.0217516',
             },
@@ -841,7 +859,7 @@ export const reviewProcessByDoi = {
         {
           publisher: {
             name: 'Research Square',
-            uri: 'https://www.biorxiv.org',
+            uri: 'https://www.researchsquare.com',
           },
           items: [
             {
@@ -859,16 +877,19 @@ export const reviewProcessByDoi = {
           items: [
             {
               date: new Date('2021-12-17T13:59:00.000Z'),
+              doi: undefined,
               type: 'review-article',
               uri: 'https://hypothes.is/a/iDLPjF9BEeyhWi89_nqmpA',
             },
             {
               date: new Date('2022-01-10T19:38:00.000Z'),
+              doi: undefined,
               type: 'review-article',
               uri: 'https://hypothes.is/a/8h6HBnJMEeyIDzNrTJzkOA',
             },
             {
               date: new Date('2022-05-17T09:52:32.797Z'),
+              doi: undefined,
               type: 'review-article',
               uri: 'https://hypothes.is/a/EqExCNXHEey74zd9EjVy7g',
             },
