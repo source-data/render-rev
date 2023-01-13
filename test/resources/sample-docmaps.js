@@ -727,6 +727,7 @@ export const reviewProcessByDoi = {
         {
           publisher: {
             name: 'review commons',
+            peerReviewPolicy: 'https://reviewcommons.org/reviewers',
             uri: 'https://reviewcommons.org',
           },
           items: [
@@ -787,6 +788,7 @@ export const reviewProcessByDoi = {
         {
           publisher: {
             name: 'review commons',
+            peerReviewPolicy: 'https://reviewcommons.org/reviewers',
             uri: 'https://reviewcommons.org',
           },
           items: [
@@ -827,6 +829,8 @@ export const reviewProcessByDoi = {
         {
           publisher: {
             name: 'embo press',
+            peerReviewPolicy:
+              'https://www.embopress.org/page/journal/17444292/refereeguide',
             uri: 'https://embopress.org/',
           },
           items: [
@@ -872,6 +876,7 @@ export const reviewProcessByDoi = {
         {
           publisher: {
             name: 'Biophysics Colab',
+            peerReviewPolicy: undefined,
             uri: 'https://biophysics.sciencecolab.org',
           },
           items: [

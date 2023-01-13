@@ -218,6 +218,7 @@ function parseDocmap(timeline, docmap) {
   timeline.groups.push({
     publisher: {
       name: docmap.publisher.name,
+      peerReviewPolicy: docmap.publisher.peer_review_policy,
       uri:
         docmap.publisher.uri ||
         docmap.publisher.url ||
