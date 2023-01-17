@@ -2,6 +2,7 @@ import { css, html, LitElement } from 'lit';
 import { Icons } from './icons.js';
 import './render-rev-highlight.js';
 import { GlobalStyles } from './styles.js';
+import '@spider-ui/tooltip';
 
 function toClassName(str) {
   return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
@@ -72,6 +73,9 @@ export class RenderRevTimeline extends LitElement {
         height: 16px;
         width: 16px;
         margin-left: 4px;
+      }
+      .group-label-inside-tooltip {
+        display: flex;
       }
 
       /* create the dotted lines between dates */
@@ -211,21 +215,48 @@ export class RenderRevTimeline extends LitElement {
     }
   }
 
+  renderGroupPublisher(publisher) {
+    const { name, peerReviewPolicy, uri } = publisher;
+    const displayName = this.config.publisherName(name);
+    const logoUrl = this.config.publisherLogo(name);
+
+    const logo = logoUrl
+      ? html`<img
+          class="group-logo"
+          alt="Logo of ${displayName}"
+          src="${logoUrl}"
+        />`
+      : '';
+    const nameAndLogo = html`${displayName} ${logo}`;
+
+    let publisherInfo;
+    if (uri || peerReviewPolicy) {
+      const linkToPublisherHomepage = html`<a href="${uri}" target="_blank"
+        >${uri}</a
+      >`;
+      const linkToPeerReviewPolicy = peerReviewPolicy
+        ? html`<a href="${peerReviewPolicy}" target="_blank"
+            >Peer Review Policy</a
+          >`
+        : '';
+      const tooltipContent = html`${linkToPublisherHomepage}<br />${linkToPeerReviewPolicy}`;
+      publisherInfo = html`
+        <spider-tooltip mode="light" show-arrow>
+          <div slot="trigger">
+            <div class="group-label-inside-tooltip">${nameAndLogo}</div>
+          </div>
+          <div slot="content">${tooltipContent}</div>
+        </spider-tooltip>
+      `;
+    } else {
+      publisherInfo = nameAndLogo;
+    }
+    return html`<div class="group-label">${publisherInfo}</div>`;
+  }
+
   renderGroupItem(group, item, showPublisher) {
-    const publisherName = group.publisher.name;
-    const publisherDisplayName = this.config.publisherName(publisherName);
-    const publisherLogoUrl = this.config.publisherLogo(publisherName);
     const publisher = showPublisher
-      ? html`<div class="group-label">
-          ${publisherDisplayName}
-          ${publisherLogoUrl
-            ? html`<img
-                class="group-logo"
-                alt="Logo of ${publisherDisplayName}"
-                src="${publisherLogoUrl}"
-              />`
-            : ''}
-        </div>`
+      ? this.renderGroupPublisher(group.publisher)
       : html`<div></div>`;
     const date = item.date
       ? html`

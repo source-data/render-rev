@@ -15,6 +15,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
+    "@spider-ui/tooltip": "^0.2.7",
     "dompurify": "^2.4.1",
     "lit": "^2.0.2"
   },
