@@ -1,5 +1,4 @@
 import { css, html, LitElement } from 'lit';
-import { Icons } from './icons.js';
 import { GlobalStyles } from './styles.js';
 
 export class RenderRevModal extends LitElement {
@@ -76,26 +75,10 @@ export class RenderRevModal extends LitElement {
       .highlight-dialog {
         margin: 3vh auto;
         height: 94vh;
-        max-width: 800px;
+        max-width: 860px;
         overflow: hidden;
         transition: transform 0.3s ease-out;
         position: relative;
-      }
-      .close-highlight {
-        border: 1px solid transparent;
-        border-radius: 50%;
-
-        position: absolute;
-        right: 8px;
-        top: 8px;
-
-        height: 32px;
-        width: 32px;
-      }
-      .close-highlight:active,
-      .close-highlight:focus,
-      .close-highlight:hover {
-        border-color: lightgrey;
       }
     `,
   ];
@@ -108,10 +91,6 @@ export class RenderRevModal extends LitElement {
       @click="${this._onClick}"
     >
       <div class="highlight-dialog" role="dialog" aria-modal="true">
-        <button class="close-highlight" @click="${this.close}">
-          ${Icons.close}
-        </button>
-
         <slot></slot>
       </div>
     </div> `;

@@ -93,8 +93,12 @@ export class RenderRevHighlight extends LitElement {
       .forEach(el => this._scrollspy.observer.observe(el));
   }
 
-  close() {
+  onClose() {
     this._scrollspy.observer.disconnect();
+  }
+
+  triggerClose() {
+    this.shadowRoot.querySelector('render-rev-modal').close();
   }
 
   setActiveContent(idxNewActiveContent) {
@@ -125,41 +129,63 @@ export class RenderRevHighlight extends LitElement {
        * Top & bottom margins are set by nav items below.
        */
       .highlight-nav {
+        background-color: #5796a4;
+        box-shadow: 0px 0px 8px 2px #5796a4;
         display: flex;
         flex-wrap: wrap;
-        height: 46px;
-        margin: 0 38px;
+        padding: 0 38px;
       }
       .highlight-nav > * {
+        display: flex;
         flex: 1 auto;
-        margin: 8px;
+        padding: 0 8px;
       }
-      /* Nav item borders are used to indicate focus/hover. So the items stay in the
-       * same place when hovered/clicked the border is always present but transparent
-       * if not in one of these states.
-       */
+      /* The nav item border-bottom is used to indicate focus/hover. */
       .highlight-nav-item {
-        border-radius: 8px;
-        border: 1px solid transparent;
+        border-bottom: 3px solid;
+        border-bottom-color: transparent;
+        color: ivory;
+        filter: brightness(85%);
         font-size: 16px;
-        height: 24px;
-        line-height: 24px;
-        padding: 2px 12px;
-      }
-      .highlight-nav-item:active,
-      .highlight-nav-item:focus,
-      .highlight-nav-item:hover {
-        border-color: darkgrey;
+        height: 36px;
+        line-height: 36px;
+        padding: 4px 12px 0;
       }
       .highlight-nav-item.active {
-        background-color: darkgray;
-        color: whitesmoke;
+        border-color: ivory;
+        filter: none;
       }
       .highlight-nav-item.active:active,
       .highlight-nav-item.active:focus,
       .highlight-nav-item.active:hover {
-        border-color: #333;
+        filter: brightness(95%);
+      }
+      .highlight-nav-item:active,
+      .highlight-nav-item:focus,
+      .highlight-nav-item:hover {
+        border-color: ivory;
+        filter: brightness(95%);
+      }
+
+      .highlight-nav-item.close-highlight {
+        border: 1px solid transparent;
+        border-radius: 50%;
+
         filter: none;
+
+        padding: 0;
+        position: absolute;
+        right: 6px;
+        top: 6px;
+
+        height: 32px;
+        width: 32px;
+      }
+      .highlight-nav-item.close-highlight:active,
+      .highlight-nav-item.close-highlight:focus,
+      .highlight-nav-item.close-highlight:hover {
+        border-color: ivory;
+        filter: brightness(85%);
       }
 
       /* .highlight-content is the container for the text content plus the two sidebars.
@@ -265,6 +291,12 @@ export class RenderRevHighlight extends LitElement {
           </div>
         `
       )}
+      <button
+        class="highlight-nav-item close-highlight"
+        @click="${this.triggerClose}"
+      >
+        ${Icons.close}
+      </button>
     `;
   }
 
@@ -429,7 +461,7 @@ export class RenderRevHighlight extends LitElement {
 
   render() {
     return html`
-      <render-rev-modal @close="${this.close}">
+      <render-rev-modal @close="${this.onClose}">
         <div class="render-rev-highlight">
           <nav class="highlight-nav">${this.getHighlightNav()}</nav>
           <div class="highlight-content">
