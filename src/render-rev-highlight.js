@@ -300,6 +300,18 @@ export class RenderRevHighlight extends LitElement {
     `;
   }
 
+  printButton() {
+    return html`
+      <button
+        class="print"
+        @click="${this.triggerPrinting}"
+        title="Print content"
+      >
+        ${Icons.printer}
+      </button>
+    `;
+  }
+
   getControlButton(isEnabled, getNewContentIdx, icon) {
     if (!this._highlight || !isEnabled(this._highlight)) {
       return null;
@@ -357,7 +369,11 @@ export class RenderRevHighlight extends LitElement {
       });
     }
     return html`
-      <button class="scroll-to-top" @click="${scrollToTop}">
+      <button
+        class="scroll-to-top"
+        @click="${scrollToTop}"
+        title="Scroll to top"
+      >
         ${Icons.arrowUp}
       </button>
     `;
@@ -418,10 +434,7 @@ export class RenderRevHighlight extends LitElement {
           <nav class="highlight-nav">${this.getHighlightNav()}</nav>
           <div class="highlight-content">
             <div class="sidebar">
-              <button class="print" @click="${this.triggerPrinting}">
-                ${Icons.printer}
-              </button>
-              ${this.previousContentButton()}
+              ${this.printButton()} ${this.previousContentButton()}
             </div>
             <div class="item-content">${this.getHighlightContent()}</div>
             <div class="sidebar">
