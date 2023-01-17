@@ -272,7 +272,7 @@ export class RenderRevHighlight extends LitElement {
     const self = this;
     function navigateToContent(event) {
       const idxNewActiveContent = Number(event.target.dataset.idx);
-      self.scrollToContent(idxNewActiveContent, true);
+      self.scrollToContent(idxNewActiveContent, true, event);
     }
     return html`
       ${this._highlight.contents.map(
@@ -350,12 +350,12 @@ export class RenderRevHighlight extends LitElement {
     }
 
     const self = this;
-    function switchHighlight() {
+    function switchHighlight(event) {
       if (isEnabled(this._highlight)) {
         const idxNewActiveContent = getNewContentIdx(
           self._highlight.idxActiveContent
         );
-        this.scrollToContent(idxNewActiveContent, true);
+        this.scrollToContent(idxNewActiveContent, true, event);
       }
     }
 
@@ -384,11 +384,14 @@ export class RenderRevHighlight extends LitElement {
     return this.getControlButton(isEnabled, getNewContentIdx, icon);
   }
 
-  scrollToContent(idx, smooth) {
+  scrollToContent(idx, smooth, event) {
     const scrollOptions = smooth ? { behavior: 'smooth' } : {};
     this.shadowRoot
       .querySelector(`.highlight[data-idx="${idx}"]`)
       .scrollIntoView(scrollOptions);
+    if (event) {
+      event.currentTarget.blur();
+    }
   }
 
   backToTopButton() {
@@ -411,7 +414,7 @@ export class RenderRevHighlight extends LitElement {
     `;
   }
 
-  triggerPrinting() {
+  triggerPrinting(event) {
     /* To be able to fully control what gets printed we have to mess with the document.
      * We append a new element with just the text we want to print to the document body
      * and add styling that hides everything but this new element when printing.
@@ -425,7 +428,7 @@ export class RenderRevHighlight extends LitElement {
     printContainer.innerHTML = `
       <main>
         ${this._highlight.contents
-          .map(({ htmlContent }) => `<article>${htmlContent}</article>`)
+          .map(({ html: htmlContent }) => `<article>${htmlContent}</article>`)
           .join('')}
       </main>
     `;
@@ -457,6 +460,7 @@ export class RenderRevHighlight extends LitElement {
 
     document.head.removeChild(printStyle);
     document.body.removeChild(printContainer);
+    event.currentTarget.blur();
   }
 
   render() {

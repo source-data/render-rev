@@ -185,8 +185,9 @@ export class RenderRevTimeline extends LitElement {
 
   itemLabel(group, item) {
     const self = this;
-    function openHighlight() {
+    function openHighlight(event) {
       self.shadowRoot.querySelector('render-rev-highlight').show(group, item);
+      event.currentTarget.blur();
     }
     const description = itemDescription(item);
     switch (item.type) {
