@@ -245,14 +245,14 @@ export class RenderRevHighlight extends LitElement {
         overflow: scroll;
       }
       .item-content article:not(:first-child) {
-        margin-top: 48px;
+        margin-top: 80px;
       }
       .item-content article header {
-        border-bottom: 1px solid;
         display: flex;
+        font-size: 1.2rem;
+        font-weight: bold;
         justify-content: space-between;
-        margin: 32px;
-        padding: 4px;
+        padding: 24px 0;
       }
       .item-content article header h1 {
         font-size: unset;
