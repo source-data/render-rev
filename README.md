@@ -12,6 +12,8 @@ If available, the full text of peer reviews and author replies can be viewed in 
 
 ![An example image of how render-rev displays the full text of reviews and responses.](./docs/assets/sample-detail-view.png)
 
+render-rev was built by [EMBO's Open Science Implementation Group](https://www.embo.org/policy/open-science/) for [EMBO Press](https://www.embopress.org/). The project was funded by the Wellcome Trust (Learned Society Curation Award 221510/Z/20/Z).
+
 ## DocMaps
 
 All data about the review process is fetched from the [Early Evidence Base (EEB)](https://eeb.embo.org/) API in the DocMaps format.
