@@ -112,6 +112,7 @@ external source, use the `.configure()` method of the element:
     ```Javascript
     { renderMarkdown: marked.parse }
     ```
+* `highlightDoi`: Automatically open the highlight viewer for the review or response with this DOI.
 
 ## Development
 

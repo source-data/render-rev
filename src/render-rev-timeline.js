@@ -29,6 +29,7 @@ export class RenderRevTimeline extends LitElement {
   static properties = {
     config: { type: Object },
     reviewProcess: { type: Object },
+    highlightItem: { type: Object },
   };
 
   static styles = [
@@ -183,10 +184,14 @@ export class RenderRevTimeline extends LitElement {
     `,
   ];
 
+  openHighlight(group, item) {
+    this.shadowRoot.querySelector('render-rev-highlight').show(group, item);
+  }
+
   itemLabel(group, item) {
     const self = this;
     function openHighlight(event) {
-      self.shadowRoot.querySelector('render-rev-highlight').show(group, item);
+      self.openHighlight(group, item);
       event.currentTarget.blur();
     }
     const description = itemDescription(item);
@@ -288,7 +293,10 @@ export class RenderRevTimeline extends LitElement {
           self.renderGroup(group)
         )}
       </div>
-      <render-rev-highlight .config=${this.config}></render-rev-highlight>
+      <render-rev-highlight
+        .config=${this.config}
+        .highlightItem=${this.highlightItem}
+      ></render-rev-highlight>
     `;
   }
 }

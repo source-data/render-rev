@@ -20,29 +20,45 @@ function highlightItemTitle(item, contentIdx) {
 export class RenderRevHighlight extends LitElement {
   static properties = {
     config: { type: Object },
+    highlightItem: { type: Object },
     _highlight: { state: true, type: Object },
     _scrollspy: { state: true, type: Object },
   };
 
-  async show(group, activeItem) {
-    const highlightContents = group.items
+  firstUpdated() {
+    super.firstUpdated();
+    if (this.highlightItem) {
+      const { group, item, content } = this.highlightItem;
+      this.show(group, item, content);
+    }
+  }
+
+  async show(activeGroup, activeItem, activeContent) {
+    const highlightContents = activeGroup.items
       .map(item =>
         item.contents ? item.contents.map(content => content.src) : []
       )
       .flat();
-    const idxActiveContent = highlightContents.indexOf(
-      activeItem.contents[0].src
-    );
 
-    const contents = group.items
+    const srcActiveContent = activeContent
+      ? activeContent.src
+      : activeItem.contents[0].src;
+    const idxActiveContent = highlightContents.indexOf(srcActiveContent);
+
+    let srcIdx = 0;
+    const contents = activeGroup.items
       .map(item =>
         item.contents
-          ? item.contents.map(({ date, doi, src }, contentIdx) => ({
-              date,
-              doi,
-              html: DOMPurify.sanitize(this.config.renderMarkdown(src)),
-              title: highlightItemTitle(item, contentIdx),
-            }))
+          ? item.contents.map(({ date, doi }, contentIdx) => {
+              const src = highlightContents[srcIdx];
+              srcIdx += 1;
+              return {
+                date,
+                doi,
+                html: DOMPurify.sanitize(this.config.renderMarkdown(src)),
+                title: highlightItemTitle(item, contentIdx),
+              };
+            })
           : []
       )
       .flat();

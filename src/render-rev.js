@@ -4,6 +4,21 @@ import { markdown } from '../lib/drawdown.js';
 import { getReviewProcess } from './store.js';
 import './render-rev-timeline.js';
 
+function findHighlightItem(reviewProcess, highlightDoi) {
+  for (const group of reviewProcess.timeline.groups) {
+    for (const item of group.items) {
+      if (item.contents) {
+        for (const content of item.contents) {
+          if (content.doi === highlightDoi) {
+            return { group, item, content };
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
 /**
  * Renders the peer review process of a preprint.
  */
@@ -27,6 +42,10 @@ export class RenderRev extends LitElement {
      */
     _reviewProcess: { state: true, type: Object },
     /**
+     * The item in the review process that should be highlighted by default.
+     */
+    _highlightItem: { state: true, type: Object },
+    /**
      * The internal status of fetching and parsing the review process data.
      */
     _status: { state: true, type: Number },
@@ -42,6 +61,7 @@ export class RenderRev extends LitElement {
     super();
     this._config = {};
     this._reviewProcess = null;
+    this._highlightItem = null;
     this._status = this.Loading;
   }
 
@@ -88,6 +108,7 @@ export class RenderRev extends LitElement {
             year: 'numeric',
           }),
       },
+      highlightDoi: null,
     };
     // use the default config as the basis and let the external options override any settings it provides.
     const config = { ...defaultConfig, ...externalOptions };
@@ -96,6 +117,12 @@ export class RenderRev extends LitElement {
     this._config = config;
     getReviewProcess(this._config)
       .then(reviewProcess => {
+        if (this._config.highlightDoi) {
+          this._highlightItem = findHighlightItem(
+            reviewProcess,
+            this._config.highlightDoi
+          );
+        }
         this._reviewProcess = reviewProcess;
         this._status = this.Ready;
       })
@@ -121,6 +148,7 @@ export class RenderRev extends LitElement {
           <render-rev-timeline
             .reviewProcess=${this._reviewProcess}
             .config=${this._config.display}
+            .highlightItem=${this._highlightItem}
           ></render-rev-timeline>
         `;
       case this.Loading:
