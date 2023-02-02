@@ -29,21 +29,19 @@ function getDate(dateString) {
   return new Date(dateStamp);
 }
 
-function fetchContents(item, uris) {
-  Promise.all(
+async function fetchContents(item, uris) {
+  const contentDocmaps = await Promise.all(
     uris.map(uri =>
       fetch(uri)
         .then(data => data.json())
         .then(data => (data && data.length ? data[0].docmap : []))
     )
-  ).then(contentDocmaps =>
-    contentDocmaps
-      .sort((a, b) => a.runningNumber > b.runningNumber)
-      .forEach((docmap, idx) => {
-        /* eslint no-param-reassign: ["error", { "props": false }] */
-        item.contents[idx].src = docmap.content;
-      })
   );
+  contentDocmaps.sort((a, b) => a.runningNumber > b.runningNumber);
+  contentDocmaps.forEach((docmap, idx) => {
+    /* eslint no-param-reassign: ["error", { "props": false }] */
+    item.contents[idx].src = docmap.content;
+  });
 }
 
 const TimelineItemTypes = {
@@ -60,7 +58,7 @@ const DocmapOutputTypes = {
   ReviewArticle: 'review-article',
 };
 
-function parseStep(items, step) {
+async function parseStep(step) {
   log('parsing step', step);
   const isSingleActionStep = ({ actions }) => actions && actions.length === 1;
   const isSingleOrMultiActionStep = ({ actions }) =>
@@ -89,10 +87,9 @@ function parseStep(items, step) {
       date,
       type: TimelineItemTypes.Response,
     };
-    items.push(item);
-    fetchContents(item, [output.uri]);
+    await fetchContents(item, [output.uri]);
     log('added response item', item);
-    return;
+    return [item];
   }
 
   const isReviewStep =
@@ -121,10 +118,9 @@ function parseStep(items, step) {
       date: dates[0],
       type: TimelineItemTypes.Reviews,
     };
-    items.push(item);
-    fetchContents(item, uris);
+    await fetchContents(item, uris);
     log('added review item', item);
-    return;
+    return [item];
   }
 
   const isReviewArticleStep =
@@ -143,9 +139,8 @@ function parseStep(items, step) {
         uri: content.url,
       };
     });
-    items.push(...newItems);
     log('added review article items', newItems);
-    return;
+    return newItems;
   }
 
   const isJournalPublicationStep =
@@ -162,11 +157,11 @@ function parseStep(items, step) {
       type: TimelineItemTypes.JournalPublication,
       uri: output.uri,
     };
-    items.push(item);
     log('added journal publication item', item);
-    return;
+    return [item];
   }
   log('no item added for step');
+  return [];
 }
 
 const publishersByDoiPrefix = {
@@ -203,7 +198,7 @@ function getFirstGroup(inputs) {
   };
 }
 
-function parseDocmap(timeline, docmap) {
+async function parseDocmapIntoGroups(timeline, docmap) {
   log('parsing docmap', docmap);
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
@@ -211,18 +206,15 @@ function parseDocmap(timeline, docmap) {
     timeline.groups.push(getFirstGroup(steps[0].inputs));
   }
 
-  const items = [];
-  for (const step of steps) {
-    parseStep(items, step);
-  }
+  const publisherUri =
+    docmap.publisher.uri || docmap.publisher.url || docmap.publisher.homepage;
+  const parsedSteps = await Promise.all(steps.map(parseStep));
+  const items = parsedSteps.flat();
   timeline.groups.push({
     publisher: {
       name: docmap.publisher.name,
       peerReviewPolicy: docmap.publisher.peer_review_policy,
-      uri:
-        docmap.publisher.uri ||
-        docmap.publisher.url ||
-        docmap.publisher.homepage,
+      uri: publisherUri,
     },
     items,
   });
@@ -235,58 +227,60 @@ function unpack(docmap) {
   return docmap;
 }
 
-function reduce(docmaps) {
+function compareTimelineGroups(a, b) {
+  function extractDates(items) {
+    return items
+      .map(item => item.date)
+      .filter(Boolean) // remove nulls, i.e. unknown dates
+      .sort();
+  }
+  function extractTypes(items) {
+    return new Set(items.map(item => item.type));
+  }
+  const datesInA = extractDates(a.items);
+  const datesInB = extractDates(b.items);
+  if (datesInA.length === 0 || datesInB.length === 0) {
+    const itemTypesInA = extractTypes(a.items);
+    const itemTypesInB = extractTypes(b.items);
+    if (itemTypesInA.has(TimelineItemTypes.Preprint)) {
+      return -1;
+    }
+    if (itemTypesInB.has(TimelineItemTypes.Preprint)) {
+      return 1;
+    }
+    if (itemTypesInA.has(TimelineItemTypes.JournalPublication)) {
+      return 1;
+    }
+    if (itemTypesInB.has(TimelineItemTypes.JournalPublication)) {
+      return -1;
+    }
+    return 0;
+  }
+
+  const earliestDateInA = datesInA[0];
+  const latestDateInA = datesInA.at(-1);
+
+  const earliestDateInB = datesInB[0];
+  const latestDateInB = datesInB.at(-1);
+
+  if (latestDateInA < earliestDateInB) {
+    return -1;
+  }
+  if (latestDateInB < earliestDateInA) {
+    return 1;
+  }
+  return 0;
+}
+
+async function convertToTimeline(docmaps) {
   const timeline = {
     groups: [],
   };
-  for (const docmap of docmaps) {
-    parseDocmap(timeline, docmap);
-  }
+  await Promise.all(
+    docmaps.map(docmap => parseDocmapIntoGroups(timeline, docmap))
+  );
   log('sorting %d timeline groups', timeline.groups.length);
-  timeline.groups.sort((a, b) => {
-    function extractDates(items) {
-      return items
-        .map(item => item.date)
-        .filter(Boolean) // remove nulls, i.e. unknown dates
-        .sort();
-    }
-    function extractTypes(items) {
-      return new Set(items.map(item => item.type));
-    }
-    const datesInA = extractDates(a.items);
-    const datesInB = extractDates(b.items);
-    if (datesInA.length === 0 || datesInB.length === 0) {
-      const itemTypesInA = extractTypes(a.items);
-      const itemTypesInB = extractTypes(b.items);
-      if (itemTypesInA.has(TimelineItemTypes.Preprint)) {
-        return -1;
-      }
-      if (itemTypesInB.has(TimelineItemTypes.Preprint)) {
-        return 1;
-      }
-      if (itemTypesInA.has(TimelineItemTypes.JournalPublication)) {
-        return 1;
-      }
-      if (itemTypesInB.has(TimelineItemTypes.JournalPublication)) {
-        return -1;
-      }
-      return 0;
-    }
-
-    const earliestDateInA = datesInA[0];
-    const latestDateInA = datesInA.at(-1);
-
-    const earliestDateInB = datesInB[0];
-    const latestDateInB = datesInB.at(-1);
-
-    if (latestDateInA < earliestDateInB) {
-      return -1;
-    }
-    if (latestDateInB < earliestDateInA) {
-      return 1;
-    }
-    return 0;
-  });
+  timeline.groups.sort(compareTimelineGroups);
   return timeline;
 }
 
@@ -294,8 +288,9 @@ export async function parse(docmaps, config) {
   debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);
   log('parsing %d docmaps', unpackedDocmaps.length, unpackedDocmaps);
+  const timeline = await convertToTimeline(unpackedDocmaps);
   return {
     summary: '',
-    timeline: reduce(unpackedDocmaps),
+    timeline,
   };
 }
