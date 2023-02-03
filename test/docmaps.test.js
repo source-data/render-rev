@@ -11,6 +11,7 @@ describe('docmaps', () => {
     .mock('glob:https://eeb.embo.org/api/v2/review_material/*', url => [
       {
         docmap: {
+          runningNumber: url.split('/').pop(), // last part of the URL, i.e. the review material ID
           content: `Content from ${url}`,
         },
       },

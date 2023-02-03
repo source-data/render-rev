@@ -37,11 +37,12 @@ async function fetchContents(item, uris) {
         .then(data => (data && data.length ? data[0].docmap : []))
     )
   );
-  contentDocmaps.sort((a, b) => a.runningNumber > b.runningNumber);
   contentDocmaps.forEach((docmap, idx) => {
     /* eslint no-param-reassign: ["error", { "props": false }] */
     item.contents[idx].src = docmap.content;
+    item.contents[idx].runningNumber = docmap.runningNumber;
   });
+  item.contents = item.contents.sort((a, b) => a.runningNumber - b.runningNumber);
 }
 
 const TimelineItemTypes = {
