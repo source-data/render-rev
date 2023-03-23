@@ -29,20 +29,12 @@ function getDate(dateString) {
   return new Date(dateStamp);
 }
 
-async function fetchContents(item, uris) {
-  const contentDocmaps = await Promise.all(
-    uris.map(uri =>
-      fetch(uri)
-        .then(data => data.json())
-        .then(data => (data && data.length ? data[0].docmap : []))
-    )
-  );
-  contentDocmaps.forEach((docmap, idx) => {
-    /* eslint no-param-reassign: ["error", { "props": false }] */
-    item.contents[idx].src = docmap.content;
-    item.contents[idx].runningNumber = docmap.runningNumber;
-  });
-  item.contents = item.contents.sort((a, b) => a.runningNumber - b.runningNumber);
+function getText(output) {
+  const textContent = output.content.find(c => c.type === 'text');
+  if (!textContent) {
+    return null;
+  }
+  return textContent.text;
 }
 
 const TimelineItemTypes = {
@@ -81,14 +73,13 @@ async function parseStep(step) {
       contents: [
         {
           date,
-          src: 'Loading...',
           doi: output.doi,
+          src: getText(output),
         },
       ],
       date,
       type: TimelineItemTypes.Response,
     };
-    await fetchContents(item, [output.uri]);
     log('added response item', item);
     return [item];
   }
@@ -99,27 +90,23 @@ async function parseStep(step) {
       hasSingleOutputOfType(action, DocmapOutputTypes.Review)
     );
   if (isReviewStep) {
-    const contents = [];
-    const dates = [];
-    const uris = [];
-    step.actions.forEach((action, idx) => {
-      const output = action.outputs[0];
-      const date = getDate(output.published);
-      contents[idx] = {
-        date,
-        doi: output.doi,
-        src: 'Loading...',
-      };
-      dates[idx] = date;
-      uris[idx] = output.uri;
-    });
-    dates.sort();
+    const contents = step.actions
+      .map(action => {
+        const output = action.outputs[0];
+        return {
+          date: getDate(output.published),
+          doi: output.doi,
+          runningNumber: output.runningNumber,
+          src: getText(output),
+        };
+      })
+      .sort((a, b) => a.runningNumber - b.runningNumber);
+    const earliestDate = contents.map(c => c.date).sort()[0];
     const item = {
       contents,
-      date: dates[0],
+      date: earliestDate,
       type: TimelineItemTypes.Reviews,
     };
-    await fetchContents(item, uris);
     log('added review item', item);
     return [item];
   }
@@ -285,6 +272,13 @@ async function convertToTimeline(docmaps) {
   return timeline;
 }
 
+/**
+ * Parse a list of docmaps that describe the review process of a preprint into a timeline.
+ *
+ * @param {Array} docmaps - A list of docmaps. All docmaps are treated as belonging to the same preprint.
+ * @param {Object} config - [optional] A configuration object. The only currently supported option is `debug`, which enables logging if truthy.
+ * @returns {Object} A timeline object.
+ */
 export async function parse(docmaps, config) {
   debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);

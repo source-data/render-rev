@@ -48,6 +48,12 @@ export const docmapsByDoi = {
                         service: 'https://hypothes.is',
                         url: 'https://hypothes.is/a/ddoLMM0aEeqoVrMgA6Yx0w',
                       },
+                      {
+                        id: '1837714',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of the author response to the reviews of 10.1101/2020.07.20.212886.',
+                      },
                     ],
                   },
                 ],
@@ -130,6 +136,7 @@ export const docmapsByDoi = {
                 outputs: [
                   {
                     published: '2020-07-23T19:26:50.243990+00:00',
+                    runningNumber: '2',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/1837718',
                     content: [
@@ -151,6 +158,12 @@ export const docmapsByDoi = {
                         service: 'https://eeb.embo.org/',
                         url: 'https://eeb.embo.org/api/v2/review_material/1837718',
                       },
+                      {
+                        id: '1837718',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #2 of 10.1101/2020.07.20.212886.',
+                      },
                     ],
                   },
                 ],
@@ -165,6 +178,7 @@ export const docmapsByDoi = {
                 outputs: [
                   {
                     published: '2020-07-23T19:26:51.010612+00:00',
+                    runningNumber: '1',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/1837715',
                     content: [
@@ -186,6 +200,12 @@ export const docmapsByDoi = {
                         service: 'https://eeb.embo.org/',
                         url: 'https://eeb.embo.org/api/v2/review_material/1837715',
                       },
+                      {
+                        id: '1837715',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #1 of 10.1101/2020.07.20.212886.',
+                      },
                     ],
                   },
                 ],
@@ -200,6 +220,7 @@ export const docmapsByDoi = {
                 outputs: [
                   {
                     published: '2020-07-23T19:26:49.980324+00:00',
+                    runningNumber: '3',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/1837719',
                     content: [
@@ -220,6 +241,12 @@ export const docmapsByDoi = {
                         type: 'web-page',
                         service: 'https://biorxiv.org',
                         url: 'https://biorxiv.org/content/10.1101/2020.07.20.212886#review',
+                      },
+                      {
+                        id: '1837719',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #3 of 10.1101/2020.07.20.212886.',
                       },
                     ],
                   },
@@ -273,6 +300,7 @@ export const docmapsByDoi = {
                   {
                     doi: '10.1234/2022.11.22.123',
                     published: '2022-02-09T18:21:15.407641+00:00',
+                    runningNumber: '1',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539358',
                     content: [
@@ -294,6 +322,12 @@ export const docmapsByDoi = {
                         service: 'https://hypothes.is/',
                         url: 'https://hypothes.is/a/EWM9QonVEeyZ1UP1Ek9W3g',
                       },
+                      {
+                        id: '20539358',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #1 of 10.1101/2021.10.26.465695.',
+                      },
                     ],
                   },
                 ],
@@ -309,6 +343,7 @@ export const docmapsByDoi = {
                   {
                     doi: '10.1234/2022.11.22.456',
                     published: '2022-02-09T18:21:15.077442+00:00',
+                    runningNumber: '2',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539359',
                     content: [
@@ -330,6 +365,12 @@ export const docmapsByDoi = {
                         service: 'https://hypothes.is/',
                         url: 'https://hypothes.is/a/ETFRponVEeyQCrc0YKW7Yw',
                       },
+                      {
+                        id: '20539359',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #2 of 10.1101/2021.10.26.465695.',
+                      },
                     ],
                   },
                 ],
@@ -345,6 +386,7 @@ export const docmapsByDoi = {
                   {
                     doi: '10.1234/2022.11.22.789',
                     published: '2022-02-09T18:21:14.076802+00:00',
+                    runningNumber: '3',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/20539360',
                     content: [
@@ -365,6 +407,12 @@ export const docmapsByDoi = {
                         type: 'web-page',
                         service: 'https://hypothes.is/',
                         url: 'https://hypothes.is/a/EJc5BInVEey7Nhcc_EWwnw',
+                      },
+                      {
+                        id: '20539360',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of review #3 of 10.1101/2021.10.26.465695.',
                       },
                     ],
                   },
@@ -414,6 +462,12 @@ export const docmapsByDoi = {
                         type: 'web-page',
                         service: 'https://eeb.embo.org',
                         url: 'https://eeb.embo.org/api/v2/review_material/20539357',
+                      },
+                      {
+                        id: '20539357',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of the author response to the reviews of 10.1101/2021.10.26.465695.',
                       },
                     ],
                   },
@@ -523,6 +577,7 @@ export const docmapsByDoi = {
                 outputs: [
                   {
                     published: '2022-05-27T05:02:20.022255+00:00',
+                    runningNumber: '',
                     type: 'review',
                     uri: 'https://eeb.embo.org/api/v2/review_material/22676192',
                     content: [
@@ -543,6 +598,12 @@ export const docmapsByDoi = {
                         type: 'web-page',
                         service: 'https://biorxiv.org',
                         url: 'https://biorxiv.org/content/10.1101/2021.10.26.465695#review',
+                      },
+                      {
+                        id: '22676192',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the full text of the review process file for 10.1101/2021.10.26.465695.',
                       },
                     ],
                   },
@@ -736,20 +797,20 @@ export const reviewProcessByDoi = {
                 {
                   date: new Date('2020-07-23T19:26:51.010612+00:00'),
                   doi: undefined,
-                  runningNumber: '1837715',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/1837715',
+                  runningNumber: '1',
+                  src: 'This is the full text of review #1 of 10.1101/2020.07.20.212886.',
                 },
                 {
                   date: new Date('2020-07-23T19:26:50.243990+00:00'),
                   doi: undefined,
-                  runningNumber: '1837718',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/1837718',
+                  runningNumber: '2',
+                  src: 'This is the full text of review #2 of 10.1101/2020.07.20.212886.',
                 },
                 {
                   date: new Date('2020-07-23T19:26:49.980324+00:00'),
                   doi: undefined,
-                  runningNumber: '1837719',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/1837719',
+                  runningNumber: '3',
+                  src: 'This is the full text of review #3 of 10.1101/2020.07.20.212886.',
                 },
               ],
               date: new Date('2020-07-23T19:26:49.980324+00:00'),
@@ -760,8 +821,7 @@ export const reviewProcessByDoi = {
                 {
                   date: new Date('2020-07-23T19:26:51.484215+00:00'),
                   doi: '10.1234/2022.1.2.012',
-                  runningNumber: '1837714',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/1837714',
+                  src: 'This is the full text of the author response to the reviews of 10.1101/2020.07.20.212886.',
                 },
               ],
               date: new Date('2020-07-23T19:26:51.484215+00:00'),
@@ -801,20 +861,20 @@ export const reviewProcessByDoi = {
                 {
                   date: new Date('2022-02-09T18:21:15.407641+00:00'),
                   doi: '10.1234/2022.11.22.123',
-                  runningNumber: '20539358',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/20539358',
+                  runningNumber: '1',
+                  src: 'This is the full text of review #1 of 10.1101/2021.10.26.465695.',
                 },
                 {
                   date: new Date('2022-02-09T18:21:15.077442+00:00'),
                   doi: '10.1234/2022.11.22.456',
-                  runningNumber: '20539359',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/20539359',
+                  runningNumber: '2',
+                  src: 'This is the full text of review #2 of 10.1101/2021.10.26.465695.',
                 },
                 {
                   date: new Date('2022-02-09T18:21:14.076802+00:00'),
                   doi: '10.1234/2022.11.22.789',
-                  runningNumber: '20539360',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/20539360',
+                  runningNumber: '3',
+                  src: 'This is the full text of review #3 of 10.1101/2021.10.26.465695.',
                 },
               ],
               date: new Date('2022-02-09T18:21:14.076802+00:00'),
@@ -825,8 +885,7 @@ export const reviewProcessByDoi = {
                 {
                   date: new Date('2022-02-09T18:21:16.420772+00:00'),
                   doi: undefined,
-                  runningNumber: '20539357',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/20539357',
+                  src: 'This is the full text of the author response to the reviews of 10.1101/2021.10.26.465695.',
                 },
               ],
               date: new Date('2022-02-09T18:21:16.420772+00:00'),
@@ -847,8 +906,8 @@ export const reviewProcessByDoi = {
                 {
                   date: new Date('2022-05-27T05:02:20.022255+00:00'),
                   doi: undefined,
-                  runningNumber: '22676192',
-                  src: 'Content from https://eeb.embo.org/api/v2/review_material/22676192',
+                  runningNumber: '',
+                  src: 'This is the full text of the review process file for 10.1101/2021.10.26.465695.',
                 },
               ],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
