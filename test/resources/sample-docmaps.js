@@ -258,6 +258,29 @@ export const docmapsByDoi = {
                   },
                 ],
               },
+              {
+                outputs: [
+                  {
+                    published: '2020-07-28T20:46:49.980666+00:00',
+                    type: 'reviews-summary',
+                    uri: 'https://eeb.embo.org/api/v2/review_material/1837800',
+                    content: [
+                      {
+                        id: '1837800',
+                        type: 'text',
+                        service: 'https://eeb.embo.org',
+                        text: 'This is the summary of the reviews of 10.1101/2020.07.20.212886.',
+                      },
+                    ],
+                  },
+                ],
+                participants: [
+                  {
+                    actor: { name: 'anonymous', type: 'person' },
+                    role: 'peer-reviewer',
+                  },
+                ],
+              },
             ],
             inputs: [
               {
@@ -769,7 +792,7 @@ export const docmapsByDoi = {
 
 export const reviewProcessByDoi = {
   '10.1101/2020.07.20.212886': {
-    summary: '',
+    summary: 'This is the summary of the reviews of 10.1101/2020.07.20.212886.',
     timeline: {
       groups: [
         {

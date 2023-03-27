@@ -6,8 +6,19 @@ function log(message, ...optionalParams) {
   }
 }
 
+/**
+ * Returns a generator that yields each step in the docmap in the correct order.
+ *
+ * Docmap steps are a simple linked list: each has a `next-step` property that is the id of the next step.
+ * The docmap has a dictionary of steps, indexed by id, and a `first-step` property that is the id of the first step.
+ * The generator will abort if it detects a loop in the docmap's steps.
+ *
+ * @param {*} idFirstStep The id of the first step in the docmap.
+ * @param {*} stepsById The dictionary of steps in the docmap, indexed by id.
+ * @returns A generator that yields each step in the docmap in the correct order.
+ */
 function* stepsGenerator(idFirstStep, stepsById) {
-  const visitedSteps = new Set();
+  const visitedSteps = new Set(); // keep track of visited steps for loop detection
   let idNextStep = idFirstStep;
   while (idNextStep in stepsById) {
     if (visitedSteps.has(idNextStep)) {
@@ -49,19 +60,37 @@ const DocmapOutputTypes = {
   Response: 'author-response',
   Review: 'review',
   ReviewArticle: 'review-article',
+  ReviewsSummary: 'reviews-summary',
 };
 
-async function parseStep(step) {
-  log('parsing step', step);
-  const isSingleActionStep = ({ actions }) => actions && actions.length === 1;
-  const isSingleOrMultiActionStep = ({ actions }) =>
-    actions && actions.length >= 1;
+function isSingleActionStep(step) {
+  const { actions } = step;
+  return actions && actions.length === 1;
+}
+function isSingleOrMultiActionStep(step) {
+  const { actions } = step;
+  return actions && actions.length >= 1;
+}
 
-  const hasSingleOutputOfType = (action, expectedType) =>
+function hasSingleOutputOfType(action, expectedType) {
+  return (
     action.outputs &&
     action.outputs.length === 1 &&
     'type' in action.outputs[0] &&
-    action.outputs[0].type === expectedType;
+    action.outputs[0].type === expectedType
+  );
+}
+
+function isReviewAction(action) {
+  return hasSingleOutputOfType(action, DocmapOutputTypes.Review);
+}
+
+function isReviewsSummaryAction(action) {
+  return hasSingleOutputOfType(action, DocmapOutputTypes.ReviewsSummary);
+}
+
+async function parseStep(step, summaryList) {
+  log('parsing step', step);
 
   const isResponseStep =
     isSingleActionStep(step) &&
@@ -86,11 +115,17 @@ async function parseStep(step) {
 
   const isReviewStep =
     isSingleOrMultiActionStep(step) &&
-    step.actions.every(action =>
-      hasSingleOutputOfType(action, DocmapOutputTypes.Review)
+    step.actions.every(
+      action => isReviewAction(action) || isReviewsSummaryAction(action)
     );
   if (isReviewStep) {
+    const summaries = step.actions
+      .filter(isReviewsSummaryAction)
+      .map(action => getText(action.outputs[0]));
+    summaryList.push(...summaries);
+
     const contents = step.actions
+      .filter(isReviewAction)
       .map(action => {
         const output = action.outputs[0];
         return {
@@ -186,7 +221,7 @@ function getFirstGroup(inputs) {
   };
 }
 
-async function parseDocmapIntoGroups(timeline, docmap) {
+async function parseDocmapIntoGroups(summaryList, timeline, docmap) {
   log('parsing docmap', docmap);
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
@@ -196,7 +231,9 @@ async function parseDocmapIntoGroups(timeline, docmap) {
 
   const publisherUri =
     docmap.publisher.uri || docmap.publisher.url || docmap.publisher.homepage;
-  const parsedSteps = await Promise.all(steps.map(parseStep));
+  const parsedSteps = await Promise.all(
+    steps.map(step => parseStep(step, summaryList))
+  );
   const items = parsedSteps.flat();
   timeline.groups.push({
     publisher: {
@@ -264,12 +301,14 @@ async function convertToTimeline(docmaps) {
   const timeline = {
     groups: [],
   };
+
+  const summaryList = [];
   await Promise.all(
-    docmaps.map(docmap => parseDocmapIntoGroups(timeline, docmap))
+    docmaps.map(docmap => parseDocmapIntoGroups(summaryList, timeline, docmap))
   );
   log('sorting %d timeline groups', timeline.groups.length);
   timeline.groups.sort(compareTimelineGroups);
-  return timeline;
+  return { summaryList, timeline };
 }
 
 /**
@@ -283,9 +322,10 @@ export async function parse(docmaps, config) {
   debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);
   log('parsing %d docmaps', unpackedDocmaps.length, unpackedDocmaps);
-  const timeline = await convertToTimeline(unpackedDocmaps);
+  const { summaryList, timeline } = await convertToTimeline(unpackedDocmaps);
+
   return {
-    summary: '',
+    summary: summaryList.length > 0 ? summaryList.at(-1) : '',
     timeline,
   };
 }
