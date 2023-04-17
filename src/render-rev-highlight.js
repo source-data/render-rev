@@ -227,6 +227,13 @@ export class RenderRevHighlight extends LitElement {
         padding: 8px;
         position: relative; /* enable positioning of buttons inside the sidebar */
       }
+      // 0 inner padding because that is added by the .item-content container
+      .sidebar-left {
+        padding-right: 0;
+      }
+      .sidebar-right {
+        padding-left: 0;
+      }
       /* Sidebar buttons are 24 + 2 * 3px + 2 * 1px = 32px wide (width + 2 * padding + 2 * border).
        * Just like with the nav items above, the border is always present but transparent
        * if not in one of these states stay in the same place when hovered/clicked.
@@ -259,6 +266,8 @@ export class RenderRevHighlight extends LitElement {
       .item-content {
         height: 100%;
         overflow: scroll;
+        // padding to prevent scrollbar from hiding content
+        padding: 0 8px;
       }
       .item-content article:not(:first-child) {
         margin-top: 80px;
@@ -485,11 +494,11 @@ export class RenderRevHighlight extends LitElement {
         <div class="render-rev-highlight">
           <nav class="highlight-nav">${this.getHighlightNav()}</nav>
           <div class="highlight-content">
-            <div class="sidebar">
+            <div class="sidebar sidebar-left">
               ${this.printButton()} ${this.previousContentButton()}
             </div>
             <div class="item-content">${this.getHighlightContent()}</div>
-            <div class="sidebar">
+            <div class="sidebar sidebar-right">
               ${this.backToTopButton()} ${this.nextContentButton()}
             </div>
           </div>
