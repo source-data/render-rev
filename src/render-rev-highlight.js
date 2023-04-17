@@ -266,7 +266,7 @@ export class RenderRevHighlight extends LitElement {
       .item-content {
         height: 100%;
         overflow: scroll;
-        // padding to prevent scrollbar from hiding content
+        /* padding to prevent scrollbar from hiding content */
         padding: 0 8px;
       }
       .item-content article:not(:first-child) {
@@ -453,7 +453,18 @@ export class RenderRevHighlight extends LitElement {
     printContainer.innerHTML = `
       <main>
         ${this._highlight.contents
-          .map(({ html: htmlContent }) => `<article>${htmlContent}</article>`)
+          .map(
+            ({ date, doi, html: htmlContent, title }) => `<article>
+            <header>
+              <h1>${title}</h1>
+              ${doi ? `<a href="https://doi.org/${doi}">${doi}</a>` : ''}
+              <time datetime="${date}">Published on ${this.config.formatDate(
+              date
+            )}</time>
+            </header>
+            ${htmlContent}
+          </article>`
+          )
           .join('')}
       </main>
     `;
@@ -471,8 +482,20 @@ export class RenderRevHighlight extends LitElement {
         #${idPrintContainer} {
           display: block !important;
         }
-        article {
-          break-after: page;
+        article:not(:first-child) {
+          margin-top: 80px;
+        }
+        article header {
+          display: flex;
+          font-size: 1.2rem;
+          font-weight: bold;
+          justify-content: space-between;
+          padding: 24px 0;
+        }
+        article header h1 {
+          font-size: unset;
+          font-weight: unset;
+          margin: unset;
         }
         code {
           white-space: break-spaces;
