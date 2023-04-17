@@ -73,9 +73,9 @@ export class RenderRevModal extends LitElement {
         display: block;
       }
       .highlight-dialog {
-        margin: 3vh auto;
-        height: 94vh;
-        max-width: 860px;
+        margin: var(--highlight-margin);
+        height: var(--highlight-height);
+        max-width: var(--highlight-max-width);
         overflow: hidden;
         transition: transform 0.3s ease-out;
         position: relative;

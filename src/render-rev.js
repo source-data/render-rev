@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { markdown } from '../lib/drawdown.js';
 
 import { getReviewProcess } from './store.js';
@@ -131,6 +131,40 @@ export class RenderRev extends LitElement {
       });
   }
 
+  /**
+   * The configurable CSS styles for the component.
+   *
+   * Users of this component can set the --rr-* CSS variables on an ancestor element of this component. This styles section then takes these external variables, or the default value if they are not set, and sets the variables that are used internally.
+   */
+  static styles = css`
+    .render-rev {
+      --timeline-line-color: var(--rr-timeline-line-color, grey);
+      --timeline-text-color: var(--rr-timeline-text-color, grey);
+
+      --preprint-bg-color: var(--rr-preprint-bg-color, #accbd2);
+      --preprint-text-color: var(--rr-preprint-text-color, #056277);
+
+      --reviews-bg-color: var(--rr-reviews-bg-color, #5796a4);
+      --reviews-text-color: var(--rr-reviews-text-color, ivory);
+
+      --published-bg-color: var(--rr-published-bg-color, #056277);
+      --published-text-color: var(--rr-published-text-color, ivory);
+
+      --highlight-max-width: var(--rr-highlight-max-width, 860px);
+      --highlight-height: var(--rr-highlight-height, 94vh);
+      --highlight-margin: var(--rr-highlight-margin, 3vh auto);
+
+      --highlight-nav-bg-color: var(
+        --rr-highlight-nav-bg-color,
+        var(--reviews-bg-color)
+      );
+      --highlight-nav-text-color: var(
+        --rr-highlight-nav-bg-color,
+        var(--reviews-text-color)
+      );
+    }
+  `;
+
   loading() {
     return html`Loading review
     process${this._config.doi ? ` for ${this._config.doi}` : ''}...`;
@@ -145,11 +179,13 @@ export class RenderRev extends LitElement {
     switch (this._status) {
       case this.Ready:
         return html`
-          <render-rev-timeline
-            .reviewProcess=${this._reviewProcess}
-            .config=${this._config.display}
-            .highlightItem=${this._highlightItem}
-          ></render-rev-timeline>
+          <div class="render-rev">
+            <render-rev-timeline
+              .reviewProcess=${this._reviewProcess}
+              .config=${this._config.display}
+              .highlightItem=${this._highlightItem}
+            ></render-rev-timeline>
+          </div>
         `;
       case this.Loading:
         return this.loading();

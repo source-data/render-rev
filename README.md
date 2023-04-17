@@ -114,6 +114,32 @@ external source, use the `.configure()` method of the element:
     ```
 * `highlightDoi`: Automatically open the highlight viewer for the review or response with this DOI.
 
+### Styling
+
+The component uses [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) to enable custom styling of some aspects of the rendered review process.
+Set the properties on the custom element or one of its ancestors to override the default values.
+
+These are the available options:
+* `--rr-timeline-line-color`: The color of the line that connects the timeline items. Defaults to `grey`.
+* `--rr-timeline-text-color`: The color of the text in the timeline (publisher names, dates). Defaults to `grey`.
+
+* `--rr-preprint-bg-color`: The background color of the preprint items in the timeline. Defaults to `#accbd2`.
+* `--rr-preprint-text-color`: The text color of the preprint items in the timeline. Defaults to `#056277`.
+
+* `--rr-reviews-bg-color`: The background color of the reviews items in the timeline. Defaults to `#5796a4`.
+* `--rr-reviews-text-color`: The text color of the reviews items in the timeline. Defaults to `ivory`.
+
+* `--rr-published-bg-color`: The background color of the published items in the timeline. Defaults to `#056277`.
+* `--rr-published-text-color`: The text color of the published items in the timeline. Defaults to `ivory`.
+
+* `--rr-highlight-max-width`: The maximum width of the highlight viewer. Defaults to `860px`.
+* `--rr-highlight-height`: The height of the highlight viewer. Defaults to `94vh`.
+* `--rr-highlight-margin`: The margin of the highlight viewer. Defaults to `3vh auto`.
+
+* `--rr-highlight-nav-bg-color`: The background color of the navigation bar in the highlight viewer. Defaults to the background color of the reviews items.
+* `--rr-highlight-nav-text-color`: The text color of the navigation bar in the highlight viewer. Defaults to the text color of the reviews items.
+
+
 ## Development
 
 The project is scaffolded with [Open Web Components](https://open-wc.org/) and built with [Lit](https://lit.dev/).

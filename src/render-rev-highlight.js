@@ -145,8 +145,8 @@ export class RenderRevHighlight extends LitElement {
        * Top & bottom margins are set by nav items below.
        */
       .highlight-nav {
-        background-color: #5796a4;
-        box-shadow: 0px 0px 8px 2px #5796a4;
+        background-color: var(--highlight-nav-bg-color);
+        box-shadow: 0px 0px 8px 2px var(--highlight-nav-bg-color);
         display: flex;
         flex-wrap: wrap;
         padding: 0 38px;
@@ -160,7 +160,7 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav-item {
         border-bottom: 3px solid;
         border-bottom-color: transparent;
-        color: ivory;
+        color: var(--highlight-nav-text-color);
         filter: brightness(85%);
         font-size: 16px;
         height: 36px;
@@ -168,7 +168,7 @@ export class RenderRevHighlight extends LitElement {
         padding: 4px 12px 0;
       }
       .highlight-nav-item.active {
-        border-color: ivory;
+        border-color: var(--highlight-nav-text-color);
         filter: none;
       }
       .highlight-nav-item.active:active,
@@ -179,7 +179,7 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav-item:active,
       .highlight-nav-item:focus,
       .highlight-nav-item:hover {
-        border-color: ivory;
+        border-color: var(--highlight-nav-text-color);
         filter: brightness(95%);
       }
 
@@ -200,7 +200,7 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav-item.close-highlight:active,
       .highlight-nav-item.close-highlight:focus,
       .highlight-nav-item.close-highlight:hover {
-        border-color: ivory;
+        border-color: var(--highlight-nav-text-color);
         filter: brightness(85%);
       }
 

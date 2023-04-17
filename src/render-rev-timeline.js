@@ -65,7 +65,7 @@ export class RenderRevTimeline extends LitElement {
       }
       .group-label,
       .item-date {
-        color: grey;
+        color: var(--timeline-text-color);
       }
       .item-date {
         position: relative;
@@ -81,6 +81,7 @@ export class RenderRevTimeline extends LitElement {
 
       /* create the dotted lines between dates */
       .timeline-group:not(:first-child) .item-date::before {
+        color: var(--timeline-line-color);
         width: 20px;
         /* position it above the middle of the item date */
         position: absolute;
@@ -155,31 +156,31 @@ export class RenderRevTimeline extends LitElement {
       }
 
       .item-label.preprint-posted {
-        background: #accbd2;
-        color: #056277;
+        background: var(--preprint-bg-color);
+        color: var(--preprint-text-color);
       }
       .item-label.preprint-posted:before {
-        border-right-color: #accbd2;
+        border-right-color: var(--preprint-bg-color);
       }
 
       .item-label.response,
       .item-label.review-article,
       .item-label.reviews {
-        background: #5796a4;
-        color: ivory;
+        background: var(--reviews-bg-color);
+        color: var(--reviews-text-color);
       }
       .item-label.response:before,
       .item-label.review-article:before,
       .item-label.reviews:before {
-        border-right-color: #5796a4;
+        border-right-color: var(--reviews-bg-color);
       }
 
       .item-label.journal-publication {
-        background: #056277;
-        color: ivory;
+        background: var(--published-bg-color);
+        color: var(--published-text-color);
       }
       .item-label.journal-publication:before {
-        border-right-color: #056277;
+        border-right-color: var(--published-bg-color);
       }
     `,
   ];
