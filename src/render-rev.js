@@ -140,6 +140,8 @@ export class RenderRev extends LitElement {
    */
   static styles = css`
     .render-rev {
+      --timeline-width: var(--rr-timeline-width, 500px);
+
       --timeline-line-color: var(--rr-timeline-line-color, grey);
       --timeline-text-color: var(--rr-timeline-text-color, grey);
 

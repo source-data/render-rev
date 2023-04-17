@@ -121,6 +121,8 @@ The component uses [CSS custom properties](https://developer.mozilla.org/en-US/d
 Set the properties on the custom element or one of its ancestors to override the default values.
 
 These are the available options:
+* `--rr-timeline-width`: The width of the timeline. Defaults to `500px`.
+
 * `--rr-timeline-line-color`: The color of the line that connects the timeline items. Defaults to `grey`.
 * `--rr-timeline-text-color`: The color of the text in the timeline (publisher names, dates). Defaults to `grey`.
 

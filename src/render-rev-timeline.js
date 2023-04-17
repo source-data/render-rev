@@ -36,8 +36,28 @@ export class RenderRevTimeline extends LitElement {
   static styles = [
     GlobalStyles,
     css`
+      .render-rev-summary,
       .render-rev-timeline {
-        width: 100%;
+        width: var(--timeline-width);
+      }
+      .render-rev-summary {
+        color: var(--timeline-line-color);
+        /* make the summary text smaller relative to the other text in render-rev */
+        font-size: smaller;
+        margin-bottom: 8px;
+        text-align: justify;
+        word-break: break-word;
+      }
+      .render-rev-summary h6 {
+        /* make the summary header text smaller than the summary text */
+        font-size: smaller;
+        font-weight: inherit;
+        margin: 0 0 4px 0;
+      }
+      .render-rev-summary .auto-summary-info {
+        text-align: justify;
+        white-space: break-spaces;
+        width: 300px;
       }
       .timeline-group:not(:first-child) {
         margin-top: 24px;
@@ -286,10 +306,32 @@ export class RenderRevTimeline extends LitElement {
     `;
   }
 
+  renderSummary() {
+    if (this.reviewProcess.summary) {
+      const infoText =
+        'This summary was generated automatically based on the content of the reviews. To access the full content of the original reviews, click on "Peer Review".';
+      return html`
+        <div class="render-rev-summary">
+          <h6>
+            Automated Summary
+            <spider-tooltip mode="light" show-arrow position="block-start">
+              <a slot="trigger" class="auto-summary-info-trigger" href="#">
+                (What is this?)
+              </a>
+              <div slot="content" class="auto-summary-info">${infoText}</div>
+            </spider-tooltip>
+          </h6>
+          ${this.reviewProcess.summary}
+        </div>
+      `;
+    }
+    return '';
+  }
+
   render() {
     const self = this;
     return html`
-      <div class="render-rev-summary">${this.reviewProcess.summary}</div>
+      ${this.renderSummary()}
       <div class="render-rev-timeline">
         ${this.reviewProcess.timeline.groups.map(group =>
           self.renderGroup(group)
