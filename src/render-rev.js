@@ -81,8 +81,8 @@ export class RenderRev extends LitElement {
   _updateReviewProcess(externalOptions) {
     const defaultConfig = {
       debug: false,
-      doi: null,
       docmaps: null,
+      docmapsUrl: doi => `https://eeb.embo.org/api/v2/docmap/${doi}`,
       display: {
         publisherName: name => {
           const nameMap = {

@@ -37,6 +37,7 @@
 
     const display = {};
     const debug = true;
+    const docmapsUrl = doi => `https://localhost:5050/api/v2/docmap/${doi}`;
 
     const eebDois = [
       '10.1101/2022.07.22.22277924',
@@ -62,7 +63,7 @@
                 ` : null}
                 <td>
                   <span>${doi}:</span>
-                  <render-rev doi="${doi}" .options=${{ debug, display }}></render-rev>
+                  <render-rev doi="${doi}" .options=${{ debug, display, docmapsUrl }}></render-rev>
                 </td>
               </tr>
             `)}
