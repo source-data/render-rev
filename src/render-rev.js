@@ -88,9 +88,11 @@ export class RenderRev extends LitElement {
           const nameMap = {
             development: 'Development',
             elife: 'eLife',
+            'embo molecular medicine': 'EMM',
             'embo press': 'EMBO Press',
             'embo reports': 'EMBOR',
             'life science alliance': 'LSA',
+            'molecular systems biology': 'MSB',
             'peerage of science': 'Peerage of Science',
             'peer ref': 'Peer Ref',
             'plos one': 'PLOS ONE',

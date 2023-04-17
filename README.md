@@ -84,7 +84,7 @@ external source, use the `.configure()` method of the element:
 * `doi`: Display the review process of the preprint with this DOI. Overrides the value passed to the `doi` custom element attribute.
 * `display`: Pass in an object to configure how the review process is displayed with one of the following keys:
   * `formatDate`: A callable that receives a Date object and returns a string representation of this date. Dates passed to this function are displayed in the timeline and above the full-text of reviews and responses in the highlight viewer. By default dates are formatted as `<Name of month abbreviated> <Day of month>, <Year>`, e.g. `Feb 24, 2020`.
-  * `publisherLogo`: A callable that receives the name of a publisher and returns a URL to the icon that should be displayed next to the publisher's name, or a falsy value if no icon should be displayed. By default always returns null, i.e. no icons are displayed for any publisher. Example:
+  * `publisherLogo`: A callable that receives the name of a publisher and returns a URL to the icon that should be displayed next to the publisher's name, or a falsy value if no icon should be displayed. By default some publisher logos are included, e.g. for bioRxiv, EMBO Press journals, or eLife. Example:
     ```Javascript
     {
       publisherLogo: name => {

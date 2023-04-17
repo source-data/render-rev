@@ -35,20 +35,7 @@
     import { html, render } from 'lit';
     import '../render-rev.js';
 
-    const display = {
-      publisherLogo: name => {
-        const urlMap = {
-          'bioRxiv': 'https://www.biorxiv.org/sites/default/files/images/favicon.ico',
-          'elife': 'https://elifesciences.org/assets/favicons/favicon-32x32.56d32e31.png',
-          'embo press': 'https://www.embopress.org/favicon.ico',
-          'embo reports': 'https://www.embopress.org/favicon.ico',
-          'life science alliance': 'https://www.embopress.org/favicon.ico',
-          'review commons': 'https://www.reviewcommons.org/wp-content/uploads/2019/11/cropped-favicon-192x192.png',
-          'the embo journal': 'https://www.embopress.org/favicon.ico',
-        };
-        return urlMap[name] || null;
-      },
-    };
+    const display = {};
     const debug = true;
 
     const eebDois = [

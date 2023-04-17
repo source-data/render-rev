@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { Icons } from './icons.js';
+import { PublisherLogos } from './logos.js';
 import './render-rev-highlight.js';
 import { GlobalStyles } from './styles.js';
 import '@spider-ui/tooltip';
@@ -225,7 +226,7 @@ export class RenderRevTimeline extends LitElement {
   renderGroupPublisher(publisher) {
     const { name, peerReviewPolicy, uri } = publisher;
     const displayName = this.config.publisherName(name);
-    const logoUrl = this.config.publisherLogo(name);
+    const logoUrl = this.config.publisherLogo(name) || PublisherLogos[name];
 
     const logo = logoUrl
       ? html`<img
