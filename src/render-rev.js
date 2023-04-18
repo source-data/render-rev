@@ -117,20 +117,22 @@ export class RenderRev extends LitElement {
     config.display = { ...defaultConfig.display, ...externalOptions.display };
 
     this._config = config;
-    getReviewProcess(this._config)
-      .then(reviewProcess => {
-        if (this._config.highlightDoi) {
-          this._highlightItem = findHighlightItem(
-            reviewProcess,
-            this._config.highlightDoi
-          );
-        }
-        this._reviewProcess = reviewProcess;
-        this._status = this.Ready;
-      })
-      .catch(() => {
-        this._status = this.Failed;
-      });
+    if (this._config.doi || this._config.docmaps) {
+      getReviewProcess(this._config)
+        .then(reviewProcess => {
+          if (this._config.highlightDoi) {
+            this._highlightItem = findHighlightItem(
+              reviewProcess,
+              this._config.highlightDoi
+            );
+          }
+          this._reviewProcess = reviewProcess;
+          this._status = this.Ready;
+        })
+        .catch(() => {
+          this._status = this.Failed;
+        });
+    }
   }
 
   /**

@@ -110,7 +110,9 @@ export class RenderRevHighlight extends LitElement {
   }
 
   onClose() {
-    this._scrollspy.observer.disconnect();
+    if (this._scrollspy) {
+      this._scrollspy.observer.disconnect();
+    }
   }
 
   triggerClose() {

@@ -57,7 +57,7 @@
                 ` : null}
                 <td>
                   <h5>${doi}:</h5>
-                  <render-rev doi="${doi}" .options=${{ debug, display, docmapsUrl }}></render-rev>
+                  <render-rev data-doi="${doi}"></render-rev>
                 </td>
               </tr>
             `)}
@@ -81,6 +81,9 @@
       document.querySelector('#demo')
     );
 
+    eebDois.forEach(
+      doi => document.querySelector(`render-rev[data-doi="${doi}"]`).configure({ docmapsUrl, doi, debug, display })
+    );
     scietyDois.forEach(
       doi => fetch(`sciety-docmaps/${doi}.json`)
         .then(data => data.json())
