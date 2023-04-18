@@ -20,12 +20,6 @@
       border-bottom-width: 1px;
       border-right-width: 1px;
     }
-    th.label {
-      width: 200px;
-    }
-    th.source {
-      width: 700px;
-    }
   </style>
 </head>
 <body>
@@ -37,7 +31,7 @@
 
     const display = {};
     const debug = true;
-    const docmapsUrl = doi => `https://localhost:5050/api/v2/docmap/${doi}`;
+    const docmapsUrl = doi => `http://localhost:5050/api/v2/docmap/${doi}`;
 
     const eebDois = [
       '10.1101/2022.07.22.22277924',
@@ -62,7 +56,7 @@
                   </th>
                 ` : null}
                 <td>
-                  <span>${doi}:</span>
+                  <h5>${doi}:</h5>
                   <render-rev doi="${doi}" .options=${{ debug, display, docmapsUrl }}></render-rev>
                 </td>
               </tr>
