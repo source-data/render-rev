@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import DOMPurify from 'dompurify';
 
@@ -23,6 +24,7 @@ export class RenderRevHighlight extends LitElement {
     highlightItem: { type: Object },
     _highlight: { state: true, type: Object },
     _scrollspy: { state: true, type: Object },
+    _hideSummary: { state: true, type: Boolean },
   };
 
   firstUpdated() {
@@ -62,14 +64,23 @@ export class RenderRevHighlight extends LitElement {
           : []
       )
       .flat();
+    const summaries = activeGroup.items
+      .map(item => item.summaries)
+      .flat()
+      .filter(Boolean);
     this._highlight = {
       contents,
       idxActiveContent,
+      summary: summaries.length > 0 ? summaries[0] : null,
     };
     const modal = this.shadowRoot.querySelector('render-rev-modal');
     modal.show();
     await modal.updateComplete;
-    this.scrollToContent(idxActiveContent, false);
+    if (idxActiveContent === 0) {
+      this.scrollToTop();
+    } else {
+      this.scrollToContent(idxActiveContent, false);
+    }
 
     // We're keeping track of which content is the currently active one to e.g. update
     // the prev / next buttons.
@@ -126,6 +137,7 @@ export class RenderRevHighlight extends LitElement {
     this._highlight = {
       contents: this._highlight.contents,
       idxActiveContent: idxNewActiveContent,
+      summary: this._highlight.summary,
     };
   }
 
@@ -212,7 +224,7 @@ export class RenderRevHighlight extends LitElement {
        */
       .highlight-content {
         display: grid;
-        grid-template-columns: 48px auto 48px;
+        grid-template-columns: 40px auto 40px;
 
         /* The navbar at the top is exactly 46px high. Setting margin- & padding-top to
          * -46px & 46px respectively positions the content just below that, while height:
@@ -226,15 +238,8 @@ export class RenderRevHighlight extends LitElement {
         padding-top: 46px;
       }
       .sidebar {
-        padding: 8px;
+        padding: 4px;
         position: relative; /* enable positioning of buttons inside the sidebar */
-      }
-      // 0 inner padding because that is added by the .item-content container
-      .sidebar-left {
-        padding-right: 0;
-      }
-      .sidebar-right {
-        padding-left: 0;
       }
       /* Sidebar buttons are 24 + 2 * 3px + 2 * 1px = 32px wide (width + 2 * padding + 2 * border).
        * Just like with the nav items above, the border is always present but transparent
@@ -269,11 +274,14 @@ export class RenderRevHighlight extends LitElement {
         height: 100%;
         overflow: scroll;
         /* padding to prevent scrollbar from hiding content */
-        padding: 0 8px;
+        padding: 0 16px;
       }
       .item-content article:not(:first-child) {
-        margin-top: 80px;
+        /* margin between piecs of content */
+        margin-top: 64px;
       }
+
+      /* styling for the header section at the top of each piece of content */
       .item-content article header {
         display: flex;
         font-size: 1.2rem;
@@ -286,6 +294,81 @@ export class RenderRevHighlight extends LitElement {
         font-weight: unset;
         margin: unset;
       }
+
+      /* styling for the summary section at the top */
+      .content-summary {
+        margin-bottom: -32px;
+        margin-top: 32px;
+      }
+      .content-summary .hidden {
+        display: none;
+      }
+      .content-summary .summary-container {
+        border: 1px solid darkgrey;
+        margin-top: 12px;
+        padding: 12px;
+        position: relative;
+      }
+      .content-summary .summary-title {
+        background: white;
+        font-weight: normal;
+        margin: 0;
+        padding: 0 4px;
+        position: absolute;
+        top: -8px;
+        left: 8px;
+      }
+      .content-summary .disclaimer {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .toggle {
+        cursor: pointer;
+        display: inline-block;
+        margin-bottom: 8px;
+      }
+      .toggle-switch {
+        display: inline-block;
+        background: #ccc;
+        border-radius: 12px;
+        width: 40px;
+        height: 22px;
+        position: relative;
+        vertical-align: middle;
+        transition: background 0.25s;
+      }
+      .toggle-switch:before,
+      .toggle-switch:after {
+        content: '';
+      }
+      .toggle-switch:before {
+        display: block;
+        background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        transition: left 0.25s;
+      }
+      .toggle:hover .toggle-switch:before {
+        background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+      }
+      .toggle-checkbox:checked + .toggle-switch {
+        background: #56c080;
+      }
+      .toggle-checkbox:checked + .toggle-switch:before {
+        left: 20px;
+      }
+      .toggle-checkbox {
+        position: absolute;
+        visibility: hidden;
+      }
+
+      /* styling for rendered markdown */
       .item-content article code {
         white-space: break-spaces;
       }
@@ -327,12 +410,53 @@ export class RenderRevHighlight extends LitElement {
     `;
   }
 
+  renderSummary() {
+    const { summary } = this._highlight;
+    if (summary) {
+      const classes = {
+        hidden: this._hideSummary,
+        'summary-container': true,
+      };
+      return html`
+        <article class="content-summary">
+          <form>
+            <label class="toggle">
+              <span class="toggle-label"
+                >Display an automated digest of the reviews:</span
+              >
+              <input
+                class="toggle-checkbox"
+                type="checkbox"
+                @change="${() => {
+                  this._hideSummary = !this._hideSummary;
+                }}"
+                checked
+              />
+              <div class="toggle-switch"></div>
+            </label>
+          </form>
+
+          <div class=${classMap(classes)}>
+            <h4 class="summary-title">Auto-digest</h4>
+            <div class="disclaimer">
+              Disclaimer: this summary was generated automatically; the full
+              original content is available below.
+            </div>
+            <div class="summary-text">${summary}</div>
+          </div>
+        </article>
+      `;
+    }
+    return '';
+  }
+
   getHighlightContent() {
     if (!this._highlight) {
       return null;
     }
     return html`
       <main>
+        ${this.renderSummary()}
         ${this._highlight.contents.map(
           ({ html: htmlContent, date, doi, title }, idx) => html`
             <article class="highlight" data-idx="${idx}">
@@ -421,19 +545,18 @@ export class RenderRevHighlight extends LitElement {
     }
   }
 
+  scrollToTop() {
+    this.shadowRoot.querySelector('.item-content').scrollTo({
+      top: 0,
+      left: 0,
+    });
+  }
+
   backToTopButton() {
-    const scrollingElement = this.shadowRoot.querySelector('.item-content');
-    function scrollToTop() {
-      scrollingElement.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      });
-    }
     return html`
       <button
         class="scroll-to-top"
-        @click="${scrollToTop}"
+        @click="${this.scrollToTop}"
         title="Scroll to top"
       >
         ${Icons.arrowUp}
