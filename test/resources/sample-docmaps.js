@@ -792,7 +792,6 @@ export const docmapsByDoi = {
 
 export const reviewProcessByDoi = {
   '10.1101/2020.07.20.212886': {
-    summary: 'This is the summary of the reviews of 10.1101/2020.07.20.212886.',
     timeline: {
       groups: [
         {
@@ -837,6 +836,9 @@ export const reviewProcessByDoi = {
                 },
               ],
               date: new Date('2020-07-23T19:26:49.980324+00:00'),
+              summaries: [
+                'This is the summary of the reviews of 10.1101/2020.07.20.212886.',
+              ],
               type: 'reviews',
             },
             {
@@ -856,7 +858,6 @@ export const reviewProcessByDoi = {
     },
   },
   '10.1101/2021.10.26.465695': {
-    summary: '',
     timeline: {
       groups: [
         {
@@ -901,6 +902,7 @@ export const reviewProcessByDoi = {
                 },
               ],
               date: new Date('2022-02-09T18:21:14.076802+00:00'),
+              summaries: [],
               type: 'reviews',
             },
             {
@@ -934,6 +936,7 @@ export const reviewProcessByDoi = {
                 },
               ],
               date: new Date('2022-05-27T05:02:20.022255+00:00'),
+              summaries: [],
               type: 'reviews',
             },
             {
@@ -948,7 +951,6 @@ export const reviewProcessByDoi = {
     },
   },
   '10.21203/rs.3.rs-955726': {
-    summary: '',
     timeline: {
       groups: [
         {

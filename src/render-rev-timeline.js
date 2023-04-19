@@ -307,7 +307,12 @@ export class RenderRevTimeline extends LitElement {
   }
 
   renderSummary() {
-    if (this.reviewProcess.summary) {
+    const summaries = this.reviewProcess.timeline.groups
+      .flatMap(group => group.items.flatMap(item => item.summaries))
+      .filter(Boolean); // remove undefined values from list
+    // If there are multiple summaries, use the first one to display in the timeline.
+    const summary = summaries.length > 0 ? summaries[0] : undefined;
+    if (summary) {
       const infoText =
         'This summary was generated automatically based on the content of the reviews. To access the full content of the original reviews, click on "Peer Review".';
       return html`
@@ -321,7 +326,7 @@ export class RenderRevTimeline extends LitElement {
               <div slot="content" class="auto-summary-info">${infoText}</div>
             </spider-tooltip>
           </h6>
-          ${this.reviewProcess.summary}
+          ${summary}
         </div>
       `;
     }

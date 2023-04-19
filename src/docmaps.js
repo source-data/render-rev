@@ -89,7 +89,7 @@ function isReviewsSummaryAction(action) {
   return hasSingleOutputOfType(action, DocmapOutputTypes.ReviewsSummary);
 }
 
-async function parseStep(step, summaryList) {
+async function parseStep(step) {
   log('parsing step', step);
 
   const isResponseStep =
@@ -122,7 +122,6 @@ async function parseStep(step, summaryList) {
     const summaries = step.actions
       .filter(isReviewsSummaryAction)
       .map(action => getText(action.outputs[0]));
-    summaryList.push(...summaries);
 
     const contents = step.actions
       .filter(isReviewAction)
@@ -140,6 +139,7 @@ async function parseStep(step, summaryList) {
     const item = {
       contents,
       date: earliestDate,
+      summaries,
       type: TimelineItemTypes.Reviews,
     };
     log('added review item', item);
@@ -221,7 +221,7 @@ function getFirstGroup(inputs) {
   };
 }
 
-async function parseDocmapIntoGroups(summaryList, timeline, docmap) {
+async function parseDocmapIntoGroups(timeline, docmap) {
   log('parsing docmap', docmap);
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
@@ -231,9 +231,7 @@ async function parseDocmapIntoGroups(summaryList, timeline, docmap) {
 
   const publisherUri =
     docmap.publisher.uri || docmap.publisher.url || docmap.publisher.homepage;
-  const parsedSteps = await Promise.all(
-    steps.map(step => parseStep(step, summaryList))
-  );
+  const parsedSteps = await Promise.all(steps.map(parseStep));
   const items = parsedSteps.flat();
   timeline.groups.push({
     publisher: {
@@ -302,13 +300,12 @@ async function convertToTimeline(docmaps) {
     groups: [],
   };
 
-  const summaryList = [];
   await Promise.all(
-    docmaps.map(docmap => parseDocmapIntoGroups(summaryList, timeline, docmap))
+    docmaps.map(docmap => parseDocmapIntoGroups(timeline, docmap))
   );
   log('sorting %d timeline groups', timeline.groups.length);
   timeline.groups.sort(compareTimelineGroups);
-  return { summaryList, timeline };
+  return timeline;
 }
 
 /**
@@ -322,10 +319,9 @@ export async function parse(docmaps, config) {
   debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);
   log('parsing %d docmaps', unpackedDocmaps.length, unpackedDocmaps);
-  const { summaryList, timeline } = await convertToTimeline(unpackedDocmaps);
+  const timeline = await convertToTimeline(unpackedDocmaps);
 
   return {
-    summary: summaryList.length > 0 ? summaryList.at(-1) : '',
     timeline,
   };
 }
