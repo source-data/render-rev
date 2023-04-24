@@ -165,7 +165,7 @@ export class RenderRev extends LitElement {
         var(--reviews-bg-color)
       );
       --highlight-nav-text-color: var(
-        --rr-highlight-nav-bg-color,
+        --rr-highlight-nav-text-color,
         var(--reviews-text-color)
       );
     }
