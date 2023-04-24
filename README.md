@@ -81,7 +81,7 @@ external source, use the `.configure()` method of the element:
 
 * `debug`: Passing a truthy value activates detailed logging during DocMaps parsing.
 * `docmaps`: Pass in an array of DocMaps that represent the review process of a preprint. Overrides both the configuration option and the custom element attribute named `doi`.
-* `docmapsUrl`: A callable that receives a DOI and returns a URL that returns an array of DocMaps in JSON format. Defaults to a function that returns `https://eeb.embo.org/api/v1/docmaps/${doi}`.
+* `docmapsUrl`: A callable that receives a DOI and returns a URL that returns an array of DocMaps in JSON format. Defaults to a function that returns `https://eeb.embo.org/api/v2/docmaps/${doi}`.
 * `doi`: Display the review process of the preprint with this DOI. Overrides the value passed to the `doi` custom element attribute.
 * `display`: Pass in an object to configure how the review process is displayed with one of the following keys:
   * `formatDate`: A callable that receives a Date object and returns a string representation of this date. Dates passed to this function are displayed in the timeline and above the full-text of reviews and responses in the highlight viewer. By default dates are formatted as `<Name of month abbreviated> <Day of month>, <Year>`, e.g. `Feb 24, 2020`.
