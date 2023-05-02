@@ -168,6 +168,12 @@ export class RenderRev extends LitElement {
         --rr-highlight-nav-text-color,
         var(--reviews-text-color)
       );
+
+      --timeline-summary-bg-color: var(--rr-timeline-summary-bg-color, #eee);
+      --timeline-summary-text-color: var(
+        --rr-timeline-summary-text-color,
+        grey
+      );
     }
   `;
 

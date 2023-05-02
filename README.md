@@ -142,6 +142,9 @@ These are the available options:
 * `--rr-highlight-nav-bg-color`: The background color of the navigation bar in the highlight viewer. Defaults to the background color of the reviews items.
 * `--rr-highlight-nav-text-color`: The text color of the navigation bar in the highlight viewer. Defaults to the text color of the reviews items.
 
+* `--rr-timeline-summary-bg-color`: The background color of the automated summary in the timeline. Defaults to `#eee`.
+* `--rr-timeline-summary-text-color`: The text color of the automated summary in the timeline. Defaults to `grey`.
+
 
 ## Development
 

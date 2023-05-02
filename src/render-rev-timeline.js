@@ -38,13 +38,16 @@ export class RenderRevTimeline extends LitElement {
     css`
       .render-rev-summary,
       .render-rev-timeline {
+        box-sizing: border-box;
         width: var(--timeline-width);
       }
       .render-rev-summary {
-        color: var(--timeline-line-color);
+        background: var(--timeline-summary-bg-color);
+        color: var(--timeline-summary-text-color);
         /* make the summary text smaller relative to the other text in render-rev */
         font-size: smaller;
         margin-bottom: 8px;
+        padding: 8px;
         text-align: justify;
         word-break: break-word;
       }
