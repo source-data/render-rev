@@ -329,9 +329,9 @@ export class RenderRevTimeline extends LitElement {
               <a slot="trigger" class="auto-summary-info-trigger" href="#">
                 What is this?
               </a>
-              <div slot="content" class="auto-summary-info">
-                ${infoText}
-              </div> </spider-tooltip
+              <!-- must have no spaces inside the .content div or they mess up the formatting -->
+              <!-- prettier-ignore -->
+              <div slot="content" class="auto-summary-info">${infoText}</div> </spider-tooltip
             >)
           </h6>
           ${summary}
