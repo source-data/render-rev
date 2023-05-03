@@ -318,10 +318,42 @@ export class RenderRevHighlight extends LitElement {
         top: -8px;
         left: 8px;
       }
-      .content-summary .disclaimer {
-        font-weight: bold;
-        margin-bottom: 8px;
+      .content-summary .summary-prelude {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
       }
+      .content-summary .summary-disclaimer {
+        font-weight: bold;
+      }
+      .content-summary .report-summary-issue {
+        margin-left: 16px;
+      }
+      /* unset styling for the link that we're using to control the report-issue functionality; it's supposed to look like a button */
+      .content-summary .report-summary-issue a {
+        all: unset;
+      }
+      .content-summary .report-summary-issue button {
+        background-color: var(--highlight-nav-bg-color);
+        color: var(--highlight-nav-text-color);
+        height: 24px;
+        text-align: center;
+        width: 100px;
+      }
+      .content-summary .report-summary-issue button:active,
+      .content-summary .report-summary-issue button:focus,
+      .content-summary .report-summary-issue button:hover {
+        filter: brightness(95%);
+      }
+      .content-summary .auto-summary-info {
+        font-weight: normal;
+        text-align: justify;
+        white-space: break-spaces;
+        width: 300px;
+      }
+
+      /* styling for the auto-summary visibility toggle */
       .toggle {
         cursor: pointer;
         display: inline-block;
@@ -417,6 +449,12 @@ export class RenderRevHighlight extends LitElement {
         hidden: this._hideSummary,
         'summary-container': true,
       };
+      const infoText =
+        'This summary was generated automatically based on the significance sections of the reviews. The full original content is available below.';
+      const { recipient, subject, body } = this.config.reportSummaryIssue;
+      const linkToReportIssue = encodeURI(
+        `mailto:${recipient}?subject=${subject}&body=${body(summary)}`
+      );
       return html`
         <article class="content-summary">
           <form>
@@ -438,9 +476,24 @@ export class RenderRevHighlight extends LitElement {
 
           <div class=${classMap(classes)}>
             <h4 class="summary-title">Auto-digest</h4>
-            <div class="disclaimer">
-              Disclaimer: this summary was generated automatically; the full
-              original content is available below.
+            <div class="summary-prelude">
+              <div class="summary-disclaimer">
+                Disclaimer: this summary was generated automatically
+                (<spider-tooltip mode="light" show-arrow position="block-start">
+                  <a slot="trigger" class="auto-summary-info-trigger" href="#">
+                    learn how
+                  </a>
+                  <div slot="content" class="auto-summary-info">
+                    ${infoText}
+                  </div> </spider-tooltip
+                >).
+              </div>
+
+              <div class="report-summary-issue">
+                <a href=${linkToReportIssue}>
+                  <button type="button">Report issue</button>
+                </a>
+              </div>
             </div>
             <div class="summary-text">${summary}</div>
           </div>

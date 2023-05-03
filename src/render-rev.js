@@ -84,6 +84,13 @@ export class RenderRev extends LitElement {
       docmaps: null,
       docmapsUrl: doi => `https://eeb.embo.org/api/v2/docmap/${doi}`,
       display: {
+        formatDate: date =>
+          date.toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          }),
+        publisherLogo: () => null,
         publisherName: name => {
           const nameMap = {
             development: 'Development',
@@ -101,20 +108,36 @@ export class RenderRev extends LitElement {
           };
           return nameMap[name] || name;
         },
-        publisherLogo: () => null,
         renderMarkdown: markdown,
-        formatDate: date =>
-          date.toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-          }),
+        reportSummaryIssue: {
+          recipient: 'eeb-feedback@embl.de',
+          subject: 'Issue with auto-summary',
+          body: (
+            doi,
+            summary
+          ) => `There is an issue with the summary (see below) of the reviews for the preprint with the DOI ${doi}:
+
+<Please describe the issue with the summary in detail here>
+
+Summary:
+${summary}
+`,
+        },
       },
       highlightDoi: null,
     };
     // use the default config as the basis and let the external options override any settings it provides.
     const config = { ...defaultConfig, ...externalOptions };
     config.display = { ...defaultConfig.display, ...externalOptions.display };
+    config.display.reportSummaryIssue = {
+      ...defaultConfig.display.reportSummaryIssue,
+      ...externalOptions.display.reportSummaryIssue,
+    };
+
+    // prefill the reportSummaryIssue body with the doi
+    const reportSummaryIssueBody = config.display.reportSummaryIssue.body;
+    config.display.reportSummaryIssue.body = summary =>
+      reportSummaryIssueBody(config.doi, summary);
 
     this._config = config;
     if (this._config.doi || this._config.docmaps) {

@@ -321,13 +321,18 @@ export class RenderRevTimeline extends LitElement {
       return html`
         <div class="render-rev-summary">
           <h6>
-            Automated Summary
-            <spider-tooltip mode="light" show-arrow position="block-start">
+            Automated Summary (<spider-tooltip
+              mode="light"
+              show-arrow
+              position="block-start"
+            >
               <a slot="trigger" class="auto-summary-info-trigger" href="#">
-                (What is this?)
+                What is this?
               </a>
-              <div slot="content" class="auto-summary-info">${infoText}</div>
-            </spider-tooltip>
+              <div slot="content" class="auto-summary-info">
+                ${infoText}
+              </div> </spider-tooltip
+            >)
           </h6>
           ${summary}
         </div>
