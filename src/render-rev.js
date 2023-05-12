@@ -57,6 +57,54 @@ export class RenderRev extends LitElement {
 
   Failed = 2;
 
+  defaultConfig = {
+    debug: false,
+    docmaps: null,
+    docmapsUrl: doi => `https://eeb.embo.org/api/v2/docmap/${doi}`,
+    display: {
+      formatDate: date =>
+        date.toLocaleDateString('en-US', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }),
+      publisherLogo: () => null,
+      publisherName: name => {
+        const nameMap = {
+          development: 'Development',
+          elife: 'eLife',
+          'embo molecular medicine': 'EMM',
+          'embo press': 'EMBO Press',
+          'embo reports': 'EMBOR',
+          'life science alliance': 'LSA',
+          'molecular systems biology': 'MSB',
+          'peerage of science': 'Peerage of Science',
+          'peer ref': 'Peer Ref',
+          'plos one': 'PLOS ONE',
+          'review commons': 'Review Commons',
+          'the embo journal': 'EMBOJ',
+        };
+        return nameMap[name] || name;
+      },
+      renderMarkdown: markdown,
+      reportSummaryIssue: {
+        recipient: 'eeb-feedback@embl.de',
+        subject: 'Issue with auto-summary',
+        body: (
+          doi,
+          summary
+        ) => `There is an issue with the summary (see below) of the reviews for the preprint with the DOI ${doi}:
+
+<Please describe the issue with the summary in detail here>
+
+Summary:
+${summary}
+`,
+      },
+    },
+    highlightDoi: null,
+  };
+
   constructor() {
     super();
     this._config = {};
@@ -79,60 +127,18 @@ export class RenderRev extends LitElement {
   }
 
   _updateReviewProcess(externalOptions) {
-    const defaultConfig = {
-      debug: false,
-      docmaps: null,
-      docmapsUrl: doi => `https://eeb.embo.org/api/v2/docmap/${doi}`,
-      display: {
-        formatDate: date =>
-          date.toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-          }),
-        publisherLogo: () => null,
-        publisherName: name => {
-          const nameMap = {
-            development: 'Development',
-            elife: 'eLife',
-            'embo molecular medicine': 'EMM',
-            'embo press': 'EMBO Press',
-            'embo reports': 'EMBOR',
-            'life science alliance': 'LSA',
-            'molecular systems biology': 'MSB',
-            'peerage of science': 'Peerage of Science',
-            'peer ref': 'Peer Ref',
-            'plos one': 'PLOS ONE',
-            'review commons': 'Review Commons',
-            'the embo journal': 'EMBOJ',
-          };
-          return nameMap[name] || name;
-        },
-        renderMarkdown: markdown,
-        reportSummaryIssue: {
-          recipient: 'eeb-feedback@embl.de',
-          subject: 'Issue with auto-summary',
-          body: (
-            doi,
-            summary
-          ) => `There is an issue with the summary (see below) of the reviews for the preprint with the DOI ${doi}:
-
-<Please describe the issue with the summary in detail here>
-
-Summary:
-${summary}
-`,
-        },
-      },
-      highlightDoi: null,
-    };
     // use the default config as the basis and let the external options override any settings it provides.
-    const config = { ...defaultConfig, ...externalOptions };
-    config.display = { ...defaultConfig.display, ...externalOptions.display };
-    config.display.reportSummaryIssue = {
-      ...defaultConfig.display.reportSummaryIssue,
-      ...externalOptions.display.reportSummaryIssue,
+    const config = { ...this.defaultConfig, ...externalOptions };
+    config.display = {
+      ...this.defaultConfig.display,
+      ...externalOptions.display,
     };
+    if (externalOptions.display) {
+      config.display.reportSummaryIssue = {
+        ...this.defaultConfig.display.reportSummaryIssue,
+        ...externalOptions.display.reportSummaryIssue,
+      };
+    }
 
     // prefill the reportSummaryIssue body with the doi
     const reportSummaryIssueBody = config.display.reportSummaryIssue.body;

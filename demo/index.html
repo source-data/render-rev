@@ -29,7 +29,6 @@
     import { html, render } from 'lit';
     import '../render-rev.js';
 
-    const display = {};
     const debug = true;
     const docmapsUrl = doi => `http://localhost:5050/api/v2/docmap/${doi}`;
 
@@ -82,12 +81,12 @@
     );
 
     eebDois.forEach(
-      doi => document.querySelector(`render-rev[data-doi="${doi}"]`).configure({ docmapsUrl, doi, debug, display })
+      doi => document.querySelector(`render-rev[data-doi="${doi}"]`).configure({ docmapsUrl, doi, debug })
     );
     scietyDois.forEach(
       doi => fetch(`sciety-docmaps/${doi}.json`)
         .then(data => data.json())
-        .then(docmaps => document.querySelector(`render-rev.sciety-docmaps[data-doi="${doi}"]`).configure({ debug, docmaps, display }))
+        .then(docmaps => document.querySelector(`render-rev.sciety-docmaps[data-doi="${doi}"]`).configure({ debug, docmaps }))
     );
   </script>
 </body>
