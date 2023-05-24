@@ -162,13 +162,13 @@ export class RenderRevHighlight extends LitElement {
         background-color: var(--highlight-nav-bg-color);
         box-shadow: 0px 0px 8px 2px var(--highlight-nav-bg-color);
         display: flex;
-        flex-wrap: wrap;
-        padding: 0 38px;
+        height: 43px;
+        padding-right: 38px;
       }
       .highlight-nav > * {
         display: flex;
         flex: 1 auto;
-        padding: 0 8px;
+        justify-content: center;
       }
       /* The nav item border-bottom is used to indicate focus/hover. */
       .highlight-nav-item {
@@ -179,7 +179,7 @@ export class RenderRevHighlight extends LitElement {
         font-size: 16px;
         height: 36px;
         line-height: 36px;
-        padding: 4px 12px 0;
+        padding: 4px 6px 0;
       }
       .highlight-nav-item.active {
         border-color: var(--highlight-nav-text-color);
@@ -195,6 +195,15 @@ export class RenderRevHighlight extends LitElement {
       .highlight-nav-item:hover {
         border-color: var(--highlight-nav-text-color);
         filter: brightness(95%);
+      }
+
+      @media (min-width: 600px) {
+        .highlight-nav {
+          padding-left: 38px;
+        }
+        .highlight-nav-item {
+          padding: 4px 12px 0;
+        }
       }
 
       .highlight-nav-item.close-highlight {
@@ -224,20 +233,30 @@ export class RenderRevHighlight extends LitElement {
        */
       .highlight-content {
         display: grid;
-        grid-template-columns: 40px auto 40px;
+        grid-template-columns: auto;
 
-        /* The navbar at the top is exactly 46px high. Setting margin- & padding-top to
-         * -46px & 46px respectively positions the content just below that, while height:
+        /* The navbar at the top is exactly 43px high. Setting margin- & padding-top to
+         * -43px & 43px respectively positions the content just below that, while height:
          * 100% combined with box-sizing: border-box makes the content take up the
          * remaining vertical space.
          * Setting height to some value is also required to enable overflow scrolling.
          */
         height: 100%;
         box-sizing: border-box;
-        margin-top: -46px;
-        padding-top: 46px;
+        margin-top: -43px;
+        padding-top: 43px;
+        padding-bottom: 40px; /* height of the footer */
+      }
+      .highlight-footer {
+        box-shadow: lightgray 0px -2px 4px 0px;
+        display: grid;
+        grid-template-columns: auto 40px 40px;
+        height: 40px;
+        margin-top: -40px;
+        padding: 4px;
       }
       .sidebar {
+        display: none;
         padding: 4px;
         position: relative; /* enable positioning of buttons inside the sidebar */
       }
@@ -245,13 +264,14 @@ export class RenderRevHighlight extends LitElement {
        * Just like with the nav items above, the border is always present but transparent
        * if not in one of these states stay in the same place when hovered/clicked.
        */
-      .sidebar button {
+      .highlight-control {
         border: 1px solid transparent;
         border-radius: 50%;
         height: 24px;
         width: 24px;
         padding: 3px;
-
+      }
+      .sidebar button {
         /* The buttons go at the bottom of the sidebar by default. */
         position: absolute;
         bottom: 8px;
@@ -270,6 +290,19 @@ export class RenderRevHighlight extends LitElement {
         top: 10%;
       }
 
+      @media (min-width: 600px) {
+        .highlight-content {
+          grid-template-columns: 40px auto 40px;
+          padding-bottom: 0;
+        }
+        .sidebar {
+          display: block;
+        }
+        .highlight-footer {
+          display: none;
+        }
+      }
+
       .item-content {
         height: 100%;
         overflow: scroll;
@@ -284,6 +317,8 @@ export class RenderRevHighlight extends LitElement {
       /* styling for the header section at the top of each piece of content */
       .item-content article header {
         display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         font-size: 1.2rem;
         font-weight: bold;
         justify-content: space-between;
@@ -550,7 +585,7 @@ export class RenderRevHighlight extends LitElement {
 
   getControlButton(isEnabled, getNewContentIdx, icon) {
     if (!this._highlight || !isEnabled(this._highlight)) {
-      return null;
+      return html`<span></span>`;
     }
 
     const self = this;
@@ -569,7 +604,13 @@ export class RenderRevHighlight extends LitElement {
       ].title
     }`;
     return html`
-      <button @click="${switchHighlight}" title="${title}">${icon}</button>
+      <button
+        class="highlight-control"
+        @click="${switchHighlight}"
+        title="${title}"
+      >
+        ${icon}
+      </button>
     `;
   }
 
@@ -608,7 +649,7 @@ export class RenderRevHighlight extends LitElement {
   backToTopButton() {
     return html`
       <button
-        class="scroll-to-top"
+        class="scroll-to-top highlight-control"
         @click="${this.scrollToTop}"
         title="Scroll to top"
       >
@@ -702,6 +743,10 @@ export class RenderRevHighlight extends LitElement {
             <div class="sidebar sidebar-right">
               ${this.backToTopButton()} ${this.nextContentButton()}
             </div>
+          </div>
+          <div class="highlight-footer">
+            ${this.backToTopButton()} ${this.previousContentButton()}
+            ${this.nextContentButton()}
           </div>
         </div>
       </render-rev-modal>
