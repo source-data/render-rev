@@ -68,7 +68,10 @@ export class RenderRevTimeline extends LitElement {
       .timeline-group {
         display: grid;
         gap: 8px;
-        grid-template-columns: minmax(140px, 1fr) 100px minmax(180px, 1fr);
+        grid-template-columns: minmax(100px, 3fr) minmax(90px, 1fr) minmax(
+            130px,
+            2fr
+          );
       }
       .group-label,
       .item-date,
@@ -101,6 +104,7 @@ export class RenderRevTimeline extends LitElement {
       }
       .group-label-inside-tooltip {
         display: flex;
+        align-items: center; /* vertically centers logos in case of multiline group name */
       }
 
       /* create the dotted lines between dates */
@@ -140,6 +144,7 @@ export class RenderRevTimeline extends LitElement {
       .item-label {
         margin-left: 12px;
         position: relative; /* enable absolute positioning for the :before element */
+        padding-right: 24px; /* make room for the action icon */
       }
       .item-label::before {
         content: '';

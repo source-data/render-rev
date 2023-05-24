@@ -2,28 +2,22 @@
 <html lang="en-GB">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
   <style>
     body {
       background: #fafafa;
     }
-    table {
-      border-collapse: collapse;
-      border-color: #dee2e6;
+    main {
+      width: 100%;
+      padding: 1rem;
     }
-    tbody, td, tfoot, th, thead, tr {
-      border-color: inherit;
-      border-style: solid;
-      border-width: 0;
-    }
-    table > :not(caption) > * > * {
-      padding: 1rem 1rem;
-      border-bottom-width: 1px;
-      border-right-width: 1px;
+    section {
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
-  <div id="demo"></div>
+  <main id="demo"></main>
 
   <script type="module">
     import { html, render } from 'lit';
@@ -45,37 +39,25 @@
 
     render(
       html`
-        <table>
-          <tbody>
-            ${eebDois.map((doi, idx) => html`
-              <tr>
-                ${idx === 0 ? html`
-                  <th rowspan="${eebDois.length}" scope="row">
-                    Fetched from EEB
-                  </th>
-                ` : null}
-                <td>
-                  <h5>${doi}:</h5>
-                  <render-rev data-doi="${doi}"></render-rev>
-                </td>
-              </tr>
-            `)}
+        <article>
+          <h2>Fetched from EEB</h2>
+          ${eebDois.map((doi) => html`
+            <section>
+              <h3>${doi}</h3>
+              <render-rev data-doi="${doi}"></render-rev>
+            </section>
+          `)}
+        </article>
 
-            ${scietyDois.map((doi, idx) => html`
-              <tr>
-                ${idx === 0 ? html`
-                  <th rowspan="${scietyDois.length}" scope="row">
-                    Sciety-style docmaps
-                  </th>
-                ` : null}
-                <td>
-                  <span>${doi}:</span>
-                  <render-rev class="sciety-docmaps" data-doi="${doi}"></render-rev>
-                </td>
-              </tr>
-            `)}
-          </tbody>
-        </table>
+        <article>
+          <h2>Sciety-style docmaps</h2>
+          ${scietyDois.map((doi) => html`
+            <section>
+              <h3>${doi}</h3>
+              <render-rev class="sciety-docmaps" data-doi="${doi}"></render-rev>
+            </section>
+          `)}
+        </article>
       `,
       document.querySelector('#demo')
     );
