@@ -335,11 +335,9 @@ export class RenderRevTimeline extends LitElement {
       // If there are multiple summaries, use the first one to display in the timeline.
       const { group, item, summary } = summaries[0];
       const openHighlight = this.openHighlightHandler(group, item);
-      const infoText = html`This summary was generated automatically based on
-        the content of the reviews. To access the full content of the original
-        reviews, click on "<button class="link" @click="${openHighlight}">
-          Peer Review</button
-        >".`;
+      // must have no extra spaces inside the info text div or they mess up the formatting
+      // prettier-ignore
+      const infoText = html`This summary was generated automatically based on the content of the reviews. To access the full content of the original reviews, click on "<button class="link" @click="${openHighlight}">Peer Review</button>".`;
       return html`
         <div class="render-rev-summary">
           <h6>
