@@ -219,11 +219,7 @@ export class RenderRevTimeline extends LitElement {
   }
 
   itemLabel(group, item) {
-    const self = this;
-    function openHighlight(event) {
-      self.openHighlight(group, item);
-      event.currentTarget.blur();
-    }
+    const openHighlight = this.openHighlightHandler(group, item);
     const description = itemDescription(item);
     switch (item.type) {
       case 'preprint-posted':
@@ -314,15 +310,35 @@ export class RenderRevTimeline extends LitElement {
     `;
   }
 
+  openHighlightHandler(group, item) {
+    const self = this;
+    function openHighlight(event) {
+      self.openHighlight(group, item);
+      event.currentTarget.blur();
+    }
+    return openHighlight;
+  }
+
   renderSummary() {
     const summaries = this.reviewProcess.timeline.groups
-      .flatMap(group => group.items.flatMap(item => item.summaries))
+      .flatMap(group =>
+        group.items.flatMap(item =>
+          item.summaries
+            ? item.summaries.flatMap(summary =>
+                summary ? { group, item, summary } : null
+              )
+            : null
+        )
+      )
       .filter(Boolean); // remove undefined values from list
-    // If there are multiple summaries, use the first one to display in the timeline.
-    const summary = summaries.length > 0 ? summaries[0] : undefined;
-    if (summary) {
-      const infoText =
-        'This summary was generated automatically based on the content of the reviews. To access the full content of the original reviews, click on "Peer Review".';
+    if (summaries.length > 0) {
+      // If there are multiple summaries, use the first one to display in the timeline.
+      const { group, item, summary } = summaries[0];
+      const openHighlight = this.openHighlightHandler(group, item);
+      const infoText = html`This summary was generated automatically based on
+        the content of the reviews. To access the full content of the original
+        reviews, click on "<a href="#" @click="${openHighlight}">Peer Review</a
+        >".`;
       return html`
         <div class="render-rev-summary">
           <h6>
