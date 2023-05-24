@@ -515,9 +515,9 @@ export class RenderRevHighlight extends LitElement {
               <div class="summary-disclaimer">
                 Disclaimer: this summary was generated automatically
                 (<spider-tooltip mode="light" show-arrow position="block-start">
-                  <a slot="trigger" class="auto-summary-info-trigger" href="#">
+                  <button slot="trigger" class="auto-summary-info-trigger link">
                     learn how
-                  </a>
+                  </button>
                   <!-- must have no spaces inside the .content div or they mess up the formatting -->
                   <!-- prettier-ignore -->
                   <div slot="content" class="auto-summary-info">${infoText}</div> </spider-tooltip

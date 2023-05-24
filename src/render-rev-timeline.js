@@ -337,7 +337,8 @@ export class RenderRevTimeline extends LitElement {
       const openHighlight = this.openHighlightHandler(group, item);
       const infoText = html`This summary was generated automatically based on
         the content of the reviews. To access the full content of the original
-        reviews, click on "<a href="#" @click="${openHighlight}">Peer Review</a
+        reviews, click on "<button class="link" @click="${openHighlight}">
+          Peer Review</button
         >".`;
       return html`
         <div class="render-rev-summary">
@@ -347,9 +348,9 @@ export class RenderRevTimeline extends LitElement {
               show-arrow
               position="block-start"
             >
-              <a slot="trigger" class="auto-summary-info-trigger" href="#">
+              <button slot="trigger" class="auto-summary-info-trigger link">
                 What is this?
-              </a>
+              </button>
               <!-- must have no spaces inside the .content div or they mess up the formatting -->
               <!-- prettier-ignore -->
               <div slot="content" class="auto-summary-info">${infoText}</div> </spider-tooltip
