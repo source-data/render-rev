@@ -6,7 +6,7 @@ import { GlobalStyles } from './styles.js';
 import '@spider-ui/tooltip';
 
 function toClassName(str) {
-  return str.replaceAll(/[^a-zA-Z0-9-_]/g, '');
+  return str?.replaceAll(/[^a-zA-Z0-9-_]/g, '') || 'undefined';
 }
 
 function itemDescription(item) {
