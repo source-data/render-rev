@@ -1,6 +1,5 @@
 export const docmapsByDoi = {
   '10.5194/angeo-40-247-2022': [
-    // NOTE: normal cases do not inclde the docmap: key
     {
       type: 'docmap',
       id: 'https://docmaps-project.github.io/ex/docmap_for/10.5194/angeo-40-247-2022',
@@ -1242,7 +1241,7 @@ export const reviewProcessByDoi = {
               date: new Date('2022-05-02T00:00:00.000Z'),
               doi: '10.5194/angeo-40-247-2022',
               type: 'journal-publication',
-              uri: undefined,
+              uri: 'https://doi.org/10.5194/angeo-40-247-2022',
             },
             {
               contents: [

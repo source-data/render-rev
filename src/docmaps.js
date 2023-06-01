@@ -96,6 +96,14 @@ function isReviewsSummaryAction(action) {
   return hasSingleOutputOfType(action, DocmapOutputTypes.ReviewsSummary);
 }
 
+function uriForDoi(doi) {
+  return `https://doi.org/${doi}`;
+}
+
+function uriForThing(io) {
+  return io.uri || io.url || uriForDoi(io.doi);
+}
+
 async function parseStep(step) {
   log('parsing step', step);
 
@@ -191,7 +199,7 @@ async function parseStep(step) {
       date: getDate(output.published),
       doi: output.doi,
       type: TimelineItemTypes.JournalPublication,
-      uri: output.uri,
+      uri: uriForThing(output),
     };
     log('added journal publication item', item);
     return [item];
@@ -220,10 +228,6 @@ function getPublisher(input) {
   );
 }
 
-function uriForDoi(doi) {
-  return `https://doi.org/${doi}`;
-}
-
 function getFirstGroup(inputs) {
   const input = inputs[0];
   return {
@@ -232,7 +236,7 @@ function getFirstGroup(inputs) {
       {
         date: getDate(input.published),
         type: TimelineItemTypes.Preprint,
-        uri: input.uri || input.url || uriForDoi(input.doi),
+        uri: uriForThing(input),
       },
     ],
   };
