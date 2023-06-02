@@ -1,4 +1,247 @@
 export const docmapsByDoi = {
+  '10.5194/angeo-40-247-2022': [
+    {
+      type: 'docmap',
+      id: 'https://docmaps-project.github.io/ex/docmap_for/10.5194/angeo-40-247-2022',
+      publisher: {
+        name: 'Docmaps Project',
+        url: 'https://docmaps-project.github.io',
+      },
+      created: '2023-05-31T22:43:16.441Z',
+      updated: '2023-05-31T22:43:16.441Z',
+      'first-step': '_:b0',
+      steps: {
+        '_:b0': {
+          inputs: [],
+          actions: [
+            {
+              participants: [
+                {
+                  actor: { type: 'person', name: 'Hwang, Jun-Young' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Lee, Young-Sook' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kim, Yong Ha' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kam, Hosik' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kwak, Young-Sil' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Yang, Tae-Yong' },
+                  role: 'author',
+                },
+              ],
+              outputs: [
+                {
+                  published: '2021-11-10T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65',
+                  type: 'preprint',
+                },
+              ],
+            },
+          ],
+          assertions: [{ status: 'catalogued', item: '10.5194/angeo-2021-65' }],
+          'next-step': '_:b1',
+        },
+        '_:b1': {
+          actions: [
+            {
+              participants: [],
+              outputs: [
+                {
+                  published: '2021-11-16T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-rc1',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [],
+              outputs: [
+                {
+                  published: '2021-11-24T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-rc2',
+                  type: 'review',
+                },
+              ],
+            },
+          ],
+          inputs: [
+            {
+              published: '2021-11-10T00:00:00.000Z',
+              doi: '10.5194/angeo-2021-65',
+              type: 'preprint',
+            },
+          ],
+          assertions: [{ status: 'reviewed', item: '10.5194/angeo-2021-65' }],
+          'previous-step': '_:b0',
+          'next-step': '_:b2',
+        },
+        '_:b2': {
+          inputs: [
+            {
+              published: '2021-11-10T00:00:00.000Z',
+              doi: '10.5194/angeo-2021-65',
+              type: 'preprint',
+            },
+          ],
+          actions: [
+            {
+              participants: [
+                {
+                  actor: { type: 'person', name: 'Hwang, Jun-Young' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Lee, Young-Sook' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kim, Yong Ha' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kam, Hosik' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Song, Seok-Min' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Kwak, Young-Sil' },
+                  role: 'author',
+                },
+                {
+                  actor: { type: 'person', name: 'Yang, Tae-Yong' },
+                  role: 'author',
+                },
+              ],
+              outputs: [
+                {
+                  published: '2022-05-02T00:00:00.000Z',
+                  doi: '10.5194/angeo-40-247-2022',
+                  type: 'journal-article',
+                },
+              ],
+            },
+          ],
+          assertions: [
+            {
+              status: 'published',
+              item: '10.5194/angeo-40-247-2022',
+            },
+          ],
+          'previous-step': '_:b1',
+          'next-step': '_:b3',
+        },
+        '_:b3': {
+          actions: [
+            {
+              participants: [],
+              outputs: [
+                {
+                  published: '2021-11-16T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-rc1',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [],
+              outputs: [
+                {
+                  published: '2021-11-27T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-cc1',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [
+                {
+                  actor: { type: 'person', name: 'Lee, Young-Sook' },
+                  role: 'author',
+                },
+              ],
+              outputs: [
+                {
+                  published: '2022-01-03T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-ac2',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [],
+              outputs: [
+                {
+                  published: '2021-11-24T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-rc2',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [
+                {
+                  actor: { type: 'person', name: 'Lee, Young-Sook' },
+                  role: 'author',
+                },
+              ],
+              outputs: [
+                {
+                  published: '2021-12-23T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-ac1',
+                  type: 'review',
+                },
+              ],
+            },
+            {
+              participants: [
+                {
+                  actor: { type: 'person', name: 'Lee, Young-Sook' },
+                  role: 'author',
+                },
+              ],
+              outputs: [
+                {
+                  published: '2022-01-27T00:00:00.000Z',
+                  doi: '10.5194/angeo-2021-65-ac3',
+                  type: 'review',
+                },
+              ],
+            },
+          ],
+          inputs: [
+            {
+              published: '2022-05-02T00:00:00.000Z',
+              doi: '10.5194/angeo-40-247-2022',
+              type: 'journal-article',
+            },
+          ],
+          assertions: [
+            {
+              status: 'reviewed',
+              item: '10.5194/angeo-40-247-2022',
+            },
+          ],
+          'previous-step': '_:b2',
+        },
+      },
+      '@context': 'https://w3id.org/docmaps/context.jsonld',
+    },
+  ],
   '10.1101/2020.07.20.212886': [
     {
       docmap: {
@@ -944,6 +1187,104 @@ export const reviewProcessByDoi = {
               doi: '10.1371/journal.pone.0217516',
               type: 'journal-publication',
               uri: 'https://doi.org/10.1371/journal.pone.0217516',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  '10.5194/angeo-40-247-2022': {
+    timeline: {
+      groups: [
+        {
+          publisher: {
+            name: null,
+            uri: null,
+          },
+          items: [
+            {
+              date: new Date('2021-11-10T00:00:00.000Z'),
+              type: 'preprint-posted', // TODO validate this, based on output type
+              uri: 'https://doi.org/10.5194/angeo-2021-65',
+              // TODO: this could be included
+              // doi: '10.5194/angeo-40-247-2022'
+            },
+          ],
+        },
+        {
+          publisher: {
+            name: 'Docmaps Project',
+            uri: 'https://docmaps-project.github.io',
+            peerReviewPolicy: undefined,
+          },
+          items: [
+            {
+              contents: [
+                {
+                  doi: '10.5194/angeo-2021-65-rc1',
+                  date: new Date('2021-11-16T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  date: new Date('2021-11-24T00:00:00.000Z'),
+                  doi: '10.5194/angeo-2021-65-rc2',
+                  runningNumber: undefined,
+                  src: null,
+                },
+              ],
+              summaries: [],
+              date: new Date('2021-11-16T00:00:00.000Z'),
+              type: 'reviews',
+            },
+            {
+              date: new Date('2022-05-02T00:00:00.000Z'),
+              doi: '10.5194/angeo-40-247-2022',
+              type: 'journal-publication',
+              uri: 'https://doi.org/10.5194/angeo-40-247-2022',
+            },
+            {
+              contents: [
+                {
+                  doi: '10.5194/angeo-2021-65-rc1',
+                  date: new Date('2021-11-16T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  doi: '10.5194/angeo-2021-65-rc2',
+                  date: new Date('2021-11-24T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  doi: '10.5194/angeo-2021-65-cc1',
+                  date: new Date('2021-11-27T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  doi: '10.5194/angeo-2021-65-ac1',
+                  date: new Date('2021-12-23T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  doi: '10.5194/angeo-2021-65-ac2',
+                  date: new Date('2022-01-03T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+                {
+                  doi: '10.5194/angeo-2021-65-ac3',
+                  date: new Date('2022-01-27T00:00:00.000Z'),
+                  runningNumber: undefined,
+                  src: null,
+                },
+              ],
+              summaries: [],
+              date: new Date('2021-11-16T00:00:00.000Z'),
+              type: 'reviews',
             },
           ],
         },

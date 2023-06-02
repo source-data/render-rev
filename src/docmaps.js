@@ -41,7 +41,7 @@ function getDate(dateString) {
 }
 
 function getText(output) {
-  const textContent = output.content.find(c => c.type === 'text');
+  const textContent = output.content?.find(c => c.type === 'text');
   if (!textContent) {
     return null;
   }
@@ -56,11 +56,18 @@ const TimelineItemTypes = {
   ReviewArticle: 'review-article',
 };
 const DocmapOutputTypes = {
-  JournalPublication: 'journal-publication',
-  Response: 'author-response',
   Review: 'review',
   ReviewArticle: 'review-article',
   ReviewsSummary: 'reviews-summary',
+
+  // TODO: adopt these Canonical output types,
+  // * see https://github.com/Docmaps-Project/docmaps/pull/58
+  JournalArticle: 'journal-article',
+  Reply: 'reply', // instead of author-response
+
+  // TODO: deprecate these Non canonical output types.
+  JournalPublication: 'journal-publication',
+  Response: 'author-response',
 };
 
 function isSingleActionStep(step) {
@@ -87,6 +94,14 @@ function isReviewAction(action) {
 
 function isReviewsSummaryAction(action) {
   return hasSingleOutputOfType(action, DocmapOutputTypes.ReviewsSummary);
+}
+
+function uriForDoi(doi) {
+  return `https://doi.org/${doi}`;
+}
+
+function uriForThing(io) {
+  return io.uri || io.url || uriForDoi(io.doi);
 }
 
 async function parseStep(step) {
@@ -134,8 +149,13 @@ async function parseStep(step) {
           src: getText(output),
         };
       })
+      // pessimistic sort - sort by date if no running numbers available
+      .sort((a, b) => a.date.valueOf() - b.date.valueOf())
+      // optimistic sort - does nothing if no running number available
       .sort((a, b) => a.runningNumber - b.runningNumber);
-    const earliestDate = contents.map(c => c.date).sort()[0];
+    const earliestDate = contents
+      .map(c => c.date)
+      .sort((a, b) => a.valueOf() - b.valueOf())[0];
     const item = {
       contents,
       date: earliestDate,
@@ -168,17 +188,18 @@ async function parseStep(step) {
 
   const isJournalPublicationStep =
     isSingleActionStep(step) &&
-    hasSingleOutputOfType(
+    (hasSingleOutputOfType(
       step.actions[0],
       DocmapOutputTypes.JournalPublication
-    );
+    ) ||
+      hasSingleOutputOfType(step.actions[0], DocmapOutputTypes.JournalArticle));
   if (isJournalPublicationStep) {
     const output = step.actions[0].outputs[0];
     const item = {
       date: getDate(output.published),
       doi: output.doi,
       type: TimelineItemTypes.JournalPublication,
-      uri: output.uri,
+      uri: uriForThing(output),
     };
     log('added journal publication item', item);
     return [item];
@@ -215,7 +236,7 @@ function getFirstGroup(inputs) {
       {
         date: getDate(input.published),
         type: TimelineItemTypes.Preprint,
-        uri: input.uri || input.url,
+        uri: uriForThing(input),
       },
     ],
   };
@@ -226,7 +247,15 @@ async function parseDocmapIntoGroups(timeline, docmap) {
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
     log('adding first group to empty timeline');
-    timeline.groups.push(getFirstGroup(steps[0].inputs));
+    // Check if first step has any inputs
+    const firstStepHasInputs = steps[0].inputs && steps[0].inputs.length > 0;
+
+    // If first step has no inputs, use Outputs section instead
+    if (!firstStepHasInputs) {
+      timeline.groups.push(getFirstGroup(steps[0].actions[0].outputs));
+    } else {
+      timeline.groups.push(getFirstGroup(steps[0].inputs));
+    }
   }
 
   const publisherUri =
