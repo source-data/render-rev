@@ -3,7 +3,7 @@
   "description": "Webcomponent render-rev following open-wc recommendations",
   "license": "MIT",
   "author": "SourceData",
-  "version": "0.1.34",
+  "version": "0.1.35",
   "browser": "dist/render-rev.js",
   "module": "dist/render-rev.js",
   "scripts": {
