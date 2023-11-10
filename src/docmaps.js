@@ -1,3 +1,5 @@
+import { uriForDoi } from './util.js';
+
 let debug = false;
 function log(message, ...optionalParams) {
   if (debug) {
@@ -94,10 +96,6 @@ function isReviewAction(action) {
 
 function isReviewsSummaryAction(action) {
   return hasSingleOutputOfType(action, DocmapOutputTypes.ReviewsSummary);
-}
-
-function uriForDoi(doi) {
-  return `https://doi.org/${doi}`;
 }
 
 function uriForThing(io) {

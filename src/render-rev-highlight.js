@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 import { Icons } from './icons.js';
 import './render-rev-modal.js';
 import { GlobalStyles } from './styles.js';
+import { uriForDoi } from './util.js';
 
 function highlightItemTitle(item, contentIdx) {
   switch (item.type) {
@@ -553,9 +554,9 @@ export class RenderRevHighlight extends LitElement {
                 ${doi
                   ? html`<a
                       class="highlight-doi"
-                      href="https://doi.org/${doi}"
+                      href="${uriForDoi(doi)}"
                       target="_blank"
-                      >${doi}</a
+                      >${uriForDoi(doi)}</a
                     >`
                   : ''}
                 <time class="highlight-date" datetime="${date}"
@@ -676,7 +677,7 @@ export class RenderRevHighlight extends LitElement {
             ({ date, doi, html: htmlContent, title }) => `<article>
             <header>
               <h1>${title}</h1>
-              ${doi ? `<a href="https://doi.org/${doi}">${doi}</a>` : ''}
+              ${doi ? `<a href="${uriForDoi(doi)}">${uriForDoi(doi)}</a>` : ''}
               <time datetime="${date}">Published on ${this.config.formatDate(
               date
             )}</time>
