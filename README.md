@@ -51,7 +51,7 @@ Use this element and pass it the DOI of the preprint you want to display:
 
 ```html
 <script type="module">
-  import 'render-rev/render-rev.js';
+  import '@source-data/render-rev';
 </script>
 
 <render-rev doi="10.1101/2020.07.20.212886"></render-rev>
@@ -66,7 +66,7 @@ external source, use the `.configure()` method of the element:
 <render-rev id="render-rev-0"></render-rev>
 
 <script type="module">
-  import 'render-rev/render-rev.js';
+  import '@source-data/render-rev';
   const renderRevElement = document.getElementById('render-rev-0');
   renderRevElement.configure({
     doi: '10.1101/2020.07.20.212886',

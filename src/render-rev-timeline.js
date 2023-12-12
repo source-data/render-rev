@@ -1,9 +1,11 @@
 import { css, html, LitElement } from 'lit';
+import { markdown } from '../lib/drawdown.js';
+import '@spider-ui/tooltip';
+
 import { Icons } from './icons.js';
 import { PublisherLogos } from './logos.js';
 import './render-rev-highlight.js';
 import { GlobalStyles } from './styles.js';
-import '@spider-ui/tooltip';
 
 function toClassName(str) {
   return str?.replaceAll(/[^a-zA-Z0-9-_]/g, '') || 'undefined';
@@ -28,39 +30,18 @@ function itemDescription(item) {
 
 export class RenderRevTimeline extends LitElement {
   static properties = {
-    config: { type: Object },
+    options: { type: Object },
     reviewProcess: { type: Object },
     highlightItem: { type: Object },
+    _config: { state: true, type: Object },
   };
 
   static styles = [
     GlobalStyles,
     css`
-      .render-rev-summary,
       .render-rev-timeline {
         box-sizing: border-box;
         width: var(--timeline-width);
-      }
-      .render-rev-summary {
-        background: var(--timeline-summary-bg-color);
-        color: var(--timeline-summary-text-color);
-        /* make the summary text smaller relative to the other text in render-rev */
-        font-size: smaller;
-        margin-bottom: 8px;
-        padding: 8px;
-        text-align: justify;
-        word-break: break-word;
-      }
-      .render-rev-summary h6 {
-        /* make the summary header text smaller than the summary text */
-        font-size: smaller;
-        font-weight: inherit;
-        margin: 0 0 4px 0;
-      }
-      .render-rev-summary .auto-summary-info {
-        text-align: justify;
-        white-space: break-spaces;
-        width: 300px;
       }
       .timeline-group:not(:first-child) {
         margin-top: 24px;
@@ -214,6 +195,48 @@ export class RenderRevTimeline extends LitElement {
     `,
   ];
 
+  defaultConfig = {
+    formatDate: date =>
+      date.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      }),
+    publisherLogo: () => null,
+    publisherName: name => {
+      const nameMap = {
+        development: 'Development',
+        elife: 'eLife',
+        'embo molecular medicine': 'EMM',
+        'embo press': 'EMBO Press',
+        'embo reports': 'EMBOR',
+        'life science alliance': 'LSA',
+        'molecular systems biology': 'MSB',
+        'peerage of science': 'Peerage of Science',
+        'peer ref': 'Peer Ref',
+        'plos one': 'PLOS ONE',
+        'review commons': 'Review Commons',
+        'the embo journal': 'EMBOJ',
+      };
+      return nameMap[name] || name;
+    },
+    renderMarkdown: markdown,
+    reportSummaryIssue: {
+      recipient: 'eeb-feedback@embl.de',
+      subject: 'Issue with auto-summary',
+      body: (
+        doi,
+        summary
+      ) => `There is an issue with the summary (see below) of the reviews for the preprint with the DOI ${doi}:
+
+<Please describe the issue with the summary in detail here>
+
+Summary:
+${summary}
+`,
+    },
+  };
+
   openHighlight(group, item) {
     this.shadowRoot.querySelector('render-rev-highlight').show(group, item);
   }
@@ -249,8 +272,8 @@ export class RenderRevTimeline extends LitElement {
 
   renderGroupPublisher(publisher) {
     const { name, peerReviewPolicy, uri } = publisher;
-    const displayName = this.config.publisherName(name);
-    const logoUrl = this.config.publisherLogo(name) || PublisherLogos[name];
+    const displayName = this._config.publisherName(name);
+    const logoUrl = this._config.publisherLogo(name) || PublisherLogos[name];
 
     const logo = logoUrl
       ? html`<img
@@ -292,7 +315,7 @@ export class RenderRevTimeline extends LitElement {
       : html`<div></div>`;
     const date = item.date
       ? html`
-          <div class="item-date">${this.config.formatDate(item.date)}</div>
+          <div class="item-date">${this._config.formatDate(item.date)}</div>
         `
       : html`<div class="item-date">n/a</div>`;
     const label = this.itemLabel(group, item);
@@ -319,59 +342,36 @@ export class RenderRevTimeline extends LitElement {
     return openHighlight;
   }
 
-  renderSummary() {
-    const summaries = this.reviewProcess.timeline.groups
-      .flatMap(group =>
-        group.items.flatMap(item =>
-          item.summaries
-            ? item.summaries.flatMap(summary =>
-                summary ? { group, item, summary } : null
-              )
-            : null
-        )
-      )
-      .filter(Boolean); // remove undefined values from list
-    if (summaries.length > 0) {
-      // If there are multiple summaries, use the first one to display in the timeline.
-      const { group, item, summary } = summaries[0];
-      const openHighlight = this.openHighlightHandler(group, item);
-      // must have no extra spaces inside the info text div or they mess up the formatting
-      // prettier-ignore
-      const infoText = html`This summary was generated automatically based on the content of the reviews. To access the full content of the original reviews, click on "<button class="link" @click="${openHighlight}">Peer Review</button>".`;
-      return html`
-        <div class="render-rev-summary">
-          <h6>
-            Automated Summary (<spider-tooltip
-              mode="light"
-              show-arrow
-              position="block-start"
-            >
-              <button slot="trigger" class="auto-summary-info-trigger link">
-                What is this?
-              </button>
-              <!-- must have no spaces inside the .content div or they mess up the formatting -->
-              <!-- prettier-ignore -->
-              <div slot="content" class="auto-summary-info">${infoText}</div> </spider-tooltip
-            >)
-          </h6>
-          ${summary}
-        </div>
-      `;
-    }
-    return '';
-  }
-
   render() {
     const self = this;
+    if (!this.reviewProcess) {
+      return '';
+    }
+
+    const externalOptions = this.options || {};
+    const config = {
+      ...this.defaultConfig,
+      ...externalOptions,
+    };
+    config.reportSummaryIssue = {
+      ...this.defaultConfig.reportSummaryIssue,
+      ...externalOptions.reportSummaryIssue,
+    };
+
+    // prefill the reportSummaryIssue body with the doi
+    const reportSummaryIssueBody = config.reportSummaryIssue.body;
+    config.reportSummaryIssue.body = summary =>
+      reportSummaryIssueBody(config.doi, summary);
+    this._config = config;
+
     return html`
-      ${this.renderSummary()}
       <div class="render-rev-timeline">
         ${this.reviewProcess.timeline.groups.map(group =>
           self.renderGroup(group)
         )}
       </div>
       <render-rev-highlight
-        .config=${this.config}
+        .config=${this._config}
         .highlightItem=${this.highlightItem}
       ></render-rev-highlight>
     `;

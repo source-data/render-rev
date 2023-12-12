@@ -1,0 +1,304 @@
+[
+    {
+        "docmap": {
+            "id": "https://eeb-dev.embo.org/api/docmaps/v1/docmap/4449ede0-c537-47a0-a6c4-d81013d8cc73",
+            "first-step": "_:b-16483243-7f51-4c69-9781-817ae0f54841",
+            "created": "2023-12-11T00:59:17.976Z",
+            "provider": "https://eeb.embo.org",
+            "steps": {
+                "_:b-c0e5bd14-937d-4269-a75f-431b917774bc": {
+                    "assertions": [
+                        {
+                            "status": "",
+                            "item": "https://doi.org/10.1101/2022.07.14.499766"
+                        }
+                    ],
+                    "inputs": [
+                        {
+                            "runningNumber": "2",
+                            "published": "2022-10-19T16:16:25.821021+00:00",
+                            "type": "review",
+                            "uri": "https://eeb-dev.embo.org/api/v2/review_material/26277754",
+                            "doi": "10.15252/rc.2022047881"
+                        },
+                        {
+                            "runningNumber": "1",
+                            "published": "2022-10-19T16:16:25.413668+00:00",
+                            "type": "review",
+                            "uri": "https://eeb-dev.embo.org/api/v2/review_material/26277753",
+                            "doi": "10.15252/rc.2022330228"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "outputs": [
+                                {
+                                    "content": [
+                                        {
+                                            "id": "26277755",
+                                            "text": "**Note:** This rebuttal was posted by the corresponding author to *Review Commons*. Content has not been altered except for formatting.\n\nLearn more at [Review Commons](https://reviewcommons.org)\n\n\n-----\n\n\n### Reply to the reviewers\n\n> \n> __The reviews are on balance an accurate, thoughtful, thorough assessment of the manuscript. We appreciate the careful engagement with the B cell differentiation aspect of our work. We identify 2 major critiques from the reviews:__\n\n> 1. __ The manuscript should make stronger connections with existing literature on ____*in-vitro *____and ____*in-vivo *____B cell differentiation.__\n> __We agree the manuscript should be revised to interact more holistically and carefully with relevant B cell differentiation research. In this respect, the reviewers both help by pointing to high-quality and relevant literature that will be discussed and cited.__\n\n> \n> __ The cytokine mixture we used on the B cells was not defined / described in the manuscript. This fact hinders the interpretation of the data because B cells will respond to diverse stimuli in quite different ways.__\n> \n> __We agree this hinders interpretation of the data, and the reviewers bring up astute points about different types of stimuli (TD vs. TI vs. TLR vs. BCR). Unfortunately, the manufacturer of the product, Stem Cell Technologies, will not disclose exactly what is in the product.__ __Given we are in strong agreement with the reviewers on this point, we analyzed the cytokine contents of the cocktail and our cell culture supernatants using a luminex cytokine panel. We present a discussion of our findings on this data in a supplementary note and figure. We acknowledge this analysis is non-exhaustive, because it does not include possible additions of non-cytokine stimulants. However, we maintain it adds much clarity to the interpretation of the data.  __\n\n> __We note that the contents of the stimulation cocktail are knowable and well-defined. These attributes are in contrast to almost all B cell stimulation protocols of which are aware. Typical stimulation protocols use various types of feeder cells, cytokines, and FBS (Fetal Bovine Serum). In particular, the feeder cells and FBS, are highly variable between labs, lots, and even experiments. FBS has a myriad of issues which are described here (____https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8349753/____). Major variability, from genomic to phenotypic, has been described in laboratory cell lines like the ones used as feeder cells. With respect to B cells specifically, large differences in B cell activation programs are observed between lots of FBS, as described here (____https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7854248/#r5____). Additionally, we have observed the presence of bovine viruses and other contaminants in FBS (unpublished data). Thus, the stimulation protocol we used is reproducible and robust in ways generally unseen by us in B cell stimulation literature. In summary, we view this cocktail as useful in a similar way to how FBS is useful to biologists \u2013 a major difference being that this cocktail is better defined and controlled. We provide similar thoughts in our supplementary note.__\n\n> __A final general point we will make is about the significance of our work, which appears to be lost on Reviewer #1. Similar technical and conceptual advances by our lab have been cited 1000s of times. Thus, we think the impact of our scientific approach speaks for itself. Many of our results confirm and expand on previous literature about B cells. We deliberately chose to make this novel technical and conceptual advance in the well-studied system of B cell differentiation. This allows us to integrate our findings with prior literature and helps validate the general approach. Reviewer #1 has performed a scholarly service by independently verifying our findings are coherent with existing literature, and we thank them for that. __\n\n> __In response to the reviews, we have edited the manuscript to reference even more of the papers in the field which report similar findings. Thus, our concordance with prior literature should be viewed as a strength of the manuscript. It shows readers of the manuscript the conceptual framework we use here is valid and can generate similar insights in less well-studied systems. For example, the approach developed here could be used in non-B cells, non-human immune systems, or even non-model organisms. In response to the reviewers critique, we modified the discussion of our work in multiple places to emphasize these points.__\n\n>     Description of the planned revisions\n> \n> \n> *Insert here a point-by-point reply that explains what revisions, additional experimentations and analyses are **planned** to address the points raised by the referees.*\n\n> 1) Which B cell activation protocol was used? No information is provided in the main text or supplementary information. Yet, this information is key to fully understand many of the conclusions of this work (e.g., ... memory B cells are intrinsically two-fold more persistent in vitro (2A)), which largely depend on the nature of the stimuli used in the in vitro B cell culture.\n\n> __We used the B cell activation protocol developed by StemCell Technologies as described in our methods section. We agree the reader and scientific community would benefit from additional information about this cocktail. To this end, we added a discussion of the cocktail to the supplementary information. We also used a cytokine analysis panel to analyze the cocktail, which provided detailed although non-exhaustive information about what is in the cocktail. __\n\n> 2) It would be informative to use more than one B cell activation program, e.g., CD40L with or without a cytokine as well as CD40L vs. CpG-DNA. Authors make broad statements about B cell fates without discussing the impact of a given signal on a given B cell fate. For instance, do memory B cells follow the same differentiation program upon stimulation with CD40L, IL-4 or a combination of CD40L and IL-4? How about differences between a TD signaling program such as that provided by CD40L and IL-10 and TI signaling program such as that provided by CpG-DNA and IL-10?\n\n> __This is a good point. We agree stimulation using a panel of different agents would be a worthwhile experiment. It stands as a goalpost for future studies. Currently, performing single cell RNA sequencing on so many samples is both beyond the scope of this manuscript and very resource intensive. ____* *__\n\n> 3) Page 3, first line: After low quality and non-B cells (Fig S1A & B). What does this statement mean? The sentence seems incomplete.\n\n> __Thank you for catching this typo. It is now clarified in the manuscript that we removed these cells bioinformatically. __\n\n> 4) First, we noted that non-B cells present in the input rapidly became undetectable by day 4, which shows the specificity of the cytokines for B cell expansion. Which cytokines are we talking about? No detail is provided.\n\n> __We now provide our analysis of the stimulation cocktail, in Supplementary note 1 and Supplementary figure 1A. We still believe it is an interesting observation that this cocktail specifically stimulates B cells because many cytokines are not specifically B cell division signals, there were some impurities in the input population, and many cytokines are produced by the cultured cells themselves.__\n\n> 5) Plasmablasts were not distinguished from plasma cells.\n\n> __We agree this is an interesting and important distinction to make. We have now distinguished between these classes of cells.__\n\n> 6) Critically, we observed no appreciable evidence of hypermutation in vitro (S2C), consistent with prior literature (Bergthorsdottir et al. 2001). This statement is vague, misleading and likely inaccurate for the following reasons. (a) The B cell culture conditions used by the authors are completely unknown. (b) It was shown that SHM can be achieved under specific in vitro B cell culture conditions that include the presence of activated CD4+ T cells (PMID: 9052835; PMID: 10092799; PMID: 10878357; PMID: 12145648). Did authors try to recapitulate those culture conditions?\n\n> __We see how this statement could be misunderstood. We only claim not to observe evidence of hypermutation in our specific culture conditions, which is important for the inferences we make. We added language to make this more clear. __\n\n> __We did not try to recapitulate the conditions in the references supplied by the reviewer. We note that these references use cell lines and not B cells. While there is immensely valuable work done on cell lines, they behave very differently from actual cells and these findings may not be relevant to our human B cells. __\n\n> 7) Some of the reported findings are repetitive of previously published results and provide no additional new information. For example:\n\n> 1. a) 'Interestingly, we found mutated B cells were far more likely to express genes involved in T cell interaction (2B), suggesting Memory B cells are intrinsically licensed to enter an inflammatory state which activates T cells'.\n> This evidence is already published (PMID: 7535180 among many other published studies).\n\n> __We will cite this paper, which is a landmark study. We don\u2019t claim we are the first to discover a propensity of mutated B cells to present help to T cells, but note that we were able to observe this fact via lineage tracing in a single experiment, which is a conceptual and technical advance. Additionally, we report an entire transcriptional module of genes which are upregulated in memory B cells vs. Naive B cells exposed to the same stimulus. This adds to the systematic understanding of the Memory B Cell activation program.__\n\n> 1. b) 'Instead, Naive B cells were biased toward expressing lectins and CCR7, suggesting Naive B cells are intrinsically primed to home into the lymphatic system and germinal centers (2B)'.\n> This evidence is already published (PMID: 9585422 among many other published studies).\n\n> __While this is an interesting and important paper referenced by the reviewer, we are unable to find anything similar to our claim about naive B cells in the reference provided. The investigators do not discuss intrinsic differences between memory and naive subsets when responding to the same stimulus.__\n\n> 8) We quantified the in vitro dynamics of CSR through the lens of mutation status, which revealed strongly different fate biases between germline and mutated cells (2D). Most strikingly, B cells which switched to IGHE were almost exclusively derived from germline progenitors: the ratio of germline IGHE cells to mutated IGHE cells was (8-fold - inf, 95 % CI). Also this evidence is not novel (PMID: 34050324 among other published studies) and, again, must reflect the presence of specific culture conditions that remain completely undisclosed. This is incredibly confusing.\n\n> __Thank you for providing this reference, we were not aware of this interesting study. These studies are quite different and complementary. Differences between these studies likely reflect the fact that their B cells are isolated from a niche, rather than generated ____*in-vitro*____. Most of the tissue-resident cells in their study are quite mutated, and thus are not the Naive B cells we are making a claim abountj. In fact, despite their claim of low mutational load, these cells would fall into the \u201cmutated\u201d or even \u201cheavily mutated\u201d categories we defined in our paper. Cells with mutation levels of 5% are not thought to be Naive in any classification scheme. Our study showed that, ____*in vitro*____, IGHE B cells effectively came exclusively from germline progenitors, their study shows no such result. The novelty of this finding was appreciated by reviewer 2. __\n\n> 9) Authors should mention that non-switched memory B cells include IgDlowIgM+CD27+ and IgD-IgM+CD27+ memory B cells. Some authors define these distinct memory B cell fractions as marginal zone (MZ) or MZ-like B cells (please, notice that splenic MZ B cells recirculate in humans) and IgM-only B cells, respectively (PMID: 28709802; PMID: 9028952; PMID: 10820234; PMID: 11158612; PMID: 26355154; PMID: 15191950; and PMID: 24733829 among many other published studies).\n\n> __We appreciate these points. We attempted to classify our B cells within this taxonomy and found no such separation clearly exists in single-cell RNA-seq profiles. Instead, we opted to re-classify our data with a state-of-the-art algorithm called celltypist (DOI:__ __10.1126/science.abl5197____ )____ which harmonizes cell annotations across a growing number of single-cell RNA sequencing studies. While this classification system is not currently mutually exclusive / completely exhaustive, we believe using this system provides standardization and data availability that are key for sharing results. As single-cell RNA-seq and flow/mass cytometry harmonize their classification systems, anyone should be able to transfer their preferred classification scheme to the cells profiled here.__\n\n> 10) Thus, CSR from IGHM cells did not meaningfully contribute to the abundance of IGHA+ cells in the population. Also this conclusion may be misleading and/or inaccurate. Indeed, an efficient class switching to IgA requires the exposure of na\u00efve B cells to the cytokine TFG-beta in addition to a robust TD (CD40L) or TI (CpG DNA or BAFF or APRIL) co-signal. Was TGF-beta present in this culture?\n\n> __This is a good point about TGF-beta and switching to IgA. Here is a clear example of the novelty and power of our approach, as well as the benefits of using a well-characterized system such as B cell differentiation. Lineage tracing clarifies between two explanations for why there are IgA cells in the output population. One explanation is that non-IgA B cells in the input switch to IgA, driven by TGF-beta. Another explanation is that IgA cells in the input expand modestly and account for IgA cells in the output. Lineage tracing offers clear evidence that the latter explanation is true. Following from this, our approach allows us to make a strong inference that TGF-beta is not present in the incompletely determined cytokine mixture. We are not sure how this conclusion may be misleading or inaccurate, as it is a clear and simple description of our data, not a claim about what factors are necessary for switching.__\n\n> 11) In contrast, we noted that many intraclonal class-switching events appeared to be directly from IGHM to IGHE. Explanations involving unobserved cells with intermediate isotypes notwithstanding, these data illustrate the relative ease with which B cells can switch directly to IGHE. It is very difficult to interpret this statement, as no information regarding the B cell-stimulating conditions used is provided. In addition, relevant literature is not quoted (e.g., PMID: 34050324).\n\n> __We clarify our discussion here to claim the ease with which peripheral blood IGHM B cells switch to IGHE. Again, lineage tracing has allowed us to distinguish between two very different population-level phenomena. One explanation is that undetected IGHE+ progenitors in the input population expanded rapidly and account for the IGHE+ cells. Another explanation is that cells class-switch to IGHE. Our data are consistent with the latter. We note that this validates the conceptual use of lineage tracing to understand rapid population dynamics in immune responses and cell differentiation protocols. This is a strength of our manuscript. We appreciate the the reviewer has furnished relevant studies, which we will cite.__\n\n> 12) Our data for IGHE cells contrasts with in vivo data which show IgE B cells to be: (1) very rare, (2) apparently derived from sequential switching (e.g. from IgG1 to IgE) (Horns et al., 2016; Looney et al., 2016), and (3) often heavily hypermutated (Croote et al., 2018). \n\n> While this reviewer agrees with the first comment (switching to IgE is relatively rare in vivo, at least in healthy individuals), the other statements are quite inaccurate. Indeed, unmutated extrafollicular na\u00efve B cells from tonsils and possibly other mucosal districts directly class switch from IgM to IgE in healthy individuals, thereby generating a low-affinity IgE repertoire. In principle, low-affinity IgE antibodies may protect against allergy by competing with high-affinity IgE specificities. In allergic patients, high-affinity IgE clones emerge from class-switched and hypermutated memory B cells that sequentially switch from IgG1 or IgA1 to IgE as a result of specific environmental conditions, including an altered skin barrier (PMID: 22249450; PMID: 30814336; PMID: 32139586).\n\n> Moreover, in contrast to what stated by authors, sequential IgG1/IgA1-to-IgE class switching mostly occurs in allergic patients but is less frequent in healthy individuals, where IgE specificities are less mutated (PMID: 30814336). Along the same lines, IgE is heavily mutated only in allergic individuals with significant molecular evidence of sequential IgG1/IgA1-to-IgE class switching (PMID: 30814336; PMID: 32139586). Overall, the data provided by Swift M. et al. are largely confirmatory of previously published evidence.\n\n> __We appreciate the clarification of this complex field and will cite the relevant literature. We also agree with the reviewers assessment that our data are validated by other approaches and groups. We see that our discussion of IgE B cells should have included that caveat that we are discussing IgE B cells detected in the peripheral blood. We have restricted claim to the suggestion that if our conditions mimic such niches where B cells switch to IgE, there are clearly efficient mechanisms which limit the amount of circulating IGHE B cells mechanisms in comparison to other isotypes.____*   *__\n\n> Taken together, these data suggest that while direct switching to IGHE from Naive progenitors is trivial in vitro, niche factors or intrinsic death programs efficiently limit their generation or lifetime in vivo.' I cannot understand this conclusion, which seems to contradict earlier statements.\n\n> __We hope we have clarified via the above comment.__\n\n> 13) I am not sure I learned much regarding the 'cell-intrinsic' fate bias and transcriptional memory of B cells after reading this elegantly presented but confusing and superficially discussed manuscript (please, see also comments 15-23).\n\n> __We understand the reviewer is confused about various aspects of our manuscript and appreciate the opportunities to clarify. We show cells with broad identities (such as germline vs. mutated or naive vs. memory) respond differently to the same stimulus. These are cell intrinsic fate biases. We quantify them and provide statistical bounds on the effect sizes of these differences, which to our knowledge has not been done. We agree with the reviewer that in the case of memory and naive B cells, much is already known about their biases. We recapitulate some of this knowledge, while adding a quantitative and an unbiased transcriptomic lens with which to view the biases. However, our analysis moves beyond cell types broadly defined, and focuses on the concept that each clone is a cell state or identity, where some of the identity may be faithfully propagated over generations and other information may not be. To this end, we tracked the transcriptome of clones during differentiation. We show that B cell clones share highly similar cell fates, implicating cell-intrinsic heterogeneity as a major contribution to diversity in immune responses. We note this reviewer did not critique this aspect of our work. The review also did not critique Figure 3 or 4, in which we present a quantitative analysis of which transcriptional programs are maintained by B cells and contribute to their clonal identity. Finally, via our analysis of human long-lived plasma cells, we report these transcriptional identities are observed in-vivo, over long time scales. This type of cell-intrinsic bias has not been studied or described to our knowledge. These findings were of particular interest to reviewer 2 and other readers of the manuscript. __\n\n> MINOR COMMENTS\n\n> __Thank you for reading the manuscript carefully and providing these comments and observations. We have fixed all clerical errors that were pointed out. We also responded to some of these minor comments here, and made changes to the manuscript to clarify. __\n\n> 1) Figures 1B, S1C and S1D are not referred to in the text. x\n\n> 2) 2B in the Text is 2D in the Figure. x\n\n> 3) 2D in the Text is 2E in the Figure. x\n\n> 4) Figure 2D seems to show only 10 genes. Please, clarify. \n\n> __We clarify in the manuscript that we present the top differentially expressed genes__\n\n> 5) 2E in the text is 2F in the Figure. x\n\n> 6) Figure S3B is not indicated in the text. x\n\n> 7) Figure 3E is not indicated in the text. x\n\n> 8) Figure S4A is not indicated in the text. x\n\n> 9) In some sections of the text, Figure panels are not sequentially discussed, which makes the text very difficult to follow. x\n\n> __Reviewer 2:__\n\n> Major comments:\n\n> On p.3 the authors assume that a B cell with an unmutated BCR in the time course arose from a naive B cell progenitor. However, it is also possible that it arose from a IgM memory B cells since they also contain a non-negligible proportion of cells with 0 mutations. This was initially seen already in the Klein, J Exp Med, 1998 paper and later confirmed by e.g. Weller et al, J Exp Med, 2008 and Wu et al, Front Immunol, 2011. And since the authors herein and others have demonstrated that IgM memory B cells have a high proliferative capacity it is possible that IgM memory B cells are overrepresented among those unmutated BCRs seen in the cultures.\n\n> The finding that IgM memory B cells are highly proliferative is not novel. It has been demonstrated by other groups before and one good example is Seifert et al, PNAS, 2015 where IgM memory B cells proliferated significantly more to BCR stimulation than naive or IgG memory B cells. However, it is also shown that IgG memory B cells are more responsive to TLR9 stimulation than IgM memory B cells as demonstrated by e.g. Marasco et al, Eur J Immunol, 2017. This is not discussed by the authors and should be added into the discussion for context of their finding by scRNAseq methods.\n\n> __*These are astute points. We incorporated a more nuanced discussion of the prior literature about highly proliferative IgM memory B cells, which have been reported before. We also added a figure which identifies the genes associated with proliferative clones in Figure 3d, which adds to our understanding of the gene regulatory networks which govern IgM memory B cell behavior. We appreciate the reference to the Seifert et al paper, which is relevant and high quality work. We concur that a discuss of Marasco would be helpful, especially because it is unknown if a TLR9 agonist is in the stimulation cocktail, but their data would suggest there is not. *__\n\n> The notion that a memory transcriptional program can be induced without SHM is not novel and this should be brought up in the discussion. One paper showing a memory transcriptional program in unmutated memory B cells is Kibler et al, Front Immunol, 2022.\n\n> __*We were not aware of this literature and have now cited it in our discussion of this finding. *__\n\n> __* *__\n\n> The observation that memory B cells are more likely to enter an inflammatory state and support T cells has been suggested by other groups (Seifert et al, PNAS, 2015; Magri et al, Immunity, 2017, Grimsholm et al, Cell Reports, 2020).\n\n> __*We have now cited and discussed a number of papers which contain similar findings. We note that we add to the holistic understanding of this phenomenon via our single cell transcriptomic approach.*__\n\n> Please provide the age distribution of the peripheral blood samples as well.\n\n> __*We have now provided the age distribution of the peripheral blood samples*__\n\n> Please show flow cytometry analysis of the cultures to assist in assessing subset distribution, viability and plasma cell differentiation for each time point. This can be provided as supplementary information.\n\n> __*We did not use flow cytometry for subset distribution and measurements of differentiation per se, only to exclude non-viable cells and we have now made this clearer in the methods section. We also now include representative plots show our sorting strategy. *__\n\n> The stimulation cocktail used for this study, what does it contain? This needs to be specified in the manuscript and not only referring to the manufacturer. This has major impact on the results since different stimulatory agents will induce different pathways.\n\n> __*This is a valid point that we addressed in our response to reviewer 1. See supplementary note 1 and Figure S1A for our analysis of the stimulation cocktail. *__\n\n> Minor comments:\n\n> Please avoid the term plasma B cells, does it refer to plasmablasts and/or plasma cells?\n\n> __*Thank you for the suggestion, we have modified our language to refer to plasmablasts and plasma cells separately.*__\n\n\n",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "id": "YZ5J9E_JEe2DzkOhY3gbQQ",
+                                            "service": "https://hypothes.is",
+                                            "type": "web-page",
+                                            "url": "https://hypothes.is/a/YZ5J9E_JEe2DzkOhY3gbQQ"
+                                        },
+                                        {
+                                            "id": "26277755",
+                                            "service": "https://eeb.embo.org",
+                                            "type": "web-page",
+                                            "url": "https://eeb-dev.embo.org/api/v2/review_material/26277755"
+                                        },
+                                        {
+                                            "id": "10.1101/2022.07.14.499766",
+                                            "service": "https://biorxiv.org",
+                                            "type": "web-page",
+                                            "url": "https://biorxiv.org/content/10.1101/2022.07.14.499766#review"
+                                        }
+                                    ],
+                                    "published": "2022-10-19T16:16:26.250693+00:00",
+                                    "type": "author-response",
+                                    "uri": "https://eeb-dev.embo.org/api/v2/review_material/26277755",
+                                    "doi": "10.15252/rc.2022344278"
+                                }
+                            ],
+                            "participants": [
+                                {
+                                    "role": "author",
+                                    "actor": {
+                                        "familyName": "Swift",
+                                        "firstName": "Michael",
+                                        "type": "person"
+                                    }
+                                },
+                                {
+                                    "role": "author",
+                                    "actor": {
+                                        "familyName": "Quake",
+                                        "firstName": "Stephen R.",
+                                        "type": "person"
+                                    }
+                                },
+                                {
+                                    "role": "author",
+                                    "actor": {
+                                        "familyName": "Horns",
+                                        "firstName": "Felix",
+                                        "type": "person"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "_:b-16483243-7f51-4c69-9781-817ae0f54841": {
+                    "assertions": [
+                        {
+                            "status": "reviewed",
+                            "item": "https://doi.org/10.1101/2022.07.14.499766"
+                        }
+                    ],
+                    "inputs": [
+                        {
+                            "published": "2022-07-15T00:00:00Z",
+                            "uri": "https://doi.org/10.1101/2022.07.14.499766",
+                            "doi": "10.1101/2022.07.14.499766"
+                        }
+                    ],
+                    "next-step": "_:b-c0e5bd14-937d-4269-a75f-431b917774bc",
+                    "actions": [
+                        {
+                            "outputs": [
+                                {
+                                    "content": [
+                                        {
+                                            "id": "39066860",
+                                            "text": "The reviews indicate that the study lacks significant advancements as many of its conclusions are expected or previously published. There are concerns about its originality and substance. However, if adequately and extensively revised, the work could potentially be of interest to a broad audience. The reviewer's expertise lies in B cell biology, B cell subsets, regulation of antibody production, including class switching, and signals skewing antibody responses to a specific isotype.",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "text"
+                                        }
+                                    ],
+                                    "published": "2023-10-09T18:29:55.901",
+                                    "type": "reviews-summary"
+                                }
+                            ],
+                            "participants": []
+                        },
+                        {
+                            "outputs": [
+                                {
+                                    "content": [
+                                        {
+                                            "id": "26277754",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "web-page",
+                                            "url": "https://eeb-dev.embo.org/api/v2/review_material/26277754"
+                                        },
+                                        {
+                                            "id": "YVdzRE_JEe2-m4_WZtr_GQ",
+                                            "service": "https://hypothes.is/",
+                                            "type": "web-page",
+                                            "url": "https://hypothes.is/a/YVdzRE_JEe2-m4_WZtr_GQ"
+                                        },
+                                        {
+                                            "id": "10.1101/2022.07.14.499766",
+                                            "service": "https://biorxiv.org",
+                                            "type": "web-page",
+                                            "url": "https://biorxiv.org/content/10.1101/2022.07.14.499766#review"
+                                        },
+                                        {
+                                            "id": "26277754",
+                                            "text": "**Note:** This preprint has been reviewed by subject experts for *Review Commons*. Content has not been altered except for formatting.\n\nLearn more at [Review Commons](https://reviewcommons.org)\n\n\n-----\n\n\n### Referee \\#2\n\n#### Evidence, reproducibility and clarity\n\n I have with great interest read the manuscript 'Fate bias and transcriptional memory of human B cells' by Swift et al where they use an in vitro approach and single cell RNA sequencing to elucidate fate decisions of human B cells.  The authors demonstrate that genes related to cell fate determination in human B cells are persistent both in their in vitro culture and in ex vivo plasma cells from bone marrow. This is a very important finding in this manuscript and the technical execution of the paper is overall of high quality. The finding of switching to IgE in vitro from unmutated precursor is very interesting and does not necessarily contradict existing data in the field but rather adds new important information. However, some of the findings are not totally novel and need to be put in context of earlier findings (outlined below). The discussion does not acknowledge literature on memory B cell transcriptional programs and mutation status in a balanced manner. Important literature by leading groups in the field are left out.    \r\n\r\n\r\n**Major comments:**\r\n\r\nOn p.3 the authors assume that a B cell with an unmutated BCR in the time course arose from a naive B cell progenitor. However, it is also possible that it arose from a IgM memory B cells since they also contain a non-negligible proportion of cells with 0 mutations. This was initially seen already in the Klein, J Exp Med, 1998 paper and later confirmed by e.g. Weller et al, J Exp Med, 2008 and Wu et al, Front Immunol, 2011. And since the authors herein and others have demonstrated that IgM memory B cells have a high proliferative capacity it is possible that IgM memory B cells are overrepresented among those unmutated BCRs seen in the cultures. \r\n\r\nThe finding that IgM memory B cells are highly proliferative is not novel. It has been demonstrated by other groups before and one good example is Seifert et al, PNAS, 2015 where IgM memory B cells proliferated significantly more to BCR stimulation than naive or IgG memory B cells. However, it is also shown that IgG memory B cells are more responsive to TLR9 stimulation than IgM memory B cells as demonstrated by e.g. Marasco et al, Eur J Immunol, 2017. This is not discussed by the authors and should be added into the discussion for context of their finding by scRNAseq methods.\r\nThe notion that a memory transcriptional program can be induced without SHM is not novel and this should be brought up in the discussion. One paper showing a memory transcriptional program in unmutated memory B cells is Kibler et al, Front Immunol, 2022. \r\n\r\nThe observation that memory B cells are more likely to enter an inflammatory state and support T cells has been suggested by other groups (Seifert et al, PNAS, 2015; Magri et al, Immunity, 2017, Grimsholm et al, Cell Reports, 2020).\r\nPlease provide the age distribution of the peripheral blood samples as well. \r\n\r\nPlease show flow cytometry analysis of the cultures to assist in assessing subset distribution, viability and plasma cell differentiation for each time point. This can be provided as supplementary information.\r\n\r\nThe stimulation cocktail used for this study, what does it contain? This need to be specified in the manuscript and not only referring to the manufacturer. This has major impact on the results since different stimulatory agents will induce different pathways. \r\n\r\n**Minor comments:**\r\n\r\nPlease avoid the term plasma B cells, does it refer to plasmablasts and/or plasma cells?\r\n\r\n\r\n**Referees cross-commenting**\r\n\r\nComments on reviewer 1 report: The reviewer raised the same significant objection to the manuscript as it stands today i.e. the content of the stimulation cocktail is not described. Without this information the manuscript is hard to put into the perspective of the existing literature. \r\n\n\n#### Significance\n\n See above comments.\n\n",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "text"
+                                        }
+                                    ],
+                                    "runningNumber": "2",
+                                    "published": "2022-10-19T16:16:25.821021+00:00",
+                                    "type": "review",
+                                    "uri": "https://eeb-dev.embo.org/api/v2/review_material/26277754",
+                                    "doi": "10.15252/rc.2022047881"
+                                }
+                            ],
+                            "participants": [
+                                {
+                                    "role": "peer-reviewer",
+                                    "actor": {
+                                        "name": "anonymous",
+                                        "type": "person"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "outputs": [
+                                {
+                                    "content": [
+                                        {
+                                            "id": "YSIwTk_JEe214avPd5dnlw",
+                                            "service": "https://hypothes.is/",
+                                            "type": "web-page",
+                                            "url": "https://hypothes.is/a/YSIwTk_JEe214avPd5dnlw"
+                                        },
+                                        {
+                                            "id": "26277753",
+                                            "text": "**Note:** This preprint has been reviewed by subject experts for *Review Commons*. Content has not been altered except for formatting.\n\nLearn more at [Review Commons](https://reviewcommons.org)\n\n\n-----\n\n\n### Referee \\#1\n\n#### Evidence, reproducibility and clarity\n\n **Summary**\r\n\r\nSwift M. et al. explored how gene expression responds to extracellular stimuli by dissecting the transcriptional programs that underlie cell-intrinsic clonal fate bias. They also verified how extrinsic signals, intrinsic state, and clonal population structure interacted to determine the dynamics of the B cell immune response. To address these questions, lineage and single-cell RNA sequencing measurements were performed in human B cells stimulated in vitro through an undisclosed protocol. The B cell receptor (BCR) gene was used as a genetic lineage marker and this information was paired with that gained from transcriptomics, which provided an additional readout of cellular identity. Authors concluded that B cells have intrinsic biases towards specific cell fates and identified specific transcriptional memory states.\r\n\r\n**Major comments**\r\n\r\nWhile this is an elegantly presented manuscript that presents a wealth of data obtained from state-of-the-art transcriptomics and bioinformatics, some issues considerably weaken the main conclusions. These weaknesses entail an almost complete absence of details as to the stimuli being used for the in vitro activation of B cells (e.g., were they exposed to IL-4, TGF-beta and/or CD40L?). In the absence of this information, the discussion of intrinsic biases towards specific cell fates cannot be fully interpreted and understood, as different stimuli induce different B cell fates. In addition, there seems to be some misunderstanding about IgE class switching and somatic hypermutation, which differ in healthy and allergic individuals. Also, the novelty of this work is reduced by the fact that some of its conclusions are either largely expected or already known from studies published previously. Altogether, these issues make some statements and conclusions confusing and, sometimes, misleading. The following additional major comments are provided.\r\n\r\n1. Which B cell activation protocol was used? No information is provided in the main text or supplementary information. Yet, this information is key to fully understand many of the conclusions of this work (e.g., ... memory B cells are intrinsically two-fold more persistent in vitro (2A)), which largely depend on the nature of the stimuli used in the in vitro B cell culture.\r\n2. It would be informative to use more than one B cell activation program, e.g., CD40L with or without a cytokine as well as CD40L vs. CpG-DNA. Authors make broad statements about B cell fates without discussing the impact of a given signal on a given B cell fate. For instance, do memory B cells follow the same differentiation program upon stimulation with CD40L, IL-4 or a combination of CD40L and IL-4? How about differences between a TD signaling program such as that provided by CD40L and IL-10 and TI signaling program such as that provided by CpG-DNA and IL-10?\r\n3. Page 3, first line: After low quality and non-B cells (Fig S1A & B). What does this statement mean? The sentence seems incomplete.\r\n4. First, we noted that non-B cells present in the input rapidly became undetectable by day 4, which shows the specificity of the cytokines for B cell expansion. Which cytokines are we talking about? No detail is provided.\r\n5. Plasmablasts were not distinguished from plasma cells.\r\n6. Critically, we observed no appreciable evidence of hypermutation in vitro (S2C), consistent with prior literature (Bergthorsdottir et al. 2001). This statement is vague, misleading and likely inaccurate for the following reasons. (a) The B cell culture conditions used by the authors are completely unknown. (b) It was shown that SHM can be achieved under specific in vitro B cell culture conditions that include the presence of activated CD4+ T cells (PMID: 9052835; PMID: 10092799; PMID: 10878357; PMID: 12145648). Did authors try to recapitulate those culture conditions?\r\n7. Some of the reported findings are repetitive of previously published results and provide no additional new information. For example:\r\n\r\n    - a) 'Interestingly, we found mutated B cells were far more likely to express genes involved in T cell interaction (2B), suggesting Memory B cells are intrinsically licensed to enter an inflammatory state which activates T cells'.\r\nThis evidence is already published (PMID: 7535180 among many other published studies).\r\n    - b) 'Instead, Naive B cells were biased toward expressing lectins and CCR7, suggesting Naive B cells are intrinsically primed to home into the lymphatic system and germinal centers (2B)'.\r\n\r\nThis evidence is already published (PMID: 9585422 among many other published studies).\r\n8. We quantified the in vitro dynamics of CSR through the lens of mutation status, which revealed strongly different fate biases between germline and mutated cells (2D). Most strikingly, B cells which switched to IGHE were almost exclusively derived from germline progenitors: the ratio of germline IGHE cells to mutated IGHE cells was (8-fold - inf, 95 % CI). Also this evidence is not novel (PMID: 34050324 among other published studies) and, again, must reflect the presence of specific culture conditions that remain completely undisclosed. This is incredibly confusing.\r\n9. Authors should mention that non-switched memory B cells include IgDlowIgM+CD27+ and IgD-IgM+CD27+ memory B cells. Some authors define these distinct memory B cell fractions as marginal zone (MZ) or MZ-like B cells (please, notice that splenic MZ B cells recirculate in humans) and IgM-only B cells, respectively (PMID: 28709802; PMID: 9028952; PMID: 10820234; PMID: 11158612; PMID: 26355154; PMID: 15191950; and PMID: 24733829 among many other published studies).\r\n10. Thus, CSR from IGHM cells did not meaningfully contribute to the abundance of IGHA+ cells in the population. Also this conclusion may be misleading and/or inaccurate. Indeed, an efficient class switching to IgA requires the exposure of na&#x00EF;ve B cells to the cytokine TFG-beta in addition to a robust TD (CD40L) or TI (CpG DNA or BAFF or APRIL) co-signal. Was TGF-beta present in this culture?\r\n11. In contrast, we noted that many intraclonal class-switching events appeared to be directly from IGHM to IGHE. Explanations involving unobserved cells with intermediate isotypes notwithstanding, these data illustrate the relative ease with which B cells can switch directly to IGHE. It is very difficult to interpret this statement, as no information regarding the B cell-stimulating conditions used is provided. In addition, relevant literature is not quoted (e.g., PMID: 34050324).\r\n12. Our data for IGHE cells contrasts with in vivo data which show IgE B cells to be: (1) very rare, (2) apparently derived from sequential switching (e.g. from IgG1 to IgE) (Horns et al., 2016; Looney et al., 2016), and (3) often heavily hypermutated (Croote et al., 2018). While this reviewer agrees with the first comment (switching to IgE is relatively rare in vivo, at least in healthy individuals), the other statements are quite inaccurate. Indeed, unmutated extrafollicular na&#x00EF;ve B cells from tonsils and possibly other mucosal districts directly class switch from IgM to IgE in healthy individuals, thereby generating a low-affinity IgE repertoire. In principle, low-affinity IgE antibodies may protect against allergy by competing with high-affinity IgE specificities. In allergic patients, high-affinity IgE clones emerge from class-switched and hypermutated memory B cells that sequentially switch from IgG1 or IgA1 to IgE as a result of specific environmental conditions, including an altered skin barrier (PMID: 22249450; PMID: 30814336; PMID: 32139586).\r\nMoreover, in contrast to what stated by authors, sequential IgG1/IgA1-to-IgE class switching mostly occurs in allergic patients but is less frequent in healthy individuals, where IgE specificities are less mutated (PMID: 30814336). Along the same lines, IgE is heavily mutated only in allergic individuals with significant molecular evidence of sequential IgG1/IgA1-to-IgE class switching (PMID: 30814336; PMID: 32139586). Overall, the data provided by Swift M. et al. are largely confirmatory of previously published evidence. \r\n\r\nTaken together, these data suggest that while direct switching to IGHE from Naive progenitors is trivial in vitro, niche factors or intrinsic death programs efficiently limit their generation or lifetime in vivo.' I cannot understand this conclusion, which seems to contradict earlier statements.\r\n13. I am not sure I learned much regarding the 'cell-intrinsic' fate bias and transcriptional memory of B cells after reading this elegantly presented but confusing and superficially discussed manuscript (please, see also comments 15-23).\r\n\r\n**Minor comments**\r\n\r\n1. Figures 1B, S1C and S1D are not referred to in the text.\r\n2. 2B in the Text is 2D in the Figure.\r\n3. 2D in the Text is 2E in the Figure.\r\n4. Figure 2D seems to show only 10 genes. Please, clarify. \r\n5. 2E in the text is 2F in the Figure.\r\n6. Figure S3B is not indicated in the text.\r\n7. Figure 3E is not indicated in the text.\r\n8. Figure S4A is not indicated in the text.\r\n9. In some sections of the text, Figure panels are not sequentially discussed, which makes the text very difficult to follow.\r\n\n\n#### Significance\n\n NATURE AND SIGNIFICNCE OF THE ADVANCE\r\n\r\nI could not grasp a significant advance in this study as provided.\r\n\r\nCOMPARE TO EXISTING PUBLISHED KNOWLEDGE\r\n\r\nAs detailed in my specific comments, many of the conclusions of this work are largely expected or already published. It is difficult to evaluate the substance and originality of other conclusions in manuscript as provided.\r\n\r\nAUDIENCE\r\n\r\nIf adequately and extensively revised, this work could be interesting to a broad audience.\r\n\r\nMY EXPERTISE\r\n\r\nB cell biology; B cell subsets; regulation of antibody production, including class switching; signals skewing antibody responses to a specific isotype.\n\n",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "id": "10.1101/2022.07.14.499766",
+                                            "service": "https://biorxiv.org",
+                                            "type": "web-page",
+                                            "url": "https://biorxiv.org/content/10.1101/2022.07.14.499766#review"
+                                        },
+                                        {
+                                            "id": "26277753",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "web-page",
+                                            "url": "https://eeb-dev.embo.org/api/v2/review_material/26277753"
+                                        }
+                                    ],
+                                    "runningNumber": "1",
+                                    "published": "2022-10-19T16:16:25.413668+00:00",
+                                    "type": "review",
+                                    "uri": "https://eeb-dev.embo.org/api/v2/review_material/26277753",
+                                    "doi": "10.15252/rc.2022330228"
+                                }
+                            ],
+                            "participants": [
+                                {
+                                    "role": "peer-reviewer",
+                                    "actor": {
+                                        "name": "anonymous",
+                                        "type": "person"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "type": "docmap",
+            "generatedAt": "2023-12-11T00:59:17.976Z",
+            "publisher": {
+                "peer_review_policy": "https://reviewcommons.org/reviewers",
+                "name": "review commons",
+                "url": "https://reviewcommons.org"
+            }
+        }
+    },
+    {
+        "docmap": {
+            "id": "https://eeb-dev.embo.org/api/docmaps/v1/docmap/b3bf80c9-354e-45d6-9b98-078d55784d45",
+            "first-step": "_:b-074a1c82-0988-4a46-9878-131ccc6e7f03",
+            "created": "2023-12-11T00:59:17.976Z",
+            "provider": "https://eeb.embo.org",
+            "steps": {
+                "_:b-074a1c82-0988-4a46-9878-131ccc6e7f03": {
+                    "assertions": [
+                        {
+                            "status": "reviewed",
+                            "item": "https://doi.org/10.1101/2022.07.14.499766"
+                        }
+                    ],
+                    "inputs": [
+                        {
+                            "published": "2022-07-15T00:00:00Z",
+                            "uri": "https://doi.org/10.1101/2022.07.14.499766",
+                            "doi": "10.1101/2022.07.14.499766"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "outputs": [
+                                {
+                                    "content": [
+                                        {
+                                            "id": "10.1101/2022.07.14.499766",
+                                            "service": "https://biorxiv.org",
+                                            "type": "web-page",
+                                            "url": "https://biorxiv.org/content/10.1101/2022.07.14.499766#review"
+                                        },
+                                        {
+                                            "id": "24695353",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "web-page",
+                                            "url": "https://eeb-dev.embo.org/api/v2/review_material/24695353"
+                                        },
+                                        {
+                                            "id": "24695353",
+                                            "text": "#### Transparent Peer Review\n___\n\n**Download the complete [Review Process](https://www.life-science-alliance.org/content/lsa/6/3/e202201792.reviewer-comments.pdf) [PDF]** including:\n\n- reviews\n- authors\\' reply\n- editorial decisions\n\n</br>\n<a href='http://doi.org/10.26508/lsa.202201792'><img src='https://www.embopress.org/pb-assets/embo-site/images/RevCo_Transparency-LSA.jpg'/></a>",
+                                            "service": "https://eeb.embo.org/",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "id": "V9ah4ML3Ee2TGWtO3C8Agw",
+                                            "service": "https://hypothes.is/",
+                                            "type": "web-page",
+                                            "url": "https://hypothes.is/a/V9ah4ML3Ee2TGWtO3C8Agw"
+                                        }
+                                    ],
+                                    "published": "2023-03-15T06:05:10.437612+00:00",
+                                    "type": "review",
+                                    "uri": "https://eeb-dev.embo.org/api/v2/review_material/24695353"
+                                }
+                            ],
+                            "participants": []
+                        }
+                    ]
+                }
+            },
+            "type": "docmap",
+            "generatedAt": "2023-12-11T00:59:17.976Z",
+            "publisher": {
+                "peer_review_policy": "https://www.embopress.org/page/journal/17444292/refereeguide",
+                "name": "embo press",
+                "url": "https://embopress.org/"
+            }
+        }
+    }
+]

@@ -21,16 +21,19 @@
 
   <script type="module">
     import { html, render } from 'lit';
-    import '../render-rev.js';
+    import '../dist/render-rev.js';
+    import { parse as parseDocmaps } from '../src/docmaps.js';
 
     const debug = true;
-    const docmapsUrl = doi => `http://localhost:5050/api/v2/docmap/${doi}`;
+    const docmapsUrl = doi => `https://eeb-dev.embo.org/api/v2/docmap/${doi}`;
+    // const docmapsUrl = doi => `http://localhost:5050/api/v2/docmap/${doi}`;
 
     const eebDois = [
       '10.1101/2022.07.22.22277924',
       '10.1101/2021.10.26.465695',
       '10.1101/2020.05.15.098251',
-      '10.1101/452276',
+    ];
+    const eebDoisLocal = [
       '10.1101/2022.07.14.499766',
     ];
     const scietyDois = [
@@ -50,6 +53,17 @@
         </article>
 
         <article>
+          <h2>EEB-style DocMaps</h2>
+          ${eebDoisLocal.map((doi) => html`
+            <section>
+              <h3>${doi}</h3>
+              <render-rev-timeline class="eeb-docmaps" data-doi="${doi}"></render-rev-timeline>
+              <render-rev-summary class="eeb-docmaps" data-doi="${doi}"></render-rev-summary>
+            </section>
+          `)}
+        </article>
+
+        <article>
           <h2>Sciety-style docmaps</h2>
           ${scietyDois.map((doi) => html`
             <section>
@@ -64,6 +78,17 @@
 
     eebDois.forEach(
       doi => document.querySelector(`render-rev[data-doi="${doi}"]`).configure({ docmapsUrl, doi, debug })
+    );
+    eebDoisLocal.forEach(
+      doi => fetch(`eeb-docmaps/${doi}.json`)
+        .then(data => data.json())
+        .then(parseDocmaps)  // from ../index.js
+        .then(reviewProcess => {
+          const reviewSummary = document.querySelector(`render-rev-summary.eeb-docmaps[data-doi="${doi}"]`);
+          reviewSummary.reviewProcess = reviewProcess;
+          const reviewTimeline = document.querySelector(`render-rev-timeline.eeb-docmaps[data-doi="${doi}"]`);
+          reviewTimeline.reviewProcess = reviewProcess;
+        })
     );
     scietyDois.forEach(
       doi => fetch(`sciety-docmaps/${doi}.json`)
