@@ -11,23 +11,6 @@ function toClassName(str) {
   return str?.replaceAll(/[^a-zA-Z0-9-_]/g, '') || 'undefined';
 }
 
-function itemDescription(item) {
-  switch (item.type) {
-    case 'reviews':
-      return `Peer Review`;
-    case 'response':
-      return 'Reply';
-    case 'review-article':
-      return 'Review';
-    case 'preprint-posted':
-      return 'Preprint';
-    case 'journal-publication':
-      return 'Published';
-    default:
-      return 'Unknown';
-  }
-}
-
 export class RenderRevTimeline extends LitElement {
   static properties = {
     options: { type: Object },
@@ -202,6 +185,7 @@ export class RenderRevTimeline extends LitElement {
         month: 'short',
         year: 'numeric',
       }),
+    itemDescriptions: {},
     publisherLogo: () => null,
     publisherName: name => {
       const nameMap = {
@@ -241,9 +225,23 @@ ${summary}
     this.shadowRoot.querySelector('render-rev-highlight').show(group, item);
   }
 
+  itemDescription(item) {
+    const defaultDescriptions = {
+      'journal-publication': 'Published',
+      'preprint-posted': 'Preprint',
+      response: 'Reply',
+      'review-article': 'Review',
+      reviews: 'Peer Review',
+    };
+    const customDescription = this._config.itemDescriptions
+      ? this._config.itemDescriptions[item.type]
+      : null;
+    return customDescription || defaultDescriptions[item.type] || item.type;
+  }
+
   itemLabel(group, item) {
     const openHighlight = this.openHighlightHandler(group, item);
-    const description = itemDescription(item);
+    const description = this.itemDescription(item);
     switch (item.type) {
       case 'preprint-posted':
       case 'journal-publication':
