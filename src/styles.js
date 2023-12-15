@@ -8,7 +8,8 @@ export const GlobalStyles = css`
   */
   .render-rev,
   .render-rev-summary,
-  .render-rev-timeline {
+  .render-rev-timeline,
+  render-rev-highlight {
     --timeline-width: var(--rr-timeline-width, 500px);
 
     --timeline-line-color: var(--rr-timeline-line-color, grey);
