@@ -8,10 +8,12 @@ export default {
     {
       file: 'dist/render-rev.js',
       format: 'iife',
+      name: 'renderRev',
     },
     {
       file: 'dist/render-rev.min.js',
       format: 'iife',
+      name: 'renderRev',
       plugins: [terser()],
     },
     {
