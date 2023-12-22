@@ -4,8 +4,8 @@
   "license": "MIT",
   "author": "SourceData",
   "version": "0.2.1",
-  "browser": "dist/render-rev.js",
-  "module": "dist/render-rev.js",
+  "main": "dist/render-rev.iife.js",
+  "module": "dist/render-rev.esm.js",
   "scripts": {
     "analyze": "cem analyze --litelement",
     "build": "rollup --config",
@@ -24,6 +24,7 @@
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "next",
+    "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.0",
