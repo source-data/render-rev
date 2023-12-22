@@ -10,8 +10,8 @@
     "analyze": "cem analyze --litelement",
     "build": "rollup --config",
     "start": "web-dev-server",
-    "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check",
-    "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write",
+    "lint": "eslint --ext .js,.html . --ignore-path .prettierignore && prettier \"**/*.js\" --check",
+    "format": "eslint --ext .js,.html . --fix --ignore-path .prettierignore && prettier \"**/*.js\" --write",
     "test": "web-test-runner --coverage",
     "test:watch": "web-test-runner --watch"
   },
