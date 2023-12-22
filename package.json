@@ -39,6 +39,11 @@
     "rollup": "^2.79.1"
   },
   "customElements": "custom-elements.json",
+  "files": [
+    "dist/",
+    "src/",
+    "custom-elements.json"
+  ],
   "eslintConfig": {
     "extends": [
       "@open-wc",
