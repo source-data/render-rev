@@ -16,7 +16,7 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 32px;
+        gap: 48px;
       }
       .timeline-items {
         display: flex;
@@ -33,7 +33,10 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
         justify-content: center;
         line-height: 16px;
         height: 32px;
-        min-width: 150px;
+      }
+      .item-date,
+      .item-label {
+        width: 175px;
       }
       .group-label,
       .item-date {
@@ -56,20 +59,15 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
       .timeline-group:not(:first-child) .item-date::before {
         color: var(--timeline-line-color);
         height: 16px;
-        width: 64px;
+        width: 98px;
 
         /* position it above the middle of the item date */
         position: absolute;
-        left: -42px;
-        /*
-         * The date element is 100px wide, the line itself 20px. In order for the line
-         * to be centered its right edge therefore has to be at:
-         * (100px / 2) - (20px / 2) = 40px
-         */
+        left: -56px;
         top: 4px;
 
         /* the dots are just dots */
-        content: '................';
+        content: '................................';
 
         /* these settings control how many dots are visible */
         font-family: 'Courier New', Courier, monospace;
@@ -83,22 +81,23 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
       .timeline-group:not(:first-child)
         .timeline-item:first-child
         .item-date::before {
-        left: -60px;
-        width: 88px;
+        left: -89px;
+        width: 128px;
       }
 
-      /* create the down-pointing arrow for the item label */
       .item-label {
-        margin-bottom: 8px;
+        margin-top: 8px;
+        border-radius: 4px;
         position: relative; /* enable absolute positioning for the :before element */
       }
+      /* the up-pointing arrow for the item label */
       .item-label::before {
         content: '';
         position: absolute;
-        top: 100%;
+        bottom: 100%;
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
-        border-top: 12px solid;
+        border-bottom: 12px solid;
         height: 0px;
         width: 0px;
       }
@@ -135,7 +134,7 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
         color: var(--preprint-text-color);
       }
       .item-label.preprint-posted:before {
-        border-top-color: var(--preprint-bg-color);
+        border-bottom-color: var(--preprint-bg-color);
       }
 
       .item-label.response,
@@ -147,7 +146,7 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
       .item-label.response:before,
       .item-label.review-article:before,
       .item-label.reviews:before {
-        border-top-color: var(--reviews-bg-color);
+        border-bottom-color: var(--reviews-bg-color);
       }
 
       .item-label.journal-publication {
@@ -155,7 +154,7 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
         color: var(--published-text-color);
       }
       .item-label.journal-publication:before {
-        border-top-color: var(--published-bg-color);
+        border-bottom-color: var(--published-bg-color);
       }
     `,
   ];
@@ -163,14 +162,14 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
   renderGroup(group) {
     return html`
       <div class="timeline-group ${toClassName(group.publisher.name)}">
+        ${this.renderGroupPublisher(group.publisher)}
         <div class="timeline-items">
           ${group.items.map(
             item => html` <div class="timeline-item">
-              ${this.itemLabel(group, item)} ${this.itemDate(item)}
+              ${this.itemDate(item)} ${this.itemLabel(group, item)}
             </div>`
           )}
         </div>
-        ${this.renderGroupPublisher(group.publisher)}
       </div>
     `;
   }
