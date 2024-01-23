@@ -274,7 +274,9 @@ ${summary}
       : html`<div class="item-date">n/a</div>`;
   }
 
-  renderGroupPublisher(publisher) {
+  tooltipPosition = ['block-end', 'block-start'];
+
+  renderGroupPublisher(publisher, isLastGroup) {
     const { name, peerReviewPolicy, uri } = publisher;
     const displayName = this._config.publisherName(name);
     const logoUrl = this._config.publisherLogo(name) || PublisherLogos[name];
@@ -299,8 +301,11 @@ ${summary}
           >`
         : '';
       const tooltipContent = html`${linkToPublisherHomepage}<br />${linkToPeerReviewPolicy}`;
+      const tooltipPosition = isLastGroup
+        ? this.tooltipPosition[1]
+        : this.tooltipPosition[0];
       publisherInfo = html`
-        <spider-tooltip mode="light" show-arrow>
+        <spider-tooltip mode="light" show-arrow position="${tooltipPosition}">
           <div slot="trigger">
             <div class="group-label-inside-tooltip">${nameAndLogo}</div>
           </div>
@@ -313,21 +318,21 @@ ${summary}
     return html`<div class="group-label">${publisherInfo}</div>`;
   }
 
-  renderGroupItem(group, item, showPublisher) {
+  renderGroupItem(group, item, showPublisher, isLastGroup) {
     const publisher = showPublisher
-      ? this.renderGroupPublisher(group.publisher)
+      ? this.renderGroupPublisher(group.publisher, isLastGroup)
       : html`<div></div>`;
     const date = this.itemDate(item);
     const label = this.itemLabel(group, item);
     return html` ${publisher} ${date} ${label} `;
   }
 
-  renderGroup(group) {
+  renderGroup(group, isLastGroup) {
     const self = this;
     return html`
       <div class="timeline-group ${toClassName(group.publisher.name)}">
         ${group.items.map((item, idx) =>
-          self.renderGroupItem(group, item, idx === 0)
+          self.renderGroupItem(group, item, idx === 0, isLastGroup)
         )}
       </div>
     `;
@@ -366,8 +371,11 @@ ${summary}
 
     return html`
       <div class="render-rev-timeline">
-        ${this.reviewProcess.timeline.groups.map(group =>
-          self.renderGroup(group)
+        ${this.reviewProcess.timeline.groups.map((group, idx) =>
+          self.renderGroup(
+            group,
+            idx === this.reviewProcess.timeline.groups.length - 1
+          )
         )}
       </div>
       <render-rev-highlight

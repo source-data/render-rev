@@ -159,10 +159,12 @@ export class RenderRevTimelineHorizontal extends RenderRevTimeline {
     `,
   ];
 
-  renderGroup(group) {
+  tooltipPosition = ['inline-end', 'inline-start'];
+
+  renderGroup(group, isLastGroup) {
     return html`
       <div class="timeline-group ${toClassName(group.publisher.name)}">
-        ${this.renderGroupPublisher(group.publisher)}
+        ${this.renderGroupPublisher(group.publisher, isLastGroup)}
         <div class="timeline-items">
           ${group.items.map(
             item => html` <div class="timeline-item">

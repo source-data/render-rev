@@ -515,7 +515,7 @@ export class RenderRevHighlight extends LitElement {
             <div class="summary-prelude">
               <div class="summary-disclaimer">
                 Disclaimer: this summary was generated automatically
-                (<spider-tooltip mode="light" show-arrow position="block-start">
+                (<spider-tooltip mode="light" show-arrow position="block-end">
                   <button slot="trigger" class="auto-summary-info-trigger link">
                     learn how
                   </button>

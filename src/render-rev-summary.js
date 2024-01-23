@@ -84,7 +84,7 @@ export class RenderRevSummary extends LitElement {
           Automated Summary (<spider-tooltip
             mode="light"
             show-arrow
-            position="block-start"
+            position="block-end"
           >
             <button slot="trigger" class="auto-summary-info-trigger link">
               What is this?
