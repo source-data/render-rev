@@ -268,6 +268,12 @@ ${summary}
     }
   }
 
+  itemDate(item) {
+    return item.date
+      ? html`<div class="item-date">${this._config.formatDate(item.date)}</div>`
+      : html`<div class="item-date">n/a</div>`;
+  }
+
   renderGroupPublisher(publisher) {
     const { name, peerReviewPolicy, uri } = publisher;
     const displayName = this._config.publisherName(name);
@@ -311,11 +317,7 @@ ${summary}
     const publisher = showPublisher
       ? this.renderGroupPublisher(group.publisher)
       : html`<div></div>`;
-    const date = item.date
-      ? html`
-          <div class="item-date">${this._config.formatDate(item.date)}</div>
-        `
-      : html`<div class="item-date">n/a</div>`;
+    const date = this.itemDate(item);
     const label = this.itemLabel(group, item);
     return html` ${publisher} ${date} ${label} `;
   }

@@ -57,7 +57,7 @@
           ${eebDoisLocal.map((doi) => html`
             <section>
               <h3>${doi}</h3>
-              <render-rev-timeline class="eeb-docmaps" data-doi="${doi}"></render-rev-timeline>
+              <render-rev-timeline-horizontal class="eeb-docmaps" data-doi="${doi}"></render-rev-timeline-horizontal>
               <render-rev-summary class="eeb-docmaps" data-doi="${doi}"></render-rev-summary>
             </section>
           `)}
@@ -86,12 +86,12 @@
         .then(reviewProcess => {
           const reviewSummary = document.querySelector(`render-rev-summary.eeb-docmaps[data-doi="${doi}"]`);
           reviewSummary.reviewProcess = reviewProcess;
-          const reviewTimeline = document.querySelector(`render-rev-timeline.eeb-docmaps[data-doi="${doi}"]`);
+          const reviewTimeline = document.querySelector(`render-rev-timeline-horizontal.eeb-docmaps[data-doi="${doi}"]`);
           reviewTimeline.reviewProcess = reviewProcess;
           reviewTimeline.options = {
             debug,
             itemDescriptions: {
-              'response': 'Author Response'
+              'response': 'Author Reply'
             }
           };
         })
