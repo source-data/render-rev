@@ -46,7 +46,7 @@ npm i render-rev
 
 ## Usage
 
-Importing the render-rev package automatically register the \<render-rev> custom element.
+Importing the render-rev package automatically register the `<render-rev>` custom element.
 Use this element and pass it the DOI of the preprint you want to display:
 
 ```html
@@ -168,6 +168,43 @@ These are the available options:
 * `--rr-timeline-summary-bg-color`: The background color of the automated summary in the timeline. Defaults to `#eee`.
 * `--rr-timeline-summary-text-color`: The text color of the automated summary in the timeline. Defaults to `grey`.
 
+### Sub-components
+
+The `<render-rev>` element is composed of several sub-components that can be used individually to customize the display of the review process.
+
+#### `<render-rev-timeline>` and `<render-rev-timeline-horizontal>`
+
+The `<render-rev-timeline>` element displays the review process as a vertical timeline with the preprint at the top and the published article at the bottom.
+The `<render-rev-timeline-horizontal>` element displays the review process as a horizontal timeline with the preprint on the left and the published article on the right.
+
+Both elements accept the attributes of the `display` configuration option described above to customize the display of the timeline.
+They can be styled using the CSS custom properties described above.
+
+```javascript
+import { parseDocmaps, RenderRevTimeline, RenderRevTimelineHorizontal } from '@source-data/render-rev';
+const docmaps = fetch('https://eeb.embo.org/api/v2/docmap/10.1101/2022.02.25.481813')
+  .then(response => response.json())
+  .then(parseDocmaps)
+  .then(reviewProcess => {
+    const timeline = new RenderRevTimeline();
+    timeline.reviewProcess = reviewProcess;
+    timeline.options = {
+      publisherName: name => name.toUpperCase(),
+    };
+    document.body.appendChild(timeline);
+
+    const timelineHorizontal = new RenderRevTimelineHorizontal();
+    timelineHorizontal.reviewProcess = reviewProcess;
+    timelineHorizontal.options = {
+      formatDate: date => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    };
+    document.body.appendChild(timelineHorizontal);
+  });
+```
+
+#### `parseDocmaps`
+
+The async `parseDocmaps` function takes an array of DocMaps and returns a `ReviewProcess` object that can be passed to the `reviewProcess` property of the timeline elements described above.
 
 ## Development
 
