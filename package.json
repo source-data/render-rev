@@ -9,6 +9,7 @@
   "scripts": {
     "analyze": "cem analyze --litelement",
     "build": "rollup --config",
+    "watch": "rollup --config --watch",
     "start": "web-dev-server",
     "lint": "eslint --ext .js,.html . --ignore-path .prettierignore && prettier \"**/*.js\" --check",
     "format": "eslint --ext .js,.html . --fix --ignore-path .prettierignore && prettier \"**/*.js\" --write",
