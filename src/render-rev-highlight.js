@@ -575,7 +575,7 @@ export class RenderRevHighlight extends LitElement {
   printButton() {
     return html`
       <button
-        class="print"
+        class="print highlight-control"
         @click="${this.triggerPrinting}"
         title="Print content"
       >
@@ -701,6 +701,7 @@ export class RenderRevHighlight extends LitElement {
         }
         #${idPrintContainer} {
           display: block !important;
+          margin-right: 32px;  /* prevent content from being cut off on the right side */
         }
         article:not(:first-child) {
           margin-top: 80px;
