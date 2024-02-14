@@ -125,6 +125,7 @@ external source, use the `.configure()` method of the element:
     ```Javascript
     { renderMarkdown: marked.parse }
     ```
+* `itemDate`: Pass in the string "earliest" or "latest" to control which date is shown for an item in the timeline with multiple contents. Defaults to "latest".
 * `highlightDoi`: Automatically open the highlight viewer for the review or response with this DOI.
 * `reportSummaryIssue`: Pass in an object to configure how the "Report issue" button for the auto-summaries works:
   * `recipient`: The email address that should receive the issue reports. Defaults to `eeb-feedback@embl.de`.

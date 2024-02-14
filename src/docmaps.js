@@ -102,7 +102,7 @@ function uriForThing(io) {
   return io.uri || io.url || uriForDoi(io.doi);
 }
 
-async function parseStep(step) {
+async function parseStep(step, config) {
   log('parsing step', step);
 
   const isResponseStep =
@@ -151,12 +151,14 @@ async function parseStep(step) {
       .sort((a, b) => a.date.valueOf() - b.date.valueOf())
       // optimistic sort - does nothing if no running number available
       .sort((a, b) => a.runningNumber - b.runningNumber);
-    const earliestDate = contents
-      .map(c => c.date)
-      .sort((a, b) => a.valueOf() - b.valueOf())[0];
+    const sortDate =
+      config.itemDate === 'earliest'
+        ? (a, b) => a.valueOf() - b.valueOf()
+        : (a, b) => b.valueOf() - a.valueOf();
+    const date = contents.map(c => c.date).sort(sortDate)[0];
     const item = {
       contents,
-      date: earliestDate,
+      date,
       summaries,
       type: TimelineItemTypes.Reviews,
     };
@@ -240,7 +242,7 @@ function getFirstGroup(inputs) {
   };
 }
 
-async function parseDocmapIntoGroups(timeline, docmap) {
+async function parseDocmapIntoGroups(timeline, docmap, config) {
   log('parsing docmap', docmap);
   const steps = Array.from(stepsGenerator(docmap['first-step'], docmap.steps));
   if (timeline.groups.length === 0) {
@@ -258,7 +260,9 @@ async function parseDocmapIntoGroups(timeline, docmap) {
 
   const publisherUri =
     docmap.publisher.uri || docmap.publisher.url || docmap.publisher.homepage;
-  const parsedSteps = await Promise.all(steps.map(parseStep));
+  const parsedSteps = await Promise.all(
+    steps.map(step => parseStep(step, config))
+  );
   const items = parsedSteps.flat();
   timeline.groups.push({
     publisher: {
@@ -322,13 +326,13 @@ function compareTimelineGroups(a, b) {
   return 0;
 }
 
-async function convertToTimeline(docmaps) {
+async function convertToTimeline(docmaps, config) {
   const timeline = {
     groups: [],
   };
 
   await Promise.all(
-    docmaps.map(docmap => parseDocmapIntoGroups(timeline, docmap))
+    docmaps.map(docmap => parseDocmapIntoGroups(timeline, docmap, config))
   );
   log('sorting %d timeline groups', timeline.groups.length);
   timeline.groups.sort(compareTimelineGroups);
@@ -342,11 +346,19 @@ async function convertToTimeline(docmaps) {
  * @param {Object} config - [optional] A configuration object. The only currently supported option is `debug`, which enables logging if truthy.
  * @returns {Object} A timeline object.
  */
-export async function parse(docmaps, config) {
+export async function parse(docmaps, externalConfig) {
+  const defaultConfig = {
+    debug: false,
+    itemDate: 'latest', // "earliest" or "latest"
+  };
+  const config = externalConfig
+    ? { ...defaultConfig, ...externalConfig }
+    : defaultConfig;
+
   debug = config ? Boolean(config.debug) : debug;
   const unpackedDocmaps = docmaps.map(unpack);
   log('parsing %d docmaps', unpackedDocmaps.length, unpackedDocmaps);
-  const timeline = await convertToTimeline(unpackedDocmaps);
+  const timeline = await convertToTimeline(unpackedDocmaps, config);
 
   return {
     timeline,
