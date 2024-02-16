@@ -130,11 +130,11 @@ external source, use the `.configure()` method of the element:
 * `reportSummaryIssue`: Pass in an object to configure how the "Report issue" button for the auto-summaries works:
   * `recipient`: The email address that should receive the issue reports. Defaults to `eeb-feedback@embl.de`.
   * `subject`: The subject line of the issue report. Defaults to `Issue with auto-summary`.
-  * `body`: A callable that receives the DOI of the preprint and the text of the auto-summary and returns the body of the issue report. Defaults to a function that returns an explanatory text.
+  * `body`: A callable that receives the URI of the preprint and the text of the auto-summary and returns the body of the issue report. Defaults to a function that returns an explanatory text.
     ```Javascript
     {
       reportSummaryIssue: {
-        body: (doi, summary) => `There is an issue with the auto-summary for ${doi}:\n\n${summary}`
+        body: (uri, summary) => `There is an issue with the auto-summary for ${uri}:\n\n${summary}`
       }
     }
     ```

@@ -209,9 +209,9 @@ export class RenderRevTimeline extends LitElement {
       recipient: 'eeb-feedback@embl.de',
       subject: 'Issue with auto-summary',
       body: (
-        doi,
+        uri,
         summary
-      ) => `There is an issue with the summary (see below) of the reviews for the preprint with the DOI ${doi}:
+      ) => `There is an issue with the summary (see below) of the reviews for the preprint ${uri}:
 
 <Please describe the issue with the summary in detail here>
 
@@ -365,8 +365,9 @@ ${summary}
 
     // prefill the reportSummaryIssue body with the doi
     const reportSummaryIssueBody = config.reportSummaryIssue.body;
+    const { uri } = this.reviewProcess.timeline.groups[0].items[0];
     config.reportSummaryIssue.body = summary =>
-      reportSummaryIssueBody(config.doi, summary);
+      reportSummaryIssueBody(uri, summary);
     this._config = config;
 
     return html`
