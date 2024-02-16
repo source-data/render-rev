@@ -3,7 +3,7 @@
   "description": "Webcomponent render-rev following open-wc recommendations",
   "license": "MIT",
   "author": "SourceData",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "main": "dist/render-rev.iife.js",
   "module": "dist/render-rev.esm.js",
   "scripts": {
